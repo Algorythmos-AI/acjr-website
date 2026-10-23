@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import frenchTypography from './src/integrations/french-typography.mjs';
 
 // Final domain is not decided yet; set SITE_URL in the deploy environment.
 const site = process.env.SITE_URL ?? 'https://acjr-website.vercel.app';
@@ -28,6 +29,7 @@ export default defineConfig({
   },
   markdown: { syntaxHighlight: false },
   integrations: [
+    frenchTypography(),
     sitemap({
       filter: (page) => !page.includes('/_styleguide/'),
       i18n: {

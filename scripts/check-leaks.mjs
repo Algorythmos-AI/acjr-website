@@ -13,8 +13,11 @@ function walk(dir) {
     if (statSync(path).isDirectory()) walk(path);
     else if (/\.pdf$/i.test(name)) problems.push(`PDF file published: ${path}`);
     else if (/\.(html|xml|txt|js|json|svg)$/.test(name)) {
-      // The preamble cites the UN Charter by its official French title; that is a reference, not a wordmark.
-      const text = readFileSync(path, 'utf8').replaceAll('Charte des Nations Unies', '');
+      // The preamble cites the UN Charter and the UN Declaration on Human Rights Defenders by their
+      // official French titles; those are references, not a wordmark.
+      const text = readFileSync(path, 'utf8')
+        .replaceAll('Charte des Nations Unies', '')
+        .replaceAll('Déclaration des Nations Unies sur les défenseurs', '');
       for (const re of forbidden) if (re.test(text)) problems.push(`${re} found in ${path.replace(root, 'dist/')}`);
     }
   }

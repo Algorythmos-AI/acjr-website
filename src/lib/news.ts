@@ -13,7 +13,8 @@ export const articleLang = (a: Article) => a.id.split('/')[0] as Lang;
 
 export async function allArticles(): Promise<Article[]> {
   const entries = await getCollection('news', (e) => showDrafts || !e.data.draft);
-  return entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  // Newest first; same-day articles fall back to their id so the order is stable across builds.
+  return entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime() || a.id.localeCompare(b.id));
 }
 
 export async function articlesFor(lang: Lang): Promise<Article[]> {

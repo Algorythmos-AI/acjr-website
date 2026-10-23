@@ -108,3 +108,13 @@ test('root redirects to a language', async ({ page }) => {
   await page.goto('/');
   await expect(page).toHaveURL(/\/(fr|en|ar)\/$/);
 });
+
+test('French pages use non-breaking spaces before double punctuation', async ({ page }) => {
+  for (const path of ['/fr/gouvernance/', '/fr/contact/', '/fr/mentions-legales/']) {
+    await page.goto(path);
+    const text = await page.locator('main').innerText();
+    expect(text, path).not.toMatch(/\S [:;!?](\s|$)/);
+    expect(text, path).not.toMatch(/« | »/);
+    expect(text, path).not.toMatch(/\w'\w/);
+  }
+});

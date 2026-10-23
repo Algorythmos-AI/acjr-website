@@ -101,7 +101,7 @@ export const en: Content = {
     eyebrow: 'African Center for Justice Rights',
     heroTitle: 'For an Africa where justice, the rule of law and human dignity are effectively protected',
     heroLead:
-      'We document serious human-rights violations, stand with victims and carry their voices to national, African and international bodies.',
+      'Our mission: to document serious human-rights violations, support victims and bring documented facts before the competent African and international courts and mechanisms.',
     ctaPrimary: 'Explore our work',
     ctaSecondary: 'About us',
     missionEyebrow: 'Our mission',
@@ -113,12 +113,12 @@ export const en: Content = {
     objectivesTitle: 'Our areas of work',
     objectivesLead: 'Six objectives, set out in Article 6 of our statutes, shape our work.',
     howTitle: 'How we work',
-    howLead: 'From the field to international bodies, a rigorous chain of work.',
+    howLead: 'From establishing the facts to international bodies: a rigorous method.',
     how: [
-      { title: 'Document', text: 'Gather and preserve testimony and evidence to international standards.' },
+      { title: 'Document', text: 'Monitor and document violations using verifiable methods and international standards.' },
       { title: 'Analyse', text: 'Assess the facts under international and regional law.' },
       { title: 'Advocate', text: 'Bring the facts before UN and African mechanisms and competent courts.' },
-      { title: 'Support', text: 'Stand with victims, witnesses and human-rights defenders, safely.' },
+      { title: 'Support', text: 'Stand with victims, witnesses and human-rights defenders, putting their safety first.' },
     ],
     principlesTitle: 'Non-negotiable principles',
     principlesLead: 'Independence, universality of rights, impartiality, non-discrimination and a victim-centred approach.',
@@ -135,7 +135,7 @@ export const en: Content = {
     {
       id: 'documentation',
       title: 'Monitoring and documenting violations',
-      short: 'Monitor and document serious violations, following the Istanbul and Minnesota Protocols.',
+      short: 'Monitor and document serious violations, and promote the Istanbul and Minnesota Protocols.',
       body: [
         'Credible justice starts with established facts. ACJR monitors and documents serious human-rights violations, using verifiable methods and probative evidence.',
         'It promotes internationally recognised investigation protocols, notably the Istanbul Protocol (documenting torture) and the Minnesota Protocol (investigating potentially unlawful deaths).',
@@ -163,14 +163,14 @@ export const en: Content = {
       short: 'Support truth-seeking, accountability, reparation and institutional reform.',
       body: [
         'Societies emerging from conflict or crisis need truth, justice and lasting reform.',
-        'ACJR supports transitional-justice processes, in keeping with its origins: the association was founded as « Paix et la Transition Démocratique » (Peace and Democratic Transition).',
+        'ACJR supports transitional-justice processes, in keeping with its origins: the association was founded as “Paix et la Transition Démocratique” (Peace and Democratic Transition).',
       ],
       points: ['Truth-seeking', 'Accountability', 'Reparation', 'Institutional reform'],
     },
     {
       id: 'defenders',
       title: 'Protecting human-rights defenders',
-      short: 'Legal protection and advocacy for defenders, lawyers, journalists and whistle-blowers.',
+      short: 'Legal protection and advocacy for defenders, lawyers, journalists and people who report violations.',
       body: [
         'Human-rights defenders, lawyers, journalists and people who report violations are often put at risk by their commitment.',
         'ACJR contributes to their legal protection and advocates on their behalf, drawing in particular on the UN Declaration on Human Rights Defenders.',
@@ -195,18 +195,18 @@ export const en: Content = {
         'Defending human rights depends on knowledge. ACJR produces and disseminates research, studies and analysis.',
         'It contributes to training human-rights actors at national and regional level.',
       ],
-      points: ['Research and studies', 'Published analysis', 'Training for human-rights actors', 'At national and regional level'],
+      points: ['Research and studies', 'Disseminating analysis', 'Training for human-rights actors', 'At national and regional level'],
     },
   ],
 
   about: {
     storyTitle: 'Our story',
     story: [
-      'The association was founded in Paris on 25 April 2024 as « Paix et la Transition Démocratique » (Peace and Democratic Transition) by its three founding members.',
+      'The association was founded in Paris on 25 April 2024 as “Paix et la Transition Démocratique” (Peace and Democratic Transition) by its three founding members.',
       'On 17 September 2026, an extraordinary general assembly changed its name and statutes. As the African Center for Justice Rights (ACJR) it is the legal continuation of the original association: no new legal entity was created and the founding members are unchanged. The change was registered with the prefecture on 30 September 2026.',
     ],
     timeline: [
-      { date: '25 April 2024', title: 'Founded', text: '« Paix et la Transition Démocratique » is constituted in Paris.' },
+      { date: '25 April 2024', title: 'Founded', text: '“Paix et la Transition Démocratique” is constituted in Paris.' },
       { date: '17 September 2026', title: 'New statutes', text: 'An extraordinary general assembly adopts the new name and statutes.' },
       { date: '30 September 2026', title: 'Registered', text: 'Change registered with the prefecture — RNA W751274196.' },
     ],
@@ -246,7 +246,7 @@ export const en: Content = {
       { name: 'International Covenant on Civil and Political Rights', year: '1966', note: 'Right to life, prohibition of torture, fair trial, fundamental freedoms.', url: 'https://www.ohchr.org/en/instruments-mechanisms/instruments/international-covenant-civil-and-political-rights' },
       { name: 'International Covenant on Economic, Social and Cultural Rights', year: '1966', note: 'Rights to work, health, education and an adequate standard of living.', url: 'https://www.ohchr.org/en/instruments-mechanisms/instruments/international-covenant-economic-social-and-cultural-rights' },
       { name: 'African Charter on Human and Peoples’ Rights', year: '1981', note: 'The cornerstone of the African human-rights system.', url: 'https://achpr.au.int/en/charter/african-charter-human-and-peoples-rights' },
-      { name: 'Geneva Conventions of 12 August 1949 and Additional Protocols', year: '1949 · 1977', note: 'Protection of people in armed conflict.', url: 'https://ihl-databases.icrc.org/en/ihl-treaties' },
+      { name: 'Geneva Conventions of 12 August 1949 and Additional Protocols', year: '1949 · 1977 · 2005', note: 'Protection of people in armed conflict.', url: 'https://ihl-databases.icrc.org/en/ihl-treaties' },
       { name: 'Rome Statute of the International Criminal Court', year: '1998', note: 'Genocide, crimes against humanity, war crimes, the crime of aggression.', url: 'https://www.icc-cpi.int/publications/core-legal-texts' },
       { name: 'Convention against Torture', year: '1984', note: 'Absolute prohibition of torture and cruel, inhuman or degrading treatment.', url: 'https://www.ohchr.org/en/instruments-mechanisms/instruments/convention-against-torture-and-other-cruel-inhuman-or-degrading' },
       { name: 'International Convention for the Protection of All Persons from Enforced Disappearance', year: '2006', note: 'Prohibition of enforced disappearance and the right to truth.', url: 'https://www.ohchr.org/en/instruments-mechanisms/instruments/international-convention-protection-all-persons-enforced' },
@@ -303,10 +303,10 @@ export const en: Content = {
 
   governance: {
     intro: [
-      'ACJR is governed democratically. Its bodies and their powers are defined by the statutes adopted on 17 September 2026; internal rules, prepared by the Board and approved by the General Assembly, set out the details.',
+      'ACJR is governed democratically. Its bodies and their powers are defined by the statutes adopted on 17 September 2026; internal rules, prepared by the Board and submitted to the General Assembly for approval, set out the details.',
     ],
     bureauTitle: 'The Executive Bureau',
-    bureauLead: 'When the statutes were adopted, continuity in office was ensured by the three founding members:',
+    bureauLead: 'As at the adoption of the statutes, continuity in office is ensured by the three founding members:',
     bureau: [
       { name: 'ABDELRAHIM GREIN Sadam', role: 'President', duty: 'Legally represents the association in all civil matters.' },
       { name: 'MAHMUD MOHAMED Hruia', role: 'Secretary-General', duty: 'Handles administration and coordination, and keeps the minutes.' },
@@ -317,18 +317,18 @@ export const en: Content = {
     bodies: [
       {
         title: 'Ordinary General Assembly',
-        text: 'It brings together the voting members. It approves the activity and financial reports and the budget, elects the Board, sets membership fees and approves the internal rules.',
-        facts: ['At least once a year', '21 days’ notice', 'Simple majority'],
+        text: 'It brings together the members with voting rights who are up to date with their membership obligations. It approves the activity and financial reports and the budget, elects the Board, sets membership fees and approves the internal rules.',
+        facts: ['At least once a year', '21 days’ notice, except in a justified emergency', 'Simple majority'],
       },
       {
         title: 'Extraordinary General Assembly',
         text: 'The only body that can amend the statutes or dissolve the association.',
-        facts: ['Quorum: two-thirds of voting members', 'Two-thirds majority', 'Second assembly within 30 days if quorum fails'],
+        facts: ['Quorum: two-thirds of members with voting rights', 'Two-thirds majority of votes cast', 'If quorum fails, a second assembly within 30 days, with no quorum required (except for dissolution)'],
       },
       {
         title: 'Board of Directors',
         text: 'It sets the direction for implementing the Assembly’s decisions, oversees general policies, adopts the draft budget and ensures sound administration.',
-        facts: ['3 to 7 members', 'Renewable 3-year term', 'Meets at least every six months'],
+        facts: ['3 to 7 members', 'Renewable 3-year term', 'Meets at least every six months', 'The President has the casting vote in a tie'],
       },
       {
         title: 'Executive Bureau',
@@ -388,8 +388,13 @@ export const en: Content = {
       'Regular accounts are kept. The financial report is submitted to the General Assembly for approval every year.',
       'Where the law, applicable thresholds, contractual commitments or a General Assembly decision require it, the accounts are audited or certified by a qualified professional.',
     ],
+    dissolutionTitle: 'If the association is dissolved',
+    dissolution: [
+      'Only an Extraordinary General Assembly convened for that purpose can decide to dissolve the association, under the quorum and majority rules of Article 12.',
+      'Net assets may not be distributed among members: they pass to a non-profit body pursuing compatible goals (Article 21).',
+    ],
     policiesTitle: 'Internal policies',
-    policiesLead: 'Under Article 20 of the statutes, the association adopts internal policies covering in particular:',
+    policiesLead: 'Under Article 20 of the statutes, the association adopts internal policies, according to its activities and obligations, covering in particular:',
     policies: [
       { title: 'Ethics and conduct', text: 'Standards of behaviour expected of members, volunteers and representatives.' },
       { title: 'Protecting children and vulnerable people', text: 'Preventing abuse and exploitation.' },

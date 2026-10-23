@@ -118,6 +118,8 @@ export interface Content {
     independence: string[];
     accountsTitle: string;
     accounts: string[];
+    dissolutionTitle: string;
+    dissolution: string[];
     policiesTitle: string;
     policiesLead: string;
     policies: Five<Pair>;
