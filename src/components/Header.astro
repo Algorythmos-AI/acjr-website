@@ -205,7 +205,8 @@ const currentPath = (key: PageKey) => key === pageKey;
     text-decoration: none;
     font-weight: 500;
   }
-  .lang-switch a[lang='ar'] { font-family: var(--font-ar-sans); }
+  .lang-switch a[lang='ar'] { font-family: var(--font-ar-system); }
+  :global(html[lang='ar']) .lang-switch a[lang='ar'] { font-family: var(--font-ar-sans); }
   .lang-switch a:hover { text-decoration: underline; color: var(--white); }
   .lang-switch a[aria-current] {
     font-weight: 700;
