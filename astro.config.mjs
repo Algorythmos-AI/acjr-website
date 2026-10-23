@@ -8,7 +8,8 @@ const site = process.env.SITE_URL ?? 'https://acjr.vercel.app';
 export default defineConfig({
   site,
   trailingSlash: 'always',
-  build: { format: 'directory' },
+  // Inlined CSS removes render-blocking requests; the CSP below hashes it.
+  build: { format: 'directory', inlineStylesheets: 'always' },
   security: {
     // Emits a CSP <meta> with hashes for every inline script and style. Header-only
     // directives (frame-ancestors, HSTS…) are set in vercel.json.

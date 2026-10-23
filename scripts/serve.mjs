@@ -3,6 +3,7 @@
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize, resolve } from 'node:path';
+import { gzipSync } from 'node:zlib';
 
 const [, , dir = 'dist', port = '4321'] = process.argv;
 const root = resolve(dir);
@@ -17,8 +18,14 @@ createServer(async (req, res) => {
   if (!file.startsWith(root)) return res.writeHead(403).end();
   try {
     if ((await stat(file)).isDirectory()) file = join(file, 'index.html');
-    const body = await readFile(file);
-    res.writeHead(200, { 'Content-Type': types[extname(file)] ?? 'application/octet-stream' }).end(body);
+    let body = await readFile(file);
+    const headers = { 'Content-Type': types[extname(file)] ?? 'application/octet-stream' };
+    // Compress text like the production host does, so local audits are representative.
+    if (/^(text|application\/xml|image\/svg)/.test(headers['Content-Type']) && /gzip/.test(req.headers['accept-encoding'] ?? '')) {
+      body = gzipSync(body);
+      headers['Content-Encoding'] = 'gzip';
+    }
+    res.writeHead(200, headers).end(body);
   } catch {
     const body = await readFile(join(root, '404.html')).catch(() => 'Not found');
     res.writeHead(404, { 'Content-Type': types['.html'] }).end(body);
