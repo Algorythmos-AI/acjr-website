@@ -68,20 +68,40 @@ test('navigation works by keyboard', async ({ page }, testInfo) => {
   }
 });
 
-test('contact form shows validation errors', async ({ page }) => {
-  await page.goto('/en/contact/');
-  await page.getByRole('button', { name: 'Send message' }).click();
+test('contact form is disabled while no endpoint is configured', async ({ page }) => {
+  for (const lang of ['fr', 'en', 'ar']) {
+    await page.goto(`/${lang}/contact/`);
+    await expect(page.locator('.contact-form fieldset')).toHaveAttribute('disabled', '');
+    await expect(page.locator('.contact-form [type=submit]')).toBeDisabled();
+    await expect(page.locator('.contact-form')).not.toHaveAttribute('action');
+    await expect(page.locator('.form-section .notice')).toBeVisible();
+  }
+});
+
+// The drafts build sets a test Formspree endpoint; the request is intercepted, never sent.
+test('contact form validates and reports a successful send', async ({ page }) => {
+  let posted = 0;
+  await page.route('https://formspree.io/**', (route) => {
+    posted++;
+    return route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
+  });
+  await page.goto('http://localhost:4322/en/contact/');
+  const send = page.getByRole('button', { name: 'Send message' });
+  await send.click();
   const summary = page.locator('.error-summary');
   await expect(summary).toBeVisible();
   await expect(summary.locator('li')).toHaveCount(4);
   await expect(summary).toBeFocused();
   await expect(page.locator('#cf-email')).toHaveAttribute('aria-invalid', 'true');
+  expect(posted).toBe(0);
   await page.fill('#cf-name', 'Test');
   await page.fill('#cf-email', 'test@example.org');
   await page.fill('#cf-message', 'Hello');
   await page.check('#cf-consent');
-  await page.getByRole('button', { name: 'Send message' }).click();
+  await send.click();
   await expect(summary).toBeHidden();
+  await expect(page.locator('.form-status')).toHaveText('Thank you, your message has been sent. We will reply as soon as possible.');
+  expect(posted).toBe(1);
 });
 
 test('root redirects to a language', async ({ page }) => {

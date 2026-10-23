@@ -42,9 +42,10 @@ const endpoint = site.formEndpoint;
         </div>
         <div class="form-status" role="status" aria-live="polite"></div>
 
+        <!-- Without an endpoint the form is disabled, so nothing can be posted with or without JS. -->
         <form
           class="contact-form"
-          method="post"
+          method={endpoint ? 'post' : undefined}
           action={endpoint ?? undefined}
           data-endpoint={endpoint ?? ''}
           data-msg-success={f.success}
@@ -52,6 +53,8 @@ const endpoint = site.formEndpoint;
           data-msg-inactive={f.inactive}
           data-msg-sending={f.sending}
         >
+          <fieldset disabled={!endpoint}>
+          <legend class="visually-hidden">{f.formTitle}</legend>
           <div class="field">
             <label for="cf-name">{f.fields.name} <span class="req">({f.required})</span></label>
             <p class="field-error" id="cf-name-error" hidden>{f.errors.name}</p>
@@ -85,6 +88,7 @@ const endpoint = site.formEndpoint;
           </div>
           <input type="hidden" name="language" value={lang} />
           <button class="btn btn--block" type="submit">{f.submit}</button>
+          </fieldset>
         </form>
       </section>
     </div>
@@ -184,7 +188,8 @@ const endpoint = site.formEndpoint;
   .safety h2 { font-size: 1.25rem; margin-bottom: var(--space-1); }
   .safety ul { margin: 0; }
   .form-section > .notice { margin-bottom: var(--space-3); }
-  .contact-form { display: grid; gap: var(--space-3); max-width: 40rem; }
+  .contact-form { max-width: 40rem; }
+  .contact-form fieldset { display: grid; gap: var(--space-3); margin: 0; padding: 0; border: 0; min-width: 0; }
   .field { display: grid; gap: 0.375rem; }
   .field label { font-weight: 700; color: var(--navy-900); }
   .req { font-weight: 400; color: var(--grey-600); font-size: var(--fs-small); }
