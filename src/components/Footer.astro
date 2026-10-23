@@ -1,0 +1,103 @@
+---
+import { pagePath, type Lang, type PageKey } from '../i18n/routes';
+import { ui } from '../i18n/ui';
+import { content } from '../content';
+import { site } from '../config/site';
+import { lockups } from '../config/brand';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const c = content[lang];
+const logo = lockups[lang];
+const logoHeight = 56;
+const logoWidth = Math.round((logo.width / logo.height) * logoHeight);
+const year = new Date().getFullYear();
+
+const columns: { title: string; keys: PageKey[] }[] = [
+  { title: t.footerExplore, keys: ['about', 'work', 'advocacy', 'news'] },
+  { title: t.footerOrganisation, keys: ['governance', 'transparency', 'involved', 'contact'] },
+  { title: t.footerLegal, keys: ['legal', 'privacy'] },
+];
+---
+
+<footer class="site-footer on-dark">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src={logo.srcWhite} alt={c.home.eyebrow} width={logoWidth} height={logoHeight} />
+        <p>{t.footerAbout}</p>
+      </div>
+      {
+        columns.map((col) => (
+          <nav class="footer-col" aria-label={col.title}>
+            <h2>{col.title}</h2>
+            <ul>
+              {col.keys.map((key) => (
+                <li>
+                  <a href={pagePath(lang, key)}>{c.nav[key]}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-status">
+        {t.legalStatus} · {t.rnaLabel}&nbsp;<span dir="ltr">{site.rna}</span> · {c.contact.location}
+      </p>
+      <p class="footer-disclaimer">{t.disclaimer}</p>
+      <p class="footer-copy">© <span dir="ltr">{year}</span> {c.home.eyebrow}. {t.copyright}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--charcoal);
+    color: var(--white);
+    border-top: var(--rule);
+    font-size: var(--fs-small);
+  }
+  .footer-top {
+    display: grid;
+    gap: var(--space-4);
+    padding-block: var(--space-5) var(--space-4);
+  }
+  @media (min-width: 768px) {
+    .footer-top { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .footer-brand { grid-column: 1 / -1; }
+  }
+  @media (min-width: 1024px) {
+    .footer-top { grid-template-columns: 2fr repeat(3, minmax(0, 1fr)); }
+    .footer-brand { grid-column: auto; }
+  }
+  .footer-brand img { height: 3.5rem; width: auto; margin-bottom: var(--space-2); }
+  .footer-brand p { max-width: 32rem; color: rgb(255 255 255 / 0.85); }
+  .footer-col h2 {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: var(--space-2);
+  }
+  :global(:lang(ar)) .footer-col h2 { font-family: var(--font-ar-sans); letter-spacing: 0; font-size: 1rem; }
+  .footer-col ul { list-style: none; padding: 0; margin: 0; }
+  .footer-col li + li { margin-top: 0.5rem; }
+  .site-footer a { color: var(--link-on-dark); }
+  .site-footer a:hover { color: var(--white); }
+  .footer-bottom {
+    border-top: 1px solid rgb(255 255 255 / 0.2);
+    padding-block: var(--space-3) var(--space-4);
+    color: rgb(255 255 255 / 0.85);
+  }
+  .footer-bottom p { margin-bottom: var(--space-1); }
+  .footer-status { font-weight: 700; color: var(--white); text-transform: uppercase; letter-spacing: 0.04em; }
+  :global(:lang(ar)) .footer-status { text-transform: none; letter-spacing: 0; }
+</style>

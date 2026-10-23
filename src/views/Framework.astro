@@ -1,0 +1,78 @@
+---
+import Icon from '../components/Icon.astro';
+import { content } from '../content';
+import { ui } from '../i18n/ui';
+import type { Lang } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const f = content[lang].framework;
+const t = ui[lang];
+---
+
+<!-- Preamble: legal references -->
+<div class="page-body">
+  <div class="container">
+    <div class="prose">{f.intro.map((p) => <p class="lead">{p}</p>)}</div>
+
+    <section aria-labelledby="refs-title" class="refs-section">
+      <h2 id="refs-title">{f.referencesTitle}</h2>
+      <ul class="refs grid grid--3 plain-list">
+        {
+          f.references.map((r) => (
+            <li>
+              <a class="ref" href={r.url} rel="external noopener">
+                <span class="ref-year">{r.year}</span>
+                <span class="ref-name">{r.name}</span>
+                <span class="ref-note">{r.note}</span>
+                <span class="ref-ext">
+                  <Icon name="external" size={16} />
+                  <span class="visually-hidden">{t.externalLink}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <div class="grid grid--2 lower">
+      <section aria-labelledby="protocols-title">
+        <h2 id="protocols-title">{f.protocolsTitle}</h2>
+        {f.protocols.map((p) => (<div class="card"><h3>{p.title}</h3><p>{p.text}</p></div>))}
+      </section>
+      <section aria-labelledby="law-title">
+        <h2 id="law-title">{f.lawTitle}</h2>
+        <div class="card">{f.law.map((p) => <p>{p}</p>)}</div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<style>
+  .refs-section { margin-block: var(--space-5); }
+  .ref {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    padding: var(--space-3);
+    background: var(--grey-50);
+    border-top: 4px solid var(--blue-700);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .ref:hover { background: var(--blue-50); color: var(--ink); text-decoration: none; }
+  .ref:hover .ref-name { text-decoration: underline; }
+  .ref-year { font-size: var(--fs-small); font-weight: 700; color: var(--ochre-700); }
+  .ref-name { font: 700 1.125rem/1.4 var(--font-serif); color: var(--blue-700); padding-inline-end: 1.5rem; }
+  :global(:lang(ar)) .ref-name { font-family: var(--font-ar-serif); }
+  .ref-note { color: var(--grey-600); font-size: 1rem; }
+  .ref-ext { position: absolute; top: var(--space-3); inset-inline-end: var(--space-3); color: var(--blue-700); }
+  .lower .card + .card { margin-top: var(--space-2); }
+  .lower .card { height: auto; }
+</style>

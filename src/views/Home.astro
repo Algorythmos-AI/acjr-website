@@ -1,0 +1,203 @@
+---
+import Icon from '../components/Icon.astro';
+import ObjectiveTile from '../components/ObjectiveTile.astro';
+import FactStrip from '../components/FactStrip.astro';
+import { content } from '../content';
+import { pagePath, type Lang } from '../i18n/routes';
+import { ui } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = content[lang];
+const h = c.home;
+const t = ui[lang];
+---
+
+<section class="hero on-dark" aria-labelledby="hero-title">
+  <svg class="hero-art" viewBox="0 0 600 600" aria-hidden="true" focusable="false">
+    <g fill="none" stroke="currentColor">
+      <circle cx="300" cy="300" r="290" stroke-width="1" />
+      <circle cx="300" cy="300" r="230" stroke-width="1" />
+      <circle cx="300" cy="300" r="170" stroke-width="1" />
+      <path d="M40 300h520" stroke-width="1" />
+      <path d="M300 40v520" stroke-width="1" />
+    </g>
+  </svg>
+  <div class="container hero-inner">
+    <p class="eyebrow hero-eyebrow">{h.eyebrow}</p>
+    <h1 id="hero-title">{h.heroTitle}</h1>
+    <hr class="rule-ochre" />
+    <p class="hero-lead">{h.heroLead}</p>
+    <div class="btn-row">
+      <a class="btn" href={pagePath(lang, 'work')}>{h.ctaPrimary}<Icon name="arrow" size={18} flip /></a>
+      <a class="btn btn--outline-light" href={pagePath(lang, 'about')}>{h.ctaSecondary}</a>
+    </div>
+  </div>
+</section>
+
+<div class="container fact-wrap">
+  <FactStrip lang={lang} />
+</div>
+
+<section class="section" aria-labelledby="mission-title">
+  <div class="container mission">
+    <div>
+      <p class="eyebrow">{h.missionEyebrow}</p>
+      <h2 id="mission-title">{h.missionTitle}</h2>
+    </div>
+    <div class="prose">
+      {h.missionText.map((p) => <p>{p}</p>)}
+      <a href={pagePath(lang, 'about')}>{t.learnMore}<span class="visually-hidden"> — {c.nav.about}</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--grey" aria-labelledby="objectives-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="objectives-title">{h.objectivesTitle}</h2>
+      <p class="lead">{h.objectivesLead}</p>
+    </div>
+    <ul class="grid grid--3 plain-list">
+      {
+        c.objectives.map((o, i) => (
+          <li>
+            <ObjectiveTile objective={o} index={i} href={pagePath(lang, 'work', o.id)} cta={t.learnMore} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="how-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="how-title">{h.howTitle}</h2>
+      <p class="lead">{h.howLead}</p>
+    </div>
+    <ol class="how grid grid--4">
+      {
+        h.how.map((step, i) => (
+          <li>
+            <span class="how-num" aria-hidden="true">{i + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<section class="section section--navy on-dark" aria-labelledby="principles-title">
+  <div class="container split">
+    <div>
+      <h2 id="principles-title">{h.principlesTitle}</h2>
+      <hr class="rule-ochre" />
+      <p class="lead on-navy">{h.principlesLead}</p>
+      <a class="btn btn--light" href={pagePath(lang, 'principles')}>{c.nav.principles}<Icon name="arrow" size={18} flip /></a>
+    </div>
+    <ul class="principle-chips">
+      {c.principles.items.map((p) => <li><Icon name="check" size={20} />{p.title}</li>)}
+    </ul>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="advocacy-title">
+  <div class="container split">
+    <div>
+      <p class="eyebrow">{c.nav.advocacy}</p>
+      <h2 id="advocacy-title">{h.advocacyTitle}</h2>
+    </div>
+    <div class="prose">
+      <p>{h.advocacyText}</p>
+      <a class="btn btn--ghost" href={pagePath(lang, 'advocacy')}>{t.learnMore}<span class="visually-hidden"> — {c.nav.advocacy}</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--grey cta-band" aria-labelledby="involved-title">
+  <div class="container cta-inner">
+    <div>
+      <h2 id="involved-title">{h.involvedTitle}</h2>
+      <p class="lead">{h.involvedText}</p>
+    </div>
+    <a class="btn btn--block cta-btn" href={pagePath(lang, 'involved')}>{h.involvedCta}</a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    color: var(--white);
+    background:
+      linear-gradient(115deg, var(--navy-900) 0%, var(--navy-900) 45%, rgb(0 119 184 / 0.9) 100%),
+      var(--navy-900);
+    padding-block: var(--space-6) calc(var(--space-7) + var(--space-3));
+  }
+  :global([dir='rtl']) .hero {
+    background:
+      linear-gradient(-115deg, var(--navy-900) 0%, var(--navy-900) 45%, rgb(0 119 184 / 0.9) 100%),
+      var(--navy-900);
+  }
+  .hero-art {
+    position: absolute;
+    width: min(46rem, 90vw);
+    inset-inline-end: -12rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgb(255 255 255 / 0.14);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; }
+  .hero h1 { color: var(--white); max-width: 26ch; }
+  .hero-eyebrow { color: var(--link-on-dark); }
+  .hero-lead { font-size: var(--fs-lead); max-width: 40rem; color: rgb(255 255 255 / 0.92); margin-bottom: var(--space-4); }
+
+  .fact-wrap { margin-top: calc(-1 * var(--space-6)); position: relative; }
+
+  .mission, .split { display: grid; gap: var(--space-4); }
+  @media (min-width: 1024px) {
+    .mission, .split { grid-template-columns: 5fr 7fr; gap: var(--space-6); }
+  }
+
+  .how { list-style: none; padding: 0; counter-reset: how; }
+  .how li { margin: 0; padding-top: var(--space-2); border-top: 2px solid var(--grey-200); }
+  .how-num {
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: var(--space-2);
+    background: var(--blue-700);
+    color: var(--white);
+    font: 700 1.125rem/1 var(--font-sans);
+    border-radius: 50%;
+  }
+  .how h3 { font-size: 1.25rem; }
+  .how p { color: var(--grey-600); }
+
+  .on-navy { color: rgb(255 255 255 / 0.9); }
+  .principle-chips { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-1); }
+  .principle-chips li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: var(--space-2);
+    background: rgb(255 255 255 / 0.06);
+    border-inline-start: 4px solid var(--ochre-500);
+    font-weight: 500;
+  }
+  .principle-chips :global(.icon) { color: var(--ochre-500); flex-shrink: 0; }
+
+  .cta-inner { display: grid; gap: var(--space-3); align-items: center; }
+  @media (min-width: 1024px) {
+    .cta-inner { grid-template-columns: 2fr 1fr; gap: var(--space-6); }
+  }
+</style>

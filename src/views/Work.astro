@@ -1,0 +1,62 @@
+---
+import ObjectiveIcon from '../components/ObjectiveIcon.astro';
+import { content } from '../content';
+import type { Lang } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = content[lang];
+const w = c.work;
+---
+
+<!-- Art. 6: objectives -->
+<div class="page-body">
+  <div class="container layout-aside">
+    <div>
+      <div class="prose">{w.intro.map((p) => <p class="lead">{p}</p>)}</div>
+      {
+        c.objectives.map((o, i) => (
+          <section class="objective" id={o.id} aria-labelledby={`${o.id}-title`}>
+            <div class="objective-head">
+              <ObjectiveIcon id={o.id} size={56} />
+              <div>
+                <p class="eyebrow">{String(i + 1).padStart(2, '0')}</p>
+                <h2 id={`${o.id}-title`}>{o.title}</h2>
+              </div>
+            </div>
+            <div class="prose">
+              {o.body.map((p) => <p>{p}</p>)}
+              <h3>{w.pointsTitle}</h3>
+              <ul class="checklist">{o.points.map((pt) => <li>{pt}</li>)}</ul>
+            </div>
+          </section>
+        ))
+      }
+    </div>
+    <aside>
+      <nav class="aside-box sticky" aria-labelledby="work-toc">
+        <h2 id="work-toc">{c.nav.work}</h2>
+        <ol class="toc">{c.objectives.map((o) => <li><a href={`#${o.id}`}>{o.title}</a></li>)}</ol>
+        <hr />
+        <h2>{w.methodTitle}</h2>
+        {w.method.map((p) => <p>{p}</p>)}
+      </nav>
+    </aside>
+  </div>
+</div>
+
+<style>
+  .objective { padding-block: var(--space-5) var(--space-3); border-bottom: 1px solid var(--grey-200); scroll-margin-top: var(--space-3); }
+  .objective:last-child { border-bottom: 0; }
+  .objective-head { display: flex; gap: var(--space-3); align-items: center; margin-bottom: var(--space-3); color: var(--blue-700); }
+  .objective-head h2 { margin: 0; }
+  .objective-head .eyebrow { margin: 0; color: var(--ochre-700); }
+  .toc { padding-inline-start: 1.25em; }
+  .toc li + li { margin-top: 0.5rem; }
+  @media (min-width: 1024px) {
+    .sticky { position: sticky; top: var(--space-3); }
+  }
+</style>

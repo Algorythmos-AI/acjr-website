@@ -2,8 +2,8 @@
 :root {
   /* Blue family: #009EDB is decorative only (3.04:1 on white fails AA for text). */
   --blue-500: #009edb;
-  --blue-700: #0077b8;
-  --blue-800: #006da8;
+  --blue-700: #0070ad; /* #0077B8 failed AA on --grey-50 and --blue-50 */
+  --blue-800: #00609a;
   --blue-50: #e6f4fb;
   --navy-900: #0b2545;
   --navy-800: #13325a;
@@ -15,7 +15,7 @@
   --white: #ffffff;
   /* Ochre: decorative/text on dark only; use --ochre-700 for text on white. */
   --ochre-500: #c8963e;
-  --ochre-700: #9a6b1f;
+  --ochre-700: #8f631d;
   --link-on-dark: #7fd3f7;
   --error: #b3261e;
   --success: #1e6b3a;

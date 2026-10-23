@@ -1,0 +1,29 @@
+---
+/** Plain sectioned text page, used for the legal notice and the privacy policy. */
+interface Props {
+  sections: { title: string; body: string[] }[];
+  updated?: string;
+}
+
+const { sections, updated } = Astro.props;
+---
+
+<div class="page-body">
+  <div class="container prose">
+    {updated && <p class="updated">{updated}</p>}
+    {
+      sections.map((s) => (
+        <section>
+          <h2>{s.title}</h2>
+          {s.body.map((p) => <p>{p}</p>)}
+        </section>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  section + section { margin-top: var(--space-4); }
+  h2 { font-size: var(--fs-h3); }
+  .updated { color: var(--grey-600); font-size: var(--fs-small); }
+</style>

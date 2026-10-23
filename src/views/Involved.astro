@@ -1,0 +1,63 @@
+---
+import Icon from '../components/Icon.astro';
+import { content } from '../content';
+import { pagePath, type Lang } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = content[lang];
+const v = c.involved;
+const icons = ['heart', 'handshake', 'shield'] as const;
+---
+
+<!-- Art. 9–10: members and admission -->
+<div class="page-body">
+  <div class="container">
+    <div class="prose">{v.intro.map((p) => <p class="lead">{p}</p>)}</div>
+
+    <ul class="grid grid--3 plain-list block">
+      {
+        v.ways.map((w, i) => (
+          <li>
+            <div class="way">
+              <Icon name={icons[i]!} size={32} />
+              <h2>{w.title}</h2>
+              <p>{w.text}</p>
+              <a class="btn btn--ghost" href={pagePath(lang, 'contact')}>{w.cta}</a>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <section class="block" aria-labelledby="membership-title">
+      <h2 id="membership-title">{v.membershipTitle}</h2>
+      <p>{v.membershipLead}</p>
+      <ul class="grid grid--3 plain-list">
+        {v.categories.map((cat) => (<li><div class="card"><h3>{cat.title}</h3><p>{cat.text}</p></div></li>))}
+      </ul>
+      <div class="prose admission">
+        <h3>{v.admissionTitle}</h3>
+        {v.admission.map((p) => <p>{p}</p>)}
+        <a class="btn" href={pagePath(lang, 'contact')}>{c.home.involvedCta}</a>
+      </div>
+    </section>
+
+    <div class="notice">
+      <Icon name="alert" size={22} />
+      <p>{v.supportNote}</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .block { margin-block: var(--space-5); }
+  .way { display: flex; flex-direction: column; align-items: flex-start; height: 100%; padding: var(--space-3); background: var(--grey-50); border-top: var(--rule); }
+  .way :global(.icon) { color: var(--blue-700); margin-bottom: var(--space-2); }
+  .way h2 { font-size: var(--fs-h3); }
+  .way p { flex-grow: 1; }
+  .admission { margin-top: var(--space-4); }
+</style>
