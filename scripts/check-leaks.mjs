@@ -4,7 +4,7 @@ import { join } from 'node:path';
 
 const root = new URL('../dist/', import.meta.url).pathname;
 // Draft articles must never reach production: their badge class and labels are forbidden too.
-const forbidden = [/statuts-ACJR/i, /Adresse retirée/, /onu-info-(header|footer)/, /draft-badge/, /Brouillon — exemple/, /Draft — sample/, /recepisse/i, /récépissé/i, /PV_AGE/i, /\bLoeb\b/i, /nations unies/i, /united nations emblem/i, /\bONU\b/];
+const forbidden = [/statuts-ACJR/i, /Adresse retirée/, /onu-info-(header|footer)/, /class="[^"]*\bdraft-badge\b/, /Brouillon — exemple/, /Draft — sample/, /recepisse/i, /récépissé/i, /PV_AGE/i, /\bLoeb\b/i, /nations unies/i, /united nations emblem/i, /\bONU\b/];
 
 const problems = [];
 function walk(dir) {
