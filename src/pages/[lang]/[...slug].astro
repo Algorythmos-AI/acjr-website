@@ -1,6 +1,5 @@
 ---
 import Base from '../../layouts/Base.astro';
-import PageHeader from '../../components/PageHeader.astro';
 import Home from '../../views/Home.astro';
 import About from '../../views/About.astro';
 import Principles from '../../views/Principles.astro';
@@ -13,29 +12,61 @@ import News from '../../views/News.astro';
 import Involved from '../../views/Involved.astro';
 import Contact from '../../views/Contact.astro';
 import Sections from '../../views/Sections.astro';
+import ArticleView from '../../views/Article.astro';
+import PageHeader from '../../components/PageHeader.astro';
 import { content } from '../../content';
+import { ui } from '../../i18n/ui';
 import { languages, pageKeys, slugs, type Lang, type PageKey } from '../../i18n/routes';
+import { PAGE_SIZE, allArticles, articleAlternates, articleLang, articleSlug, formatDate, newsPagePath, type Article } from '../../lib/news';
+import { categoryLabel } from '../../lib/categories';
 
-export function getStaticPaths() {
-  return languages.flatMap((lang) =>
-    pageKeys.map((key) => ({
+type Props =
+  | { kind: 'page'; lang: Lang; pageKey: PageKey; news?: { articles: Article[]; page: number; totalPages: number } }
+  | { kind: 'article'; lang: Lang; pageKey: 'news'; article: Article; related: Article[]; altPaths: Record<Lang, string> };
+
+export async function getStaticPaths() {
+  const articles = await allArticles();
+  return languages.flatMap((lang) => {
+    const own = articles.filter((a) => articleLang(a) === lang);
+    const totalPages = Math.max(1, Math.ceil(own.length / PAGE_SIZE));
+    const newsSlug = slugs[lang].news;
+
+    const pages = pageKeys.map((key) => ({
       params: { lang, slug: slugs[lang][key] || undefined },
-      props: { lang, pageKey: key },
-    })),
-  );
+      props: {
+        kind: 'page' as const,
+        lang,
+        pageKey: key,
+        ...(key === 'news' ? { news: { articles: own.slice(0, PAGE_SIZE), page: 1, totalPages } } : {}),
+        ...(key === 'home' ? { news: { articles: own.slice(0, 3), page: 1, totalPages: 1 } } : {}),
+      },
+    }));
+    const listing = Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((page) => ({
+      params: { lang, slug: `${newsSlug}/page/${page}` },
+      props: { kind: 'page' as const, lang, pageKey: 'news' as const, news: { articles: own.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE), page, totalPages } },
+    }));
+    const items = own.map((article) => ({
+      params: { lang, slug: `${newsSlug}/${articleSlug(article)}` },
+      props: {
+        kind: 'article' as const,
+        lang,
+        pageKey: 'news' as const,
+        article,
+        related: own.filter((a) => a !== article).slice(0, 2),
+        altPaths: articleAlternates(article, articles),
+      },
+    }));
+    return [...pages, ...listing, ...items];
+  });
 }
 
-interface Props {
-  lang: Lang;
-  pageKey: PageKey;
-}
-
-const { lang, pageKey } = Astro.props;
+const props = Astro.props;
+const { lang, pageKey } = props;
 const c = content[lang];
+const t = ui[lang];
 const meta = c.meta[pageKey];
 
 const views = {
-  home: Home,
   about: About,
   principles: Principles,
   framework: Framework,
@@ -43,16 +74,49 @@ const views = {
   advocacy: Advocacy,
   governance: Governance,
   transparency: Transparency,
-  news: News,
   involved: Involved,
   contact: Contact,
 } as const;
 const View = pageKey in views ? views[pageKey as keyof typeof views] : null;
 ---
 
-<Base lang={lang} pageKey={pageKey} title={meta.title} description={meta.description}>
-  {pageKey !== 'home' && <PageHeader lang={lang} pageKey={pageKey} />}
-  {View && <View lang={lang} />}
-  {pageKey === 'legal' && <Sections sections={c.legal.sections} />}
-  {pageKey === 'privacy' && <Sections sections={c.privacy.sections} updated={c.privacy.updated} />}
-</Base>
+{
+  props.kind === 'article' ? (
+    <Base
+      lang={lang}
+      pageKey="news"
+      title={props.article.data.title.length > 50 ? `${props.article.data.title.slice(0, 48)}…` : props.article.data.title}
+      description={props.article.data.description}
+      altPaths={props.altPaths}
+      ogType="article"
+      noindex={props.article.data.draft}
+    >
+      <PageHeader lang={lang} pageKey="news" title={props.article.data.title} lead="" currentCrumb={props.article.data.title}>
+        <p class="article-meta">
+          <span>{categoryLabel(props.article.data.category, lang)}</span> ·{' '}
+          <span>{t.publishedOn} <time datetime={props.article.data.date.toISOString().slice(0, 10)}>{formatDate(props.article.data.date, lang)}</time></span>
+        </p>
+      </PageHeader>
+      <ArticleView lang={lang} article={props.article} related={props.related} />
+    </Base>
+  ) : (
+    <Base
+      lang={lang}
+      pageKey={pageKey}
+      title={props.news && props.news.page > 1 && pageKey === 'news' ? `${meta.title} (${props.news.page})` : meta.title}
+      description={meta.description}
+      altPaths={pageKey === 'news' && props.news && props.news.page > 1 ? (Object.fromEntries(languages.map((l) => [l, newsPagePath(l, props.news!.page)])) as Record<Lang, string>) : undefined}
+    >
+      {pageKey !== 'home' && <PageHeader lang={lang} pageKey={pageKey} />}
+      {pageKey === 'news' && props.news && <News lang={lang} {...props.news} />}
+      {pageKey === 'home' && <Home lang={lang} latest={props.news?.articles ?? []} />}
+      {View && <View lang={lang} />}
+      {pageKey === 'legal' && <Sections sections={c.legal.sections} />}
+      {pageKey === 'privacy' && <Sections sections={c.privacy.sections} updated={c.privacy.updated} />}
+    </Base>
+  )
+}
+
+<style>
+  .article-meta { margin: var(--space-2) 0 0; color: rgb(255 255 255 / 0.9); font-size: var(--fs-small); }
+</style>

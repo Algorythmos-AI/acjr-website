@@ -9,9 +9,10 @@ import { lockups } from '../config/brand';
 interface Props {
   lang: Lang;
   pageKey: PageKey | null;
+  altPaths?: Record<Lang, string> | undefined;
 }
 
-const { lang, pageKey } = Astro.props;
+const { lang, pageKey, altPaths } = Astro.props;
 const t = ui[lang];
 const c = content[lang];
 const nav = primaryNav(lang);
@@ -32,7 +33,7 @@ const currentPath = (key: PageKey) => key === pageKey;
             languages.map((l) => (
               <li>
                 <a
-                  href={pagePath(l, pageKey ?? 'home')}
+                  href={altPaths?.[l] ?? pagePath(l, pageKey ?? 'home')}
                   lang={l}
                   hreflang={langMeta[l].hreflang}
                   aria-current={l === lang ? 'true' : undefined}

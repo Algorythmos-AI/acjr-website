@@ -3,7 +3,8 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = new URL('../dist/', import.meta.url).pathname;
-const forbidden = [/recepisse/i, /récépissé/i, /PV_AGE/i, /\bLoeb\b/i, /nations unies/i, /united nations emblem/i, /\bONU\b/];
+// Draft articles must never reach production: their badge class and labels are forbidden too.
+const forbidden = [/draft-badge/, /Brouillon — exemple/, /Draft — sample/, /recepisse/i, /récépissé/i, /PV_AGE/i, /\bLoeb\b/i, /nations unies/i, /united nations emblem/i, /\bONU\b/];
 
 const problems = [];
 function walk(dir) {

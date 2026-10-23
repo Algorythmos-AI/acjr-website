@@ -1,0 +1,57 @@
+---
+import { ui } from '../i18n/ui';
+import { newsPath, type Lang } from '../i18n/routes';
+import { articleSlug, formatDate, type Article } from '../lib/news';
+import { categoryLabel } from '../lib/categories';
+
+/** ONU Info pattern: charcoal date strip, serif title, excerpt, full-width "read more" button. */
+interface Props {
+  article: Article;
+  lang: Lang;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { article, lang, headingLevel = 'h3' } = Astro.props;
+const t = ui[lang];
+const href = newsPath(lang, articleSlug(article));
+const Heading = headingLevel;
+const id = `card-${articleSlug(article)}`;
+---
+
+<article class="news-card" aria-labelledby={id}>
+  <div class="news-visual" aria-hidden="true">
+    <svg viewBox="0 0 320 120" preserveAspectRatio="xMidYMid slice" focusable="false">
+      <rect width="320" height="120" fill="currentColor" />
+      <g fill="none" stroke="#fff" stroke-opacity="0.18">
+        <circle cx="260" cy="60" r="90" /><circle cx="260" cy="60" r="60" /><circle cx="260" cy="60" r="30" />
+      </g>
+    </svg>
+    <span class="news-cat">{categoryLabel(article.data.category, lang)}</span>
+  </div>
+  <p class="news-date"><time datetime={article.data.date.toISOString().slice(0, 10)}>{formatDate(article.data.date, lang)}</time></p>
+  <div class="news-body">
+    {article.data.draft && <p class="draft-badge">{t.draftBadge}</p>}
+    <Heading id={id}><a href={href}>{article.data.title}</a></Heading>
+    <p>{article.data.description}</p>
+  </div>
+  <span class="btn btn--block news-more" aria-hidden="true">{t.readMore}</span>
+</article>
+
+<style>
+  .news-card { position: relative; display: flex; flex-direction: column; height: 100%; background: var(--white); border: 1px solid var(--grey-200); }
+  .news-card:hover { box-shadow: var(--shadow); }
+  .news-card:focus-within { outline: 3px solid var(--blue-700); outline-offset: 2px; }
+  .news-visual { position: relative; color: var(--navy-900); aspect-ratio: 8 / 3; overflow: hidden; }
+  .news-visual svg { width: 100%; height: 100%; }
+  :global([dir='rtl']) .news-visual svg { transform: scaleX(-1); }
+  .news-cat { position: absolute; inset-inline-start: var(--space-2); bottom: var(--space-2); padding: 0.25rem 0.625rem; background: var(--ochre-500); color: var(--navy-900); font-size: 0.8125rem; font-weight: 700; }
+  .news-date { margin: 0; padding: 0.5rem var(--space-3); background: var(--charcoal); color: var(--white); font-size: var(--fs-small); font-weight: 500; }
+  .news-body { flex-grow: 1; padding: var(--space-3); }
+  .news-body :is(h2, h3) { font-size: 1.25rem; }
+  .news-body a { color: var(--navy-900); text-decoration: none; }
+  .news-body a::after { content: ''; position: absolute; inset: 0; }
+  .news-body a:focus-visible { outline: none; box-shadow: none; }
+  .news-body p:last-child { margin: 0; color: var(--grey-600); font-size: 1rem; }
+  .news-more { border-radius: 0; }
+  .draft-badge { display: inline-block; margin-bottom: var(--space-1); padding: 0.125rem 0.5rem; border: 2px dashed var(--ochre-700); color: var(--ochre-700); font-size: 0.8125rem; font-weight: 700; }
+</style>

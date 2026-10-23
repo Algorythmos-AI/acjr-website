@@ -7,11 +7,20 @@ import type { Lang, PageKey } from '../i18n/routes';
 interface Props {
   lang: Lang;
   pageKey: PageKey;
+  /** Overrides for pages below a section page, e.g. a news article. */
+  title?: string;
+  lead?: string;
+  /** When set, the section page becomes a link and this is the current crumb. */
+  currentCrumb?: string;
 }
 
-const { lang, pageKey } = Astro.props;
+const { lang, pageKey, title, lead, currentCrumb } = Astro.props;
 const meta = content[lang].meta[pageKey];
-const trail = breadcrumbs(lang, pageKey);
+const trail = breadcrumbs(lang, pageKey).map((c) => ({ ...c, current: false }));
+if (currentCrumb) trail.push({ key: pageKey, label: currentCrumb, href: '', current: true });
+else trail[trail.length - 1]!.current = true;
+const heading = title ?? meta.title;
+const leadText = lead ?? meta.lead;
 ---
 
 <div class="page-header on-dark">
@@ -19,8 +28,8 @@ const trail = breadcrumbs(lang, pageKey);
     <nav class="breadcrumbs" aria-label={ui[lang].breadcrumb}>
       <ol>
         {
-          trail.map((crumb, i) =>
-            i === trail.length - 1 ? (
+          trail.map((crumb) =>
+            crumb.current ? (
               <li aria-current="page">{crumb.label}</li>
             ) : (
               <li>
@@ -31,9 +40,10 @@ const trail = breadcrumbs(lang, pageKey);
         }
       </ol>
     </nav>
-    <h1>{meta.title}</h1>
+    <h1 class:list={{ long: heading.length > 60 }}>{heading}</h1>
     <hr class="rule-ochre" />
-    {meta.lead && <p class="page-lead">{meta.lead}</p>}
+    {leadText && <p class="page-lead">{leadText}</p>}
+    <slot />
   </div>
 </div>
 
@@ -51,6 +61,7 @@ const trail = breadcrumbs(lang, pageKey);
       var(--navy-900);
   }
   .page-header h1 { color: var(--white); margin-top: var(--space-4); max-width: 22ch; }
+  .page-header h1.long { font-size: var(--fs-h2); max-width: 32ch; }
   .page-header .rule-ochre { margin-bottom: var(--space-2); }
   .page-lead { font-size: var(--fs-lead); max-width: 46rem; margin: 0; color: rgb(255 255 255 / 0.9); }
   .breadcrumbs ol {
