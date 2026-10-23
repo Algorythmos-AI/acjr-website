@@ -25,7 +25,7 @@ test.describe('news templates (drafts build)', () => {
   test('cards link to articles, which are marked as drafts and noindex', async ({ page }) => {
     await page.goto(DRAFTS + '/en/news/');
     await expect(page.locator('.news-card')).toHaveCount(2);
-    await page.locator('.news-card a').first().click();
+    await page.locator('.news-card a[href$="/en/news/new-statutes/"]').click();
     await expect(page).toHaveURL(/\/en\/news\/new-statutes\/$/);
     await expect(page.locator('h1')).toContainText('new statutes');
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');

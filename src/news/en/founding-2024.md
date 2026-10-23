@@ -1,14 +1,14 @@
 ---
-title: 'Paris, April 2024: « Paix et la Transition Démocratique » is founded'
+title: 'Paris, April 2024: “Paix et la Transition Démocratique” is founded'
 description: A look back at the founding in Paris, on 25 April 2024, of the association that has since become the African Center for Justice Rights.
-date: 2024-04-25
+date: 2026-10-23
 translationKey: founding
 category: association
 draft: true
 ---
 
-On 25 April 2024, the association « Paix et la Transition Démocratique » was constituted in Paris under the French law of 1 July 1901.
+On 25 April 2024, the association “Paix et la Transition Démocratique” was constituted in Paris under the French law of 1 July 1901.
 
 Its three founding members, signatories of the founding act, are ABDELRAHIM GREIN Sadam, MAHMUD MOHAMED Hruia and EL TAHER AISSA Issam.
 
-In September 2026 the association adopted new statutes and the name African Center for Justice Rights (ACJR), as its legal continuation. Transitional justice remains one of its six strategic objectives.
+In September 2026 the association adopted new statutes and the name African Center for Justice Rights (ACJR), as its legal continuation. Transitional justice is one of its six strategic objectives.

@@ -105,7 +105,7 @@ export const fr: Content = {
     // Art. 5 — vision
     heroTitle: 'Pour une Afrique où la justice, l’État de droit et la dignité humaine sont effectivement protégés',
     heroLead:
-      'Nous documentons les violations graves des droits humains, accompagnons les victimes et portons leur voix devant les instances nationales, africaines et internationales.',
+      'Notre mission : documenter les violations graves des droits humains, soutenir les victimes et porter les faits documentés devant les juridictions et mécanismes africains et internationaux compétents.',
     ctaPrimary: 'Découvrir nos actions',
     ctaSecondary: 'Qui sommes-nous',
     missionEyebrow: 'Notre mission',
@@ -117,12 +117,12 @@ export const fr: Content = {
     objectivesTitle: 'Nos domaines d’action',
     objectivesLead: 'Six objectifs, inscrits à l’article 6 de nos statuts, structurent notre travail.',
     howTitle: 'Notre méthode',
-    howLead: 'Du terrain jusqu’aux instances internationales, une chaîne de travail rigoureuse.',
+    howLead: 'De l’établissement des faits jusqu’aux instances internationales : une méthode rigoureuse.',
     how: [
-      { title: 'Documenter', text: 'Recueillir et préserver les témoignages et les preuves selon les standards internationaux.' },
+      { title: 'Documenter', text: 'Suivre et documenter les violations selon des méthodes vérifiables et les standards internationaux.' },
       { title: 'Analyser', text: 'Qualifier juridiquement les faits au regard du droit international et régional.' },
       { title: 'Plaider', text: 'Porter les faits devant les mécanismes onusiens, africains et les juridictions compétentes.' },
-      { title: 'Accompagner', text: 'Soutenir les victimes, les témoins et les défenseurs des droits humains, en sécurité.' },
+      { title: 'Accompagner', text: 'Soutenir les victimes, les témoins et les défenseurs des droits humains, en plaçant leur sécurité au premier plan.' },
     ],
     principlesTitle: 'Des principes non négociables',
     principlesLead: 'Indépendance, universalité des droits, impartialité, non-discrimination et approche centrée sur les victimes.',
@@ -140,7 +140,7 @@ export const fr: Content = {
     {
       id: 'documentation',
       title: 'Suivi et documentation des violations',
-      short: 'Suivre et documenter les violations graves, selon les Protocoles d’Istanbul et du Minnesota.',
+      short: 'Suivre et documenter les violations graves, et promouvoir les Protocoles d’Istanbul et du Minnesota.',
       body: [
         "Une justice crédible commence par des faits établis. L'ACJR suit et documente les violations graves des droits humains, en s’appuyant sur des méthodes vérifiables et des éléments probants.",
         "Elle promeut l’utilisation de protocoles d’enquête internationalement reconnus, notamment le Protocole d’Istanbul (documentation de la torture) et le Protocole du Minnesota (enquêtes sur les décès potentiellement illicites).",
@@ -180,10 +180,10 @@ export const fr: Content = {
     {
       id: 'defenders',
       title: 'Protection des défenseurs des droits humains',
-      short: 'Protection juridique et plaidoyer pour les défenseurs, avocats, journalistes et lanceurs d’alerte.',
+      short: 'Protection juridique et plaidoyer pour les défenseurs, avocats, journalistes et personnes signalant des violations.',
       body: [
         "Les défenseurs des droits humains, les avocats, les journalistes et les personnes qui signalent des violations sont souvent exposés à des risques en raison de leur engagement.",
-        "L'ACJR contribue à leur protection juridique et mène un plaidoyer en leur faveur, en s’appuyant notamment sur la Déclaration sur les défenseurs des droits de l’homme.",
+        "L'ACJR contribue à leur protection juridique et mène un plaidoyer en leur faveur, en s’appuyant notamment sur la Déclaration des Nations Unies sur les défenseurs des droits de l’homme.",
       ],
       points: [
         'Protection juridique',
@@ -217,7 +217,7 @@ export const fr: Content = {
       ],
       points: [
         'Recherches et études',
-        'Analyses diffusées',
+        'Diffusion des analyses',
         'Formation des acteurs des droits humains',
         'Aux niveaux national et régional',
       ],
@@ -289,11 +289,11 @@ export const fr: Content = {
       { name: 'Pacte international relatif aux droits civils et politiques', year: '1966', note: 'Droit à la vie, interdiction de la torture, procès équitable, libertés fondamentales.', url: 'https://www.ohchr.org/fr/instruments-mechanisms/instruments/international-covenant-civil-and-political-rights' },
       { name: 'Pacte international relatif aux droits économiques, sociaux et culturels', year: '1966', note: 'Droits au travail, à la santé, à l’éducation, à un niveau de vie suffisant.', url: 'https://www.ohchr.org/fr/instruments-mechanisms/instruments/international-covenant-economic-social-and-cultural-rights' },
       { name: 'Charte africaine des droits de l’homme et des peuples', year: '1981', note: 'Socle du système africain de protection des droits humains.', url: 'https://achpr.au.int/en/charter/african-charter-human-and-peoples-rights' },
-      { name: 'Conventions de Genève du 12 août 1949 et Protocoles additionnels', year: '1949 · 1977', note: 'Protection des personnes en temps de conflit armé.', url: 'https://ihl-databases.icrc.org/fr/ihl-treaties' },
+      { name: 'Conventions de Genève du 12 août 1949 et Protocoles additionnels', year: '1949 · 1977 · 2005', note: 'Protection des personnes en temps de conflit armé.', url: 'https://ihl-databases.icrc.org/fr/ihl-treaties' },
       { name: 'Statut de Rome de la Cour pénale internationale', year: '1998', note: 'Génocide, crimes contre l’humanité, crimes de guerre, crime d’agression.', url: 'https://www.icc-cpi.int/fr/publications/textes-juridiques-fondamentaux' },
       { name: 'Convention contre la torture', year: '1984', note: 'Interdiction absolue de la torture et des traitements cruels, inhumains ou dégradants.', url: 'https://www.ohchr.org/fr/instruments-mechanisms/instruments/convention-against-torture-and-other-cruel-inhuman-or-degrading' },
       { name: 'Convention internationale pour la protection de toutes les personnes contre les disparitions forcées', year: '2006', note: 'Interdiction des disparitions forcées et droit à la vérité.', url: 'https://www.ohchr.org/fr/instruments-mechanisms/instruments/international-convention-protection-all-persons-enforced' },
-      { name: 'Déclaration sur les défenseurs des droits de l’homme', year: '1998', note: 'Droit de promouvoir et de protéger les droits humains.', url: 'https://www.ohchr.org/fr/instruments-mechanisms/instruments/declaration-right-and-responsibility-individuals-groups-and' },
+      { name: 'Déclaration des Nations Unies sur les défenseurs des droits de l’homme', year: '1998', note: 'Droit de promouvoir et de protéger les droits humains.', url: 'https://www.ohchr.org/fr/instruments-mechanisms/instruments/declaration-right-and-responsibility-individuals-groups-and' },
     ],
     lawTitle: 'Notre statut en droit français',
     law: [
@@ -348,7 +348,7 @@ export const fr: Content = {
   // Art. 11–15 — governance
   governance: {
     intro: [
-      'L’ACJR est administrée de manière démocratique. Ses organes et leurs pouvoirs sont définis par les statuts adoptés le 17 septembre 2026 ; un règlement intérieur, préparé par le conseil d’administration et approuvé par l’assemblée générale, en précise les modalités.',
+      'L’ACJR est administrée de manière démocratique. Ses organes et leurs pouvoirs sont définis par les statuts adoptés le 17 septembre 2026 ; un règlement intérieur, préparé par le conseil d’administration et soumis à l’approbation de l’assemblée générale, en précise les modalités.',
     ],
     bureauTitle: 'Le Bureau exécutif',
     bureauLead: 'À la date d’adoption des statuts, la continuité des fonctions est assurée par les trois membres fondateurs :',
@@ -362,23 +362,23 @@ export const fr: Content = {
     bodies: [
       {
         title: 'Assemblée générale ordinaire',
-        text: 'Elle réunit les membres disposant du droit de vote. Elle approuve les rapports d’activité et financier et le budget, élit le conseil d’administration, fixe les cotisations et approuve le règlement intérieur.',
-        facts: ['Au moins une fois par an', 'Convocation 21 jours à l’avance', 'Majorité simple'],
+        text: 'Elle réunit les membres disposant du droit de vote et à jour de leurs obligations associatives. Elle approuve les rapports d’activité et financier et le budget, élit le conseil d’administration, fixe les cotisations et approuve le règlement intérieur.',
+        facts: ['Au moins une fois par an', 'Convocation 21 jours à l’avance, sauf urgence motivée', 'Majorité simple'],
       },
       {
         title: 'Assemblée générale extraordinaire',
         text: 'Seule compétente pour modifier les statuts ou prononcer la dissolution de l’association.',
-        facts: ['Quorum : deux tiers des membres votants', 'Majorité des deux tiers', 'Seconde assemblée sous 30 jours si le quorum manque'],
+        facts: ['Quorum : deux tiers des membres disposant du droit de vote', 'Majorité des deux tiers des suffrages exprimés', 'À défaut de quorum, seconde assemblée sous 30 jours, sans condition de quorum (sauf dissolution)'],
       },
       {
         title: 'Conseil d’administration',
         text: 'Il détermine les orientations de mise en œuvre des décisions de l’assemblée, supervise les politiques générales, arrête le projet de budget et veille à la bonne administration.',
-        facts: ['3 à 7 membres', 'Mandat de 3 ans, renouvelable', 'Se réunit au moins tous les six mois'],
+        facts: ['3 à 7 membres', 'Mandat de 3 ans, renouvelable', 'Se réunit au moins tous les six mois', 'Voix prépondérante du président en cas de partage'],
       },
       {
         title: 'Bureau exécutif',
         text: 'Élu par le conseil parmi ses membres, il comprend au minimum un président, un secrétaire général et un trésorier.',
-        facts: ['Vice-président possible', 'Le président représente l’association'],
+        facts: ['Vice-président élu le cas échéant', 'Le président représente l’association'],
       },
     ],
     volunteerTitle: 'Une direction bénévole',
@@ -434,13 +434,18 @@ export const fr: Content = {
       'Une comptabilité régulière est tenue. Le rapport financier est soumis chaque année à l’approbation de l’assemblée générale.',
       'Lorsque la loi, les seuils applicables, des engagements contractuels ou une décision de l’assemblée générale l’exigent, les comptes sont contrôlés ou certifiés par un professionnel habilité.',
     ],
+    dissolutionTitle: 'En cas de dissolution',
+    dissolution: [
+      'Seule une assemblée générale extraordinaire spécialement convoquée peut décider la dissolution, aux conditions de quorum et de majorité de l’article 12.',
+      'L’actif net ne peut être réparti entre les membres : il est dévolu à un organisme à but non lucratif poursuivant des objectifs compatibles (article 21).',
+    ],
     policiesTitle: 'Politiques internes',
-    policiesLead: 'Selon l’article 20 des statuts, l’association adopte des politiques internes relatives notamment aux domaines suivants :',
+    policiesLead: 'Selon l’article 20 des statuts, l’association adopte, en fonction de ses activités et de ses obligations, des politiques internes relatives notamment aux domaines suivants :',
     policies: [
       { title: 'Éthique et conduite', text: 'Règles de comportement attendues des membres, bénévoles et représentants.' },
       { title: 'Protection des enfants et des personnes vulnérables', text: 'Prévention des abus et de l’exploitation.' },
       { title: 'Conflits d’intérêts et corruption', text: 'Prévention des conflits d’intérêts et de la corruption.' },
-      { title: 'Protection des données et des sources', text: 'Confidentialité et sécurité des informations, des victimes, des témoins et des sources.' },
+      { title: 'Protection des données et des sources', text: 'Confidentialité et sécurité des informations relatives aux victimes, aux témoins et aux sources.' },
       { title: 'Égalité des chances et non-discrimination', text: 'Égalité des chances et prévention des discriminations.' },
     ],
   },
@@ -473,7 +478,7 @@ export const fr: Content = {
     ways: [
       { title: 'Bénévolat', text: 'Juristes, chercheurs, traducteurs, communicants : mettez vos compétences au service de la justice.', cta: 'Proposer mon aide' },
       { title: 'Partenariats', text: 'Organisations et institutions poursuivant des objectifs compatibles : construisons ensemble des alliances.', cta: 'Devenir partenaire' },
-      { title: 'Soutien', text: 'Dons et libéralités contribuent à notre indépendance. Contactez-nous pour connaître les modalités.', cta: 'Nous soutenir' },
+      { title: 'Soutien', text: 'Les dons et libéralités contribuent à notre indépendance. Contactez-nous pour connaître les modalités.', cta: 'Nous soutenir' },
     ],
     supportNote: 'Les modalités de don en ligne seront bientôt disponibles.',
   },
