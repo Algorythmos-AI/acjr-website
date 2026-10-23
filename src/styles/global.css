@@ -83,7 +83,7 @@ hr { border: 0; border-top: 1px solid var(--grey-200); margin: var(--space-4) 0;
 .notice { display: flex; gap: var(--space-2); padding: var(--space-3); background: var(--blue-50); border-inline-start: 4px solid var(--blue-700); }
 .notice > .icon { flex-shrink: 0; align-self: flex-start; color: var(--blue-700); margin-top: 0.2em; }
 .notice p:last-child { margin-bottom: 0; }
-.notice--warn { background: #fdf6e9; border-inline-start-color: var(--ochre-700); }
+.notice--warn { background: var(--ochre-50); border-inline-start-color: var(--ochre-700); }
 .notice--warn > .icon { color: var(--ochre-700); }
 .checklist { list-style: none; padding: 0; }
 .checklist li { position: relative; padding-inline-start: 1.75rem; }

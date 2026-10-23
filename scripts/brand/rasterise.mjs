@@ -1,6 +1,6 @@
 // Rasterises the brand SVGs with Playwright's Chromium.
 //   node scripts/brand/rasterise.mjs          -> favicon.ico, apple-touch-icon.png, og-image-*.png
-//   node scripts/brand/rasterise.mjs --check  -> also writes QA PNGs (16/32/400px) to /tmp/claude-0/logo-check
+//   node scripts/brand/rasterise.mjs --check  -> also writes QA PNGs (16/32/400px) to $LOGO_CHECK_DIR (default /tmp/logo-check)
 import { chromium } from '@playwright/test';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const BRAND = join(ROOT, 'public', 'brand');
 const PUB = join(ROOT, 'public');
-const CHECK = '/tmp/claude-0/logo-check';
+const CHECK = process.env.LOGO_CHECK_DIR || '/tmp/logo-check';
 const check = process.argv.includes('--check');
 
 const dataUri = (file) =>
@@ -26,7 +26,8 @@ function findChrome() {
   }
   return undefined;
 }
-const browser = await chromium.launch({ executablePath: findChrome() });
+// PW_CHROMIUM (as in playwright.config.ts) lets a locally installed Chrome be used instead.
+const browser = await chromium.launch({ executablePath: process.env.PW_CHROMIUM || findChrome() });
 const page = await browser.newPage();
 
 async function render(html, w, h, out, transparent = true) {

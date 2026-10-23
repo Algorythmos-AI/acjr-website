@@ -185,3 +185,15 @@ test('French pages use non-breaking spaces before double punctuation', async ({ 
     expect(text, path).not.toMatch(/\w'\w/);
   }
 });
+
+test('every language uses an ACJR lockup whose name is legible in the header', async ({ page }) => {
+  for (const lang of languages) {
+    await page.goto(`/${lang}/`);
+    const logo = page.locator('.brand img');
+    await expect(logo).toHaveAttribute('src', `/brand/lockup-${lang}.svg`);
+    const svg = await (await page.request.get(`/brand/lockup-${lang}.svg`)).text();
+    if (lang !== 'ar') expect(svg).toMatch(/<title[^>]*>ACJR – /);
+    // The name occupies about a fifth of the lockup height, so ≥ 48 px keeps it at ≥ 9.6 px.
+    expect((await logo.boundingBox())!.height).toBeGreaterThanOrEqual(48);
+  }
+});

@@ -8,6 +8,7 @@ const tokens = Object.fromEntries([...css.matchAll(/--([\w-]+):\s*(#[0-9a-f]{6})
 const pairs = [
   ['ink', 'white', 4.5, 'body text'],
   ['ink', 'grey-50', 4.5, 'text on grey bands'],
+  ['ink', 'ochre-50', 4.5, 'text in warning notices'],
   ['grey-600', 'white', 4.5, 'meta text'],
   ['grey-600', 'grey-50', 4.5, 'meta text on grey'],
   ['blue-700', 'white', 4.5, 'links'],

@@ -17,7 +17,7 @@ export const fr: Content = {
     },
     about: {
       title: 'Qui sommes-nous',
-      description: "Histoire, vision et mission de l'African Center for Justice Rights (ACJR), en français CADJ, association loi 1901 basée à Paris.",
+      description: 'Histoire, vision et mission de l’African Center for Justice Rights (ACJR), association loi 1901 basée à Paris.',
       lead: 'Une association indépendante, fondée à Paris, au service de la justice et de la dignité humaine en Afrique.',
     },
     principles: {
