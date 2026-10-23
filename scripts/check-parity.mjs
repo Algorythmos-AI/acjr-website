@@ -46,8 +46,25 @@ for (const l of languages) {
   }
 }
 
+// News: each translationKey must exist in every language, so the language switcher never falls back silently.
+import { readdirSync, readFileSync } from 'node:fs';
+const newsKeys = {};
+for (const l of languages) {
+  const dir = new URL(`../src/news/${l}/`, import.meta.url);
+  let files = [];
+  try { files = readdirSync(dir).filter((f) => f.endsWith('.md')); } catch {}
+  for (const f of files) {
+    const key = readFileSync(new URL(f, dir), 'utf8').match(/^translationKey:\s*(\S+)/m)?.[1];
+    if (!key) errors.push(`news/${l}/${f}: no translationKey`);
+    else (newsKeys[key] ??= new Set()).add(l);
+  }
+}
+for (const [key, langs] of Object.entries(newsKeys)) {
+  for (const l of languages) if (!langs.has(l)) errors.push(`news "${key}" has no ${l} version`);
+}
+
 if (errors.length) {
   console.error(errors.map((e) => `✘ ${e}`).join('\n'));
   process.exit(1);
 }
-console.log(`✔ content parity OK across ${languages.join(', ')} (${shapes.fr.size} fields, ${pageKeys.length} pages)`);
+console.log(`✔ content parity OK across ${languages.join(', ')} (${shapes.fr.size} fields, ${pageKeys.length} pages, ${Object.keys(newsKeys).length} news items)`);

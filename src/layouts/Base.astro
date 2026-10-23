@@ -14,17 +14,21 @@ interface Props {
   title: string;
   description: string;
   noindex?: boolean;
+  /** Per-language URLs of this exact page, for pages outside the fixed page set (news articles, listing pages). */
+  altPaths?: Record<Lang, string> | undefined;
+  ogType?: 'website' | 'article';
 }
 
-const { lang, pageKey, title, description, noindex = false } = Astro.props;
+const { lang, pageKey, title, description, noindex = false, altPaths, ogType = 'website' } = Astro.props;
 const meta = langMeta[lang];
 const t = ui[lang];
 const siteUrl = Astro.site ?? new URL('https://acjr.vercel.app');
 const abs = (path: string) => new URL(path, siteUrl).href;
 
 const fullTitle = pageKey === 'home' ? `ACJR — ${title}` : `${title} | ACJR`;
-const canonical = pageKey ? abs(pagePath(lang, pageKey)) : undefined;
-const alternates = pageKey ? languages.map((l) => ({ hreflang: langMeta[l].hreflang, href: abs(pagePath(l, pageKey)) })) : [];
+const pathFor = (l: Lang) => altPaths?.[l] ?? (pageKey ? pagePath(l, pageKey) : undefined);
+const canonical = pageKey ? abs(pathFor(lang)!) : undefined;
+const alternates = pageKey ? languages.map((l) => ({ hreflang: langMeta[l].hreflang, href: abs(pathFor(l)!) })) : [];
 const ogImage = abs(`/brand/og-image-${lang}.png`);
 
 const jsonLd = {
@@ -51,13 +55,13 @@ const jsonLd = {
     {noindex && <meta name="robots" content="noindex" />}
     {canonical && <link rel="canonical" href={canonical} />}
     {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
-    {pageKey && <link rel="alternate" hreflang="x-default" href={abs(pagePath('fr', pageKey))} />}
+    {pageKey && <link rel="alternate" hreflang="x-default" href={abs(pathFor('fr')!)} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" content="#0b2545" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={site.legalName} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -71,7 +75,7 @@ const jsonLd = {
   </head>
   <body>
     <a class="skip-link" href="#main">{t.skip}</a>
-    <Header lang={lang} pageKey={pageKey} />
+    <Header lang={lang} pageKey={pageKey} altPaths={altPaths} />
     <main id="main" tabindex="-1">
       <slot />
     </main>

@@ -10,11 +10,12 @@
     "check:types": "astro check",
     "check:content": "node scripts/check-parity.mjs",
     "check:contrast": "node scripts/check-contrast.mjs",
-    "check:html": "html-validate \"dist/**/*.html\"",
+    "check:html": "html-validate \"dist/**/*.html\" \"dist-drafts/**/*.html\"",
     "check:leaks": "node scripts/check-leaks.mjs",
     "check:links": "linkinator dist --recurse --skip \"^https://\"",
     "test:e2e": "playwright test",
-    "check": "npm run check:types && npm run check:content && npm run check:contrast && npm run build && npm run check:leaks && npm run check:html && npm run check:links && npm run test:e2e"
+    "check": "npm run check:types && npm run check:content && npm run check:contrast && npm run build && npm run build:drafts && npm run check:leaks && npm run check:html && npm run check:links && npm run test:e2e",
+    "build:drafts": "SHOW_DRAFTS=1 astro build --outDir dist-drafts"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",

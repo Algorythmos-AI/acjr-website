@@ -2,15 +2,19 @@
 import Icon from '../components/Icon.astro';
 import ObjectiveTile from '../components/ObjectiveTile.astro';
 import FactStrip from '../components/FactStrip.astro';
+import NewsCard from '../components/NewsCard.astro';
+import type { Article } from '../lib/news';
 import { content } from '../content';
 import { pagePath, type Lang } from '../i18n/routes';
 import { ui } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
+  /** Most recent articles; the section is hidden while none are published. */
+  latest?: Article[];
 }
 
-const { lang } = Astro.props;
+const { lang, latest = [] } = Astro.props;
 const c = content[lang];
 const h = c.home;
 const t = ui[lang];
@@ -120,7 +124,27 @@ const t = ui[lang];
   </div>
 </section>
 
-<section class="section section--grey cta-band" aria-labelledby="involved-title">
+{
+  latest.length > 0 && (
+    <section class="section section--grey" aria-labelledby="latest-title">
+      <div class="container">
+        <div class="section-head news-head">
+          <h2 id="latest-title">{t.latestNews}</h2>
+          <a href={pagePath(lang, 'news')}>{t.allNews}</a>
+        </div>
+        <ul class="grid grid--3 plain-list">
+          {latest.map((a) => (
+            <li>
+              <NewsCard article={a} lang={lang} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<section class="section cta-band" aria-labelledby="involved-title">
   <div class="container cta-inner">
     <div>
       <h2 id="involved-title">{h.involvedTitle}</h2>
@@ -196,6 +220,8 @@ const t = ui[lang];
   }
   .principle-chips :global(.icon) { color: var(--ochre-500); flex-shrink: 0; }
 
+  .news-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--space-2); max-width: none; }
+  .cta-band { border-top: 1px solid var(--grey-200); }
   .cta-inner { display: grid; gap: var(--space-3); align-items: center; }
   @media (min-width: 1024px) {
     .cta-inner { grid-template-columns: 2fr 1fr; gap: var(--space-6); }

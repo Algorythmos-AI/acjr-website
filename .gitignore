@@ -9,3 +9,4 @@ playwright-report/
 .DS_Store
 # Source documents live outside this folder and must never be committed or published.
 *.pdf
+dist-drafts/

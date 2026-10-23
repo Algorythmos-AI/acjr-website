@@ -9,7 +9,11 @@ export default defineConfig({
   fullyParallel: true,
   reporter: [['list']],
   use: { baseURL: 'http://localhost:4321', launchOptions: executablePath ? { executablePath } : {} },
-  webServer: { command: 'npx astro preview --port 4321', url: 'http://localhost:4321/fr/', reuseExistingServer: true },
+  webServer: [
+    { command: 'node scripts/serve.mjs dist 4321', url: 'http://localhost:4321/fr/', reuseExistingServer: true },
+    // Drafts build (npm run build:drafts) to exercise the news templates with sample articles.
+    { command: 'node scripts/serve.mjs dist-drafts 4322', url: 'http://localhost:4322/fr/', reuseExistingServer: true },
+  ],
   projects: [
     { name: 'mobile', use: { ...devices['Desktop Chrome'], viewport: { width: 375, height: 800 } } },
     { name: 'tablet', use: { ...devices['Desktop Chrome'], viewport: { width: 768, height: 1000 } } },
