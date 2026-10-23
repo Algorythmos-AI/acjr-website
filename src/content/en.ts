@@ -1,6 +1,8 @@
 import type { Content } from './types';
 import { site, pendingText } from '../config/site.ts';
 
+/** True once ACJR can actually be reached (an email or a live form). */
+const canContact = Boolean(site.email || site.formEndpoint);
 const p = pendingText.en;
 
 /* English translation of fr.ts. English carries the organisation's legal reference name. */
@@ -9,7 +11,7 @@ export const en: Content = {
     home: {
       title: 'Justice and human rights in Africa',
       description:
-        'ACJR documents human-rights violations, supports victims and advocates for justice and accountability in Africa.',
+        'ACJR’s mission is to document human-rights violations, support victims and advocate for justice and accountability in Africa.',
       lead: '',
     },
     about: {
@@ -60,7 +62,9 @@ export const en: Content = {
     contact: {
       title: 'Contact',
       description: 'Contact ACJR, a Paris-based human-rights association. Safety advice for victims and witnesses.',
-      lead: 'Write to us. If you are a victim or a witness, please read our safety advice first.',
+      lead: canContact
+        ? 'Write to us. If you are a victim or a witness, please read our safety advice first.'
+        : 'Our contact details will be published very soon. If you are a victim or a witness, please read our safety advice first.',
     },
     legal: {
       title: 'Legal notice',
@@ -117,12 +121,12 @@ export const en: Content = {
     how: [
       { title: 'Document', text: 'Monitor and document violations using verifiable methods and international standards.' },
       { title: 'Analyse', text: 'Assess the facts under international and regional law.' },
-      { title: 'Advocate', text: 'Bring the facts before UN and African mechanisms and competent courts.' },
+      { title: 'Advocate', text: 'Where possible and in line with their rules, bring the facts before UN and African mechanisms and competent courts.' },
       { title: 'Support', text: 'Stand with victims, witnesses and human-rights defenders, putting their safety first.' },
     ],
     principlesTitle: 'Non-negotiable principles',
     principlesLead: 'Independence, universality of rights, impartiality, non-discrimination and a victim-centred approach.',
-    advocacyTitle: 'A voice before international mechanisms',
+    advocacyTitle: 'Seeking a voice before international mechanisms',
     advocacyText:
       'The Human Rights Council, the Universal Periodic Review, special procedures, treaty bodies and the African Commission on Human and Peoples’ Rights: where it is permitted to take part and in line with their rules, ACJR aims to take documented facts where they can make a difference.',
     involvedTitle: 'Get involved',
@@ -137,13 +141,13 @@ export const en: Content = {
       title: 'Monitoring and documenting violations',
       short: 'Monitor and document serious violations, and promote the Istanbul and Minnesota Protocols.',
       body: [
-        'Credible justice starts with established facts. ACJR monitors and documents serious human-rights violations, using verifiable methods and probative evidence.',
+        'Credible justice starts with established facts. ACJR aims to monitor and document serious human-rights violations, using verifiable methods and reliable evidence.',
         'It promotes internationally recognised investigation protocols, notably the Istanbul Protocol (documenting torture) and the Minnesota Protocol (investigating potentially unlawful deaths).',
       ],
       points: [
         'Monitoring situations and documenting serious violations',
         'Promoting the Istanbul and Minnesota Protocols',
-        'Verifiable methods and probative evidence',
+        'Verifiable methods and reliable evidence',
         'Safety, dignity and consent of victims and witnesses',
       ],
     },
@@ -152,7 +156,7 @@ export const en: Content = {
       title: 'Legal analysis and strategic litigation',
       short: 'Prepare analysis, case files and legal briefs in support of justice mechanisms.',
       body: [
-        'ACJR prepares analysis, documentary case files and legal briefs.',
+        'ACJR intends to prepare analysis, documentary case files and legal briefs.',
         'In accordance with applicable law, this work supports justice mechanisms and strategic litigation before the competent courts.',
       ],
       points: ['Legal analysis', 'Documentary case files', 'Legal briefs', 'Support for justice mechanisms and strategic litigation'],
@@ -163,7 +167,7 @@ export const en: Content = {
       short: 'Support truth-seeking, accountability, reparation and institutional reform.',
       body: [
         'Societies emerging from conflict or crisis need truth, justice and lasting reform.',
-        'ACJR supports transitional-justice processes, in keeping with its origins: the association was founded as “Paix et la Transition Démocratique” (Peace and Democratic Transition).',
+        'ACJR intends to support transitional-justice processes, in keeping with its origins: the association was founded as “Paix et la Transition Démocratique” (Peace and Democratic Transition).',
       ],
       points: ['Truth-seeking', 'Accountability', 'Reparation', 'Institutional reform'],
     },
@@ -173,7 +177,7 @@ export const en: Content = {
       short: 'Legal protection and advocacy for defenders, lawyers, journalists and people who report violations.',
       body: [
         'Human-rights defenders, lawyers, journalists and people who report violations are often put at risk by their commitment.',
-        'ACJR contributes to their legal protection and advocates on their behalf, drawing in particular on the UN Declaration on Human Rights Defenders.',
+        'ACJR intends to contribute to their legal protection and to advocate on their behalf, drawing in particular on the UN Declaration on Human Rights Defenders.',
       ],
       points: ['Legal protection', 'Advocacy', 'Human-rights defenders, lawyers and journalists', 'People who report violations'],
     },
@@ -183,7 +187,7 @@ export const en: Content = {
       short: 'Defend women, children, refugees, displaced people and minorities.',
       body: [
         'Conflicts and crises hit the most vulnerable first.',
-        'ACJR defends the rights of vulnerable people and groups, in particular women exposed to gender-based violence, children affected by conflict, refugees, displaced people and minorities.',
+        'ACJR aims to defend the rights of vulnerable people and groups, in particular women exposed to gender-based violence, children affected by conflict, refugees, displaced people and minorities.',
       ],
       points: ['Women exposed to gender-based violence', 'Children affected by conflict', 'Refugees and displaced people', 'Minorities'],
     },
@@ -192,8 +196,8 @@ export const en: Content = {
       title: 'Research and training',
       short: 'Produce and share research, and train human-rights actors.',
       body: [
-        'Defending human rights depends on knowledge. ACJR produces and disseminates research, studies and analysis.',
-        'It contributes to training human-rights actors at national and regional level.',
+        'Defending human rights depends on knowledge. ACJR intends to produce and disseminate research, studies and analysis.',
+        'It intends to contribute to training human-rights actors at national and regional level.',
       ],
       points: ['Research and studies', 'Disseminating analysis', 'Training for human-rights actors', 'At national and regional level'],
     },
@@ -229,7 +233,7 @@ export const en: Content = {
     items: [
       { title: 'Independence', text: 'ACJR works fully independently of governments, political parties, religious organisations and financial interests.' },
       { title: 'Universality and indivisibility of rights', text: 'All human rights are treated as interdependent and indivisible.' },
-      { title: 'Impartiality and documentary rigour', text: 'Monitoring, documentation and analysis rest on verifiable methods, probative evidence and respect for applicable standards.' },
+      { title: 'Impartiality and documentary rigour', text: 'Monitoring, documentation and analysis rest on verifiable methods, reliable evidence and respect for applicable standards.' },
       { title: 'Non-discrimination', text: 'ACJR acts for every person without distinction, in particular of origin, colour, sex, religion, political opinion, or national or social origin.' },
       { title: 'A victim-centred approach', text: 'The safety, dignity, consent, access to remedy and reparation of victims and witnesses are essential considerations.' },
     ],
@@ -303,12 +307,12 @@ export const en: Content = {
 
   governance: {
     intro: [
-      'ACJR is governed democratically. Its bodies and their powers are defined by the statutes adopted on 17 September 2026; internal rules, prepared by the Board and submitted to the General Assembly for approval, set out the details.',
+      'ACJR is governed democratically. Its bodies and their powers are defined by the statutes adopted on 17 September 2026; they provide for internal rules, prepared by the Board and submitted to the General Assembly for approval, to set out the details.',
     ],
     bureauTitle: 'The Executive Bureau',
     bureauLead: 'As at the adoption of the statutes, continuity in office is ensured by the three founding members:',
     bureau: [
-      { name: 'ABDELRAHIM GREIN Sadam', role: 'President', duty: 'Legally represents the association in all civil matters.' },
+      { name: 'ABDELRAHIM GREIN Sadam', role: 'President', duty: 'Legally represents the association in civil matters.' },
       { name: 'MAHMUD MOHAMED Hruia', role: 'Secretary-General', duty: 'Handles administration and coordination, and keeps the minutes.' },
       { name: 'EL TAHER AISSA Issam', role: 'Treasurer', duty: 'Oversees finances, the accounts and budget preparation.' },
     ],
@@ -363,7 +367,7 @@ export const en: Content = {
       { label: 'Legal name', value: 'African Center for Justice Rights (ACJR)' },
       { label: 'In French', value: 'Centre Africain pour les Droits de la Justice (CADJ)' },
       { label: 'Legal form', value: 'Association under the French law of 1 July 1901' },
-      { label: 'Seat', value: 'Paris, France' },
+      { label: 'Registered office', value: 'Paris, France' },
       { label: 'RNA number', value: 'W751274196' },
       { label: 'Founded', value: '25 April 2024' },
       { label: 'Current statutes', value: '17 September 2026' },
@@ -394,12 +398,12 @@ export const en: Content = {
       'Net assets may not be distributed among members: they pass to a non-profit body pursuing compatible goals (Article 21).',
     ],
     policiesTitle: 'Internal policies',
-    policiesLead: 'Under Article 20 of the statutes, the association adopts internal policies, according to its activities and obligations, covering in particular:',
+    policiesLead: 'Under Article 20 of the statutes, the association adopts, as its activities and obligations require, internal policies covering in particular:',
     policies: [
       { title: 'Ethics and conduct', text: 'Standards of behaviour expected of members, volunteers and representatives.' },
       { title: 'Protecting children and vulnerable people', text: 'Preventing abuse and exploitation.' },
       { title: 'Conflicts of interest and corruption', text: 'Preventing conflicts of interest and corruption.' },
-      { title: 'Protection of data and sources', text: 'Confidentiality and security of information, victims, witnesses and sources.' },
+      { title: 'Protection of data and sources', text: 'Confidentiality and security of information about victims, witnesses and sources.' },
       { title: 'Equal opportunity and non-discrimination', text: 'Equal opportunity and the prevention of discrimination.' },
     ],
   },
@@ -407,7 +411,7 @@ export const en: Content = {
   news: {
     emptyTitle: 'No news published yet',
     emptyText: 'Our first statements and publications will appear on this page soon.',
-    followText: 'To stay informed, write to us.',
+    followText: canContact ? 'To stay informed, write to us.' : 'Our contact details will be published on the Contact page shortly.',
   },
 
   involved: {
@@ -431,7 +435,7 @@ export const en: Content = {
     ways: [
       { title: 'Volunteer', text: 'Lawyers, researchers, translators, communicators: put your skills to work for justice.', cta: 'Offer my help' },
       { title: 'Partner', text: 'Organisations and institutions with compatible goals: let’s build alliances together.', cta: 'Become a partner' },
-      { title: 'Support', text: 'Donations and bequests help keep us independent. Contact us to find out how.', cta: 'Support us' },
+      { title: 'Support', text: `Donations help keep us independent. ${canContact ? 'Contact us to find out how.' : 'Details will be published shortly.'}`, cta: 'Support us' },
     ],
     supportNote: 'Online donations will be available soon.',
   },
@@ -441,14 +445,14 @@ export const en: Content = {
     safetyTitle: 'Victims and witnesses: your safety comes first',
     safety: [
       'This form is not a secure channel: it is not end-to-end encrypted, and messages pass through a US-based provider (Formspree).',
-      'Do not describe what you experienced or witnessed, give names, places or dates, or send evidence, photos or videos.',
-      'Use a device, connection and email account that only you control: our reply will arrive in that inbox. Use private browsing and clear your history if necessary.',
+      'Do not describe what you experienced or witnessed, give people’s names, places or dates, or send evidence, photos or videos. You may use a pseudonym in the Name field.',
+      'Use a device, connection and email account that only you control: our reply will arrive in that inbox. Use private browsing and clear your history if necessary. This advice also applies to messages sent by email.',
       'Simply tell us how and when you can be reached safely. We will try to contact you through a suitable channel, but cannot guarantee a response time.',
       'If you are in immediate danger, contact emergency services or a protection organisation you trust, if you can do so safely.',
     ],
     formTitle: 'Write to us',
     fields: {
-      name: 'Name',
+      name: 'Name or pseudonym',
       email: 'Email address',
       subject: 'Subject',
       message: 'Message',
@@ -469,13 +473,13 @@ export const en: Content = {
     failure: 'Your message could not be sent. Please try again later.',
     inactive: 'The contact form is not active yet, so no message can be sent for now. Our contact details will be published on this page very soon.',
     privacyLink: 'Read our privacy policy',
-    locationTitle: 'Seat',
+    locationTitle: 'Registered office',
     location: 'Paris, France',
     emailTitle: 'Email',
     emailPending: 'Address coming soon',
   },
 
-  // LCEN art. 6 III. Missing client details render as "to be published shortly".
+  // LCEN art. 1-1 I (formerly art. 6 III). Missing client details render as "to be published shortly".
   legal: {
     sections: [
       {
@@ -522,7 +526,7 @@ export const en: Content = {
         title: 'Hosting and connection data',
         body: [
           'The site is hosted by Vercel Inc. (USA). On every visit, Vercel processes technical connection data (IP address, date and time, page requested, browser type) to serve the pages and keep the service secure.',
-          'This processing is based on our legitimate interest in running a secure website (Article 6(1)(f) GDPR). Vercel keeps these logs for a limited period, as set out in its privacy policy.',
+          'This processing is based on our legitimate interest in running a secure website (Article 6(1)(f) GDPR). ACJR has no access to these logs and does not keep them; Vercel keeps them for the minimum period needed to secure and run the service, as set out in its privacy policy.',
         ],
       },
       {
@@ -530,12 +534,13 @@ export const en: Content = {
         body: [
           'When it is active, the contact form collects your name, email address, subject and message. This data is used solely to reply to you.',
           'The legal basis is your consent (Article 6(1)(a) GDPR), which you can withdraw at any time.',
+          'Providing this data is optional; without a name, email address and message we cannot reply. No automated decision-making takes place.',
         ],
       },
       {
         title: 'Sensitive data',
         body: [
-          'Do not include information about your health, origins, political or religious opinions, or violations you experienced or witnessed. If you do, you explicitly consent to its processing solely to reply to you (Article 9(2)(a) GDPR).',
+          'Do not include information about your health, origins, political or religious opinions, or violations you experienced or witnessed. If a message nevertheless contains such information, we will use it only to reply to and direct you, and will delete it as soon as possible.',
         ],
       },
       {

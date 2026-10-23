@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const FIXTURES = 'http://localhost:4323'; // 11 FR, 10 EN, 9 AR articles + 1 FR-only article
+const FIXTURES = 'http://localhost:4413'; // 11 FR, 10 EN, 9 AR articles + 1 FR-only article
 
 test.describe('news pagination and hreflang (fixtures build)', () => {
   test('only languages with enough articles get a second page', async ({ request }) => {

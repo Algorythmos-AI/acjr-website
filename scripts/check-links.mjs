@@ -5,6 +5,10 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { join, posix } from 'node:path';
 
 const builds = ['dist', 'dist-drafts', 'dist-fixtures'].filter((d) => existsSync(d));
+if (!existsSync('dist')) {
+  console.error('✘ dist/ not found: run the build first, from the project root');
+  process.exit(1);
+}
 // The canonical link of the home page gives the configured site origin.
 const origin = new URL(readFileSync('dist/fr/index.html', 'utf8').match(/<link rel="canonical" href="([^"]+)"/)[1]).origin;
 

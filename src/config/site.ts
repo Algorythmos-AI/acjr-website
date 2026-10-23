@@ -15,7 +15,7 @@ export const site = {
   statutesDate: '2026-09-17',
   city: 'Paris',
   country: 'France',
-  /** Publishable postal address (registered office or domiciliation), required by LCEN art. 6 III. */
+  /** Publishable postal address (registered office or domiciliation), required by LCEN art. 1-1 I (formerly art. 6 III). */
   postalAddress: null as string | null,
   email: null as string | null,
   phone: null as string | null,

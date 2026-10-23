@@ -7,7 +7,7 @@ category: association
 draft: true
 ---
 
-At an extraordinary general assembly on 17 September 2026, the association founded in Paris in April 2024 as “Paix et la Transition Démocratique” adopted new statutes. It is now the **African Center for Justice Rights (ACJR)**, the legal continuation of the original association: no new legal entity is created.
+At an extraordinary general assembly on 17 September 2026, the association founded in Paris in April 2024 as “Paix et la Transition Démocratique” adopted new statutes. It is now the **African Center for Justice Rights (ACJR)**, the legal continuation of the original association: no new legal entity was created.
 
 ## What the new statutes set out
 

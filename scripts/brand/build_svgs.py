@@ -346,7 +346,7 @@ def main():
         "fr": dict(acr="ACJR", lines=["Centre Africain pour les", "Droits de la Justice"],
                    title="ACJR – Centre Africain pour les Droits de la Justice"),
         "ar": dict(acr=None, lines=["المركز الافريقي", "للحقوق والعدالة"],
-                   title="المركز الافريقي للحقوق والعدالة"),
+                   title="المركز الافريقي للحقوق والعدالة – ACJR"),
     }
     gap = 26          # mark -> divider and divider -> text
     for lang, cfg in langs.items():
@@ -366,15 +366,20 @@ def main():
                 parts.insert(0, mark_body(blue_d, ochre_d, cm, cp))
                 divider_x = 200 + gap
             else:
-                size = 62
+                size = 54
+                acr_size = 38
                 # measure first, then right-align next to the divider on the right
                 _, w1 = NASKH_B.path(cfg["lines"][0], size, 0, 0, "rtl", "Arab", "ar")
                 _, w2 = NASKH_B.path(cfg["lines"][1], size, 0, 0, "rtl", "Arab", "ar")
-                tw = max(w1, w2)
+                _, w3 = ROBOTO_B.path("ACJR", acr_size, 0, 0, tracking=0.02)
+                tw = max(w1, w2, w3)
                 pad = 12
                 right = pad + tw
-                d1, _ = NASKH_B.path(cfg["lines"][0], size, right - w1, 88, "rtl", "Arab", "ar")
-                d2, _ = NASKH_B.path(cfg["lines"][1], size, right - w2, 168, "rtl", "Arab", "ar")
+                d1, _ = NASKH_B.path(cfg["lines"][0], size, right - w1, 66, "rtl", "Arab", "ar")
+                d2, _ = NASKH_B.path(cfg["lines"][1], size, right - w2, 132, "rtl", "Arab", "ar")
+                # ACJR, the legal reference name, under the Arabic name as in the other lockups.
+                d3, _ = ROBOTO_B.path("ACJR", acr_size, right - w3, 182, tracking=0.02)
+                d2 += d3
                 divider_x = right + gap
                 mark_x = divider_x + gap + 3 - 3
                 width = mark_x + 200

@@ -51,6 +51,8 @@ const number = String(index + 1).padStart(2, '0');
   .tile:focus-within { outline: 3px solid var(--blue-700); outline-offset: 2px; }
   .tile-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-2); color: var(--stripe); }
   .tile-number { font: 900 2rem/1 var(--font-serif); color: var(--stripe); }
+  /* The Arabic fonts already on the page have these digits, so no Latin font is fetched for them. */
+  :global(:lang(ar)) .tile-number { font-family: var(--font-ar-serif); font-weight: 700; }
   .tile h3 { font-size: 1.25rem; }
   .tile h3 a { color: var(--navy-900); text-decoration: none; }
   /* Whole tile is clickable through the heading link. */

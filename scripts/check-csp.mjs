@@ -7,6 +7,10 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const builds = ['dist', 'dist-drafts', 'dist-fixtures'].filter((d) => existsSync(d));
+if (!existsSync('dist')) {
+  console.error('✘ dist/ not found: run the build first, from the project root');
+  process.exit(1);
+}
 const hash = (text) => `'sha256-${createHash('sha256').update(text).digest('base64')}'`;
 const problems = [];
 let pages = 0;
@@ -40,6 +44,7 @@ function walk(dir) {
 }
 builds.forEach(walk);
 
+if (pages === 0) problems.push('no HTML pages found');
 if (problems.length) {
   console.error([...new Set(problems)].slice(0, 20).map((p) => `✘ ${p}`).join('\n'));
   process.exit(1);
