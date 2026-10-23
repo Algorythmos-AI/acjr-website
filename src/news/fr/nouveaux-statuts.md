@@ -7,7 +7,7 @@ category: association
 draft: true
 ---
 
-Réunie en assemblée générale extraordinaire le 17 septembre 2026, l’association fondée à Paris en avril 2024 sous le nom « Paix et la Transition Démocratique » a adopté de nouveaux statuts. Elle prend le nom d’**African Center for Justice Rights (ACJR)**, en français **Centre Africain pour les Droits de la Justice (CADJ)**, dont elle constitue la continuation juridique : aucune nouvelle personne morale n’est créée.
+Réunie en assemblée générale extraordinaire le 17 septembre 2026, l’association fondée à Paris en avril 2024 sous le nom « Paix et la Transition Démocratique » a adopté de nouveaux statuts. Elle prend le nom d’**African Center for Justice Rights (ACJR)**, en français **Centre Africain pour les Droits de la Justice (CADJ)**, et constitue la continuation juridique de l’association d’origine : aucune nouvelle personne morale n’a été créée.
 
 ## Ce que prévoient les nouveaux statuts
 

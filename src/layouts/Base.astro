@@ -38,7 +38,8 @@ const canonical = pageKey ? abs(pathFor(lang)!) : undefined;
 const hreflangFor = (l: Lang) => (hreflangPaths ? hreflangPaths[l] : pathFor(l));
 const translated = pageKey ? languages.filter((l) => hreflangFor(l)) : [];
 const alternates = translated.length > 1 ? translated.map((l) => ({ hreflang: langMeta[l].hreflang, href: abs(hreflangFor(l)!) })) : [];
-const xDefault = alternates.length ? (hreflangFor('fr') ?? hreflangFor(lang)) : undefined;
+// x-default is the first language (fr, en, ar) that has the page, so every page of a cluster agrees.
+const xDefault = alternates.length ? hreflangFor(translated[0]!) : undefined;
 const ogImage = abs(`/brand/og-image-${lang}.png`);
 
 const jsonLd = {

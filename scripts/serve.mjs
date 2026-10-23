@@ -13,7 +13,12 @@ const types = {
 };
 
 createServer(async (req, res) => {
-  const url = decodeURIComponent(new URL(req.url ?? '/', 'http://x').pathname);
+  let url;
+  try {
+    url = decodeURIComponent(new URL(req.url ?? '/', 'http://x').pathname);
+  } catch {
+    return res.writeHead(400).end('Bad request');
+  }
   let file = normalize(join(root, url));
   // Compare with a trailing separator so /..%2Fdist-drafts cannot reach a sibling folder.
   if (file !== root && !file.startsWith(root + sep)) return res.writeHead(403).end();

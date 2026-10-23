@@ -26,6 +26,7 @@ for (const url of urls) {
   const status = await probe(url);
   const line = `${status} ${url}`;
   if (typeof status === 'number' && status < 400) console.log(`✔ ${line}`);
+  else if ([404, 410].includes(status)) broken.push(line);
   else if ([401, 403, 429].includes(status) || botWalled.includes(new URL(url).host)) manual.push(line);
   else broken.push(line);
 }

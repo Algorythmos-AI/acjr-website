@@ -152,7 +152,7 @@ test('contact form validates and reports a successful send', async ({ page }) =>
     posted++;
     return route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
   });
-  await page.goto('http://localhost:4322/en/contact/');
+  await page.goto('http://localhost:4412/en/contact/');
   const send = page.getByRole('button', { name: 'Send message' });
   await send.click();
   const summary = page.locator('.error-summary');
@@ -176,13 +176,27 @@ test('root redirects to a language', async ({ page }) => {
   await expect(page).toHaveURL(/\/(fr|en|ar)\/$/);
 });
 
-test('French pages use non-breaking spaces before double punctuation', async ({ page }) => {
-  for (const path of ['/fr/gouvernance/', '/fr/contact/', '/fr/mentions-legales/']) {
+test('French typography on every French page, the root chooser and the 404', async ({ page }) => {
+  const paths = [...allPages.filter((p) => p.lang === 'fr').map((p) => p.path), '/', '/404.html'];
+  for (const path of paths) {
     await page.goto(path);
-    const text = await page.locator('main').innerText();
-    expect(text, path).not.toMatch(/\S [:;!?](\s|$)/);
-    expect(text, path).not.toMatch(/« | »/);
-    expect(text, path).not.toMatch(/\w'\w/);
+    // Visible French text only: skip elements marked as another language, and verbatim blocks.
+    const text = await page.evaluate(() => {
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      let out = '';
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+        const el = n.parentElement!;
+        if (el.closest('script, style, pre, code, textarea, [lang]:not([lang="fr"])')) continue;
+        out += n.textContent + '\n';
+      }
+      return out;
+    });
+    const description = (await page.locator('meta[name="description"]').getAttribute('content')) ?? '';
+    for (const [label, value] of [['text', text], ['meta description', description]] as const) {
+      expect(value, `${path} ${label}: plain space before : ; ! ?`).not.toMatch(/[^\s\u00a0\u202f] +[:;!?](\s|$)/);
+      expect(value, `${path} ${label}: plain space inside « »`).not.toMatch(/« | »/);
+      expect(value, `${path} ${label}: straight apostrophe`).not.toMatch(/\p{L}'\p{L}/u);
+    }
   }
 });
 
@@ -192,7 +206,7 @@ test('every language uses an ACJR lockup whose name is legible in the header', a
     const logo = page.locator('.brand img');
     await expect(logo).toHaveAttribute('src', `/brand/lockup-${lang}.svg`);
     const svg = await (await page.request.get(`/brand/lockup-${lang}.svg`)).text();
-    if (lang !== 'ar') expect(svg).toMatch(/<title[^>]*>ACJR – /);
+    expect(svg).toMatch(lang === 'ar' ? /<title[^>]*>[^<]*– ACJR</ : /<title[^>]*>ACJR – /);
     // The name occupies about a fifth of the lockup height, so ≥ 48 px keeps it at ≥ 9.6 px.
     expect((await logo.boundingBox())!.height).toBeGreaterThanOrEqual(48);
   }

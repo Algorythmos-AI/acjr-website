@@ -1,6 +1,8 @@
 import type { Content } from './types';
 import { site, pendingText } from '../config/site.ts';
 
+/** True once ACJR can actually be reached (an email or a live form). */
+const canContact = Boolean(site.email || site.formEndpoint);
 const p = pendingText.fr;
 
 /*
@@ -12,7 +14,7 @@ export const fr: Content = {
     home: {
       title: 'Justice et droits humains en Afrique',
       description:
-        "L'ACJR documente les violations des droits humains, soutient les victimes et plaide pour la justice et la redevabilité en Afrique.",
+        'L’ACJR a pour mission de documenter les violations des droits humains, de soutenir les victimes et de plaider pour la justice et la redevabilité en Afrique.',
       lead: '',
     },
     about: {
@@ -63,7 +65,9 @@ export const fr: Content = {
     contact: {
       title: 'Contact',
       description: "Contacter l'ACJR, association de défense des droits humains basée à Paris. Conseils de sécurité pour les victimes et témoins.",
-      lead: 'Écrivez-nous. Si vous êtes victime ou témoin, lisez d’abord nos conseils de sécurité.',
+      lead: canContact
+        ? 'Écrivez-nous. Si vous êtes victime ou témoin, lisez d’abord nos conseils de sécurité.'
+        : 'Nos coordonnées seront publiées très prochainement. Si vous êtes victime ou témoin, lisez d’abord nos conseils de sécurité.',
     },
     legal: {
       title: 'Mentions légales',
@@ -121,7 +125,7 @@ export const fr: Content = {
     how: [
       { title: 'Documenter', text: 'Suivre et documenter les violations selon des méthodes vérifiables et les standards internationaux.' },
       { title: 'Analyser', text: 'Qualifier juridiquement les faits au regard du droit international et régional.' },
-      { title: 'Plaider', text: 'Porter les faits devant les mécanismes onusiens, africains et les juridictions compétentes.' },
+      { title: 'Plaider', text: 'Porter les faits, lorsque c’est possible et selon leurs règles, devant les mécanismes onusiens et africains et les juridictions compétentes.' },
       { title: 'Accompagner', text: 'Soutenir les victimes, les témoins et les défenseurs des droits humains, en plaçant leur sécurité au premier plan.' },
     ],
     principlesTitle: 'Des principes non négociables',
@@ -142,7 +146,7 @@ export const fr: Content = {
       title: 'Suivi et documentation des violations',
       short: 'Suivre et documenter les violations graves, et promouvoir les Protocoles d’Istanbul et du Minnesota.',
       body: [
-        "Une justice crédible commence par des faits établis. L'ACJR suit et documente les violations graves des droits humains, en s’appuyant sur des méthodes vérifiables et des éléments probants.",
+        "Une justice crédible commence par des faits établis. L’ACJR a pour objectif de suivre et de documenter les violations graves des droits humains, en s’appuyant sur des méthodes vérifiables et des éléments probants.",
         "Elle promeut l’utilisation de protocoles d’enquête internationalement reconnus, notamment le Protocole d’Istanbul (documentation de la torture) et le Protocole du Minnesota (enquêtes sur les décès potentiellement illicites).",
       ],
       points: [
@@ -157,7 +161,7 @@ export const fr: Content = {
       title: 'Analyse juridique et contentieux stratégique',
       short: 'Préparer analyses, dossiers et mémoires juridiques à l’appui des mécanismes de justice.',
       body: [
-        "L'ACJR prépare des analyses, des dossiers documentaires et des mémoires juridiques.",
+        'L’ACJR entend préparer des analyses, des dossiers documentaires et des mémoires juridiques.',
         "Dans le respect du droit applicable, ces travaux sont destinés à soutenir les mécanismes de justice et les contentieux stratégiques devant les juridictions compétentes.",
       ],
       points: [
@@ -173,7 +177,7 @@ export const fr: Content = {
       short: 'Soutenir la recherche de la vérité, la responsabilité, la réparation et la réforme institutionnelle.',
       body: [
         "Les sociétés qui sortent d’un conflit ou d’une crise ont besoin de vérité, de justice et de réformes durables.",
-        "L'ACJR soutient les processus de justice transitionnelle, dans la continuité de ses origines : l’association a été fondée sous le nom « Paix et la Transition Démocratique ».",
+        "L’ACJR entend soutenir les processus de justice transitionnelle, dans la continuité de ses origines : l’association a été fondée sous le nom « Paix et la Transition Démocratique ».",
       ],
       points: ['Recherche de la vérité', 'Responsabilité', 'Réparation', 'Réforme institutionnelle'],
     },
@@ -183,7 +187,7 @@ export const fr: Content = {
       short: 'Protection juridique et plaidoyer pour les défenseurs, avocats, journalistes et personnes signalant des violations.',
       body: [
         "Les défenseurs des droits humains, les avocats, les journalistes et les personnes qui signalent des violations sont souvent exposés à des risques en raison de leur engagement.",
-        "L'ACJR contribue à leur protection juridique et mène un plaidoyer en leur faveur, en s’appuyant notamment sur la Déclaration des Nations Unies sur les défenseurs des droits de l’homme.",
+        "L’ACJR entend contribuer à leur protection juridique et mener un plaidoyer en leur faveur, en s’appuyant notamment sur la Déclaration des Nations Unies sur les défenseurs des droits de l’homme.",
       ],
       points: [
         'Protection juridique',
@@ -198,7 +202,7 @@ export const fr: Content = {
       short: 'Défendre les femmes, les enfants, les réfugiés, les personnes déplacées et les minorités.',
       body: [
         "Les conflits et les crises frappent d’abord les plus vulnérables.",
-        "L'ACJR défend les droits des personnes et groupes vulnérables, notamment les femmes exposées aux violences fondées sur le genre, les enfants touchés par les conflits, les réfugiés, les personnes déplacées et les minorités.",
+        "L’ACJR a pour objectif de défendre les droits des personnes et groupes vulnérables, notamment les femmes exposées aux violences fondées sur le genre, les enfants touchés par les conflits, les réfugiés, les personnes déplacées et les minorités.",
       ],
       points: [
         'Femmes exposées aux violences fondées sur le genre',
@@ -212,8 +216,8 @@ export const fr: Content = {
       title: 'Recherche et formation',
       short: 'Produire et diffuser des recherches et former les acteurs des droits humains.',
       body: [
-        "La défense des droits humains repose sur la connaissance. L'ACJR produit et diffuse des recherches, des études et des analyses.",
-        "Elle contribue à la formation des acteurs des droits humains aux niveaux national et régional.",
+        "La défense des droits humains repose sur la connaissance. L’ACJR entend produire et diffuser des recherches, des études et des analyses.",
+        'Elle entend contribuer à la formation des acteurs des droits humains aux niveaux national et régional.',
       ],
       points: [
         'Recherches et études',
@@ -348,7 +352,7 @@ export const fr: Content = {
   // Art. 11–15 — governance
   governance: {
     intro: [
-      'L’ACJR est administrée de manière démocratique. Ses organes et leurs pouvoirs sont définis par les statuts adoptés le 17 septembre 2026 ; un règlement intérieur, préparé par le conseil d’administration et soumis à l’approbation de l’assemblée générale, en précise les modalités.',
+      'L’ACJR est administrée de manière démocratique. Ses organes et leurs pouvoirs sont définis par les statuts adoptés le 17 septembre 2026  ; ils prévoient un règlement intérieur, préparé par le conseil d’administration et soumis à l’approbation de l’assemblée générale, pour en préciser les modalités.',
     ],
     bureauTitle: 'Le Bureau exécutif',
     bureauLead: 'À la date d’adoption des statuts, la continuité des fonctions est assurée par les trois membres fondateurs :',
@@ -453,7 +457,7 @@ export const fr: Content = {
   news: {
     emptyTitle: 'Aucune actualité publiée pour le moment',
     emptyText: 'Nos premières déclarations et publications paraîtront prochainement sur cette page.',
-    followText: 'Pour être informé, écrivez-nous.',
+    followText: canContact ? 'Pour être informé, écrivez-nous.' : 'Nos coordonnées seront publiées prochainement sur la page Contact.',
   },
 
   // Art. 9–10 — members
@@ -478,7 +482,7 @@ export const fr: Content = {
     ways: [
       { title: 'Bénévolat', text: 'Juristes, chercheurs, traducteurs, communicants : mettez vos compétences au service de la justice.', cta: 'Proposer mon aide' },
       { title: 'Partenariats', text: 'Organisations et institutions poursuivant des objectifs compatibles : construisons ensemble des alliances.', cta: 'Devenir partenaire' },
-      { title: 'Soutien', text: 'Les dons et libéralités contribuent à notre indépendance. Contactez-nous pour connaître les modalités.', cta: 'Nous soutenir' },
+      { title: 'Soutien', text: `Les dons contribuent à notre indépendance. ${canContact ? 'Contactez-nous pour connaître les modalités.' : 'Les modalités seront précisées prochainement.'}`, cta: 'Nous soutenir' },
     ],
     supportNote: 'Les modalités de don en ligne seront bientôt disponibles.',
   },
@@ -488,14 +492,14 @@ export const fr: Content = {
     safetyTitle: 'Victimes et témoins : votre sécurité d’abord',
     safety: [
       'Ce formulaire n’est pas un canal sécurisé : il n’est pas chiffré de bout en bout et les messages transitent par un prestataire établi aux États-Unis (Formspree).',
-      'N’y décrivez aucun fait subi ou observé, n’indiquez ni nom, ni lieu, ni date, et n’envoyez ni preuves, ni photos, ni vidéos.',
-      'Utilisez un appareil, une connexion et une adresse électronique que vous seul contrôlez : notre réponse arrivera dans cette boîte. Utilisez la navigation privée et effacez votre historique si nécessaire.',
+      'N’y décrivez aucun fait subi ou observé, n’indiquez ni nom de personne, ni lieu, ni date, et n’envoyez ni preuves, ni photos, ni vidéos. Vous pouvez utiliser un pseudonyme dans le champ « Nom ».',
+      'Utilisez un appareil, une connexion et une adresse électronique que vous seul contrôlez : notre réponse arrivera dans cette boîte. Utilisez la navigation privée et effacez votre historique si nécessaire. Ces conseils valent aussi pour les messages envoyés par courriel.',
       'Indiquez simplement comment et quand vous joindre en sécurité ; nous chercherons à vous recontacter par un canal adapté, sans pouvoir garantir de délai.',
       'En cas de danger immédiat, contactez, si vous pouvez le faire sans risque, les services d’urgence ou une organisation de protection de confiance.',
     ],
     formTitle: 'Écrivez-nous',
     fields: {
-      name: 'Nom',
+      name: 'Nom ou pseudonyme',
       email: 'Adresse électronique',
       subject: 'Objet',
       message: 'Message',
@@ -522,7 +526,7 @@ export const fr: Content = {
     emailPending: 'Adresse bientôt disponible',
   },
 
-  // LCEN art. 6 III. Missing client details render as "à communiquer prochainement".
+  // LCEN art. 1-1 I (formerly art. 6 III). Missing client details render as "à communiquer prochainement".
   legal: {
     sections: [
       {
@@ -572,7 +576,7 @@ export const fr: Content = {
         title: 'Hébergement et données de connexion',
         body: [
           'Le site est hébergé par Vercel Inc. (États-Unis). À chaque visite, Vercel traite des données techniques de connexion (adresse IP, date et heure, page demandée, type de navigateur) afin d’afficher les pages et d’assurer la sécurité du service.',
-          'Ce traitement repose sur notre intérêt légitime à exploiter un site sûr (article 6.1.f du RGPD). Ces journaux sont conservés par Vercel pour une durée limitée, selon sa politique de confidentialité.',
+          'Ce traitement repose sur notre intérêt légitime à exploiter un site sûr (article 6.1.f du RGPD). L’ACJR n’a pas accès à ces journaux et ne les conserve pas ; Vercel les conserve pendant la durée minimale nécessaire à la sécurité et au fonctionnement du service, selon sa politique de confidentialité.',
         ],
       },
       {
@@ -580,12 +584,13 @@ export const fr: Content = {
         body: [
           'Lorsqu’il est actif, le formulaire de contact recueille votre nom, votre adresse électronique, l’objet et le message. Ces données servent uniquement à vous répondre.',
           'Le fondement juridique est votre consentement (article 6.1.a du RGPD), que vous pouvez retirer à tout moment.',
+          'La fourniture de ces données est facultative ; sans nom, adresse électronique et message, nous ne pouvons pas vous répondre. Aucune décision automatisée n’est prise.',
         ],
       },
       {
         title: 'Données sensibles',
         body: [
-          'N’indiquez aucune information sur votre santé, vos origines, vos opinions politiques ou religieuses, ni sur des violations subies ou observées. Si vous le faites, vous consentez explicitement à leur traitement aux seules fins de vous répondre (article 9.2.a du RGPD).',
+          'N’indiquez aucune information sur votre santé, vos origines, vos opinions politiques ou religieuses, ni sur des violations subies ou observées. Si un message en contient malgré tout, nous ne l’utiliserons que pour vous répondre et vous orienter, et nous supprimerons ces informations dès que possible.',
         ],
       },
       {

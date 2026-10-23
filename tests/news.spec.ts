@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-const DRAFTS = 'http://localhost:4322';
+const DRAFTS = 'http://localhost:4412';
 
 test.describe('news (production build)', () => {
   test('listing shows the empty state and the home page hides latest news', async ({ page }) => {

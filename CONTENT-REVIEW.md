@@ -28,9 +28,12 @@ The site copy was checked line by line against `docs/source/statuts-ACJR.md` (th
 - [x] **Names:** the Bureau is shown family name first, as in the statutes. The Arabic name is spelled المركز الافريقي للحقوق والعدالة, as confirmed.
 - [x] **Draft news:** facts only. The founders' invented "conviction" is removed. The claims about a "broader mission" are removed too, since the 2024 statutes aren't available to compare against.
 - [x] **Home page:** describes the statutory mission, not existing field work or evidence custody (« instances nationales » removed).
-- [x] **Preamble:** the Geneva Additional Protocols are dated 1977 · 2005; the full name of the UN Declaration on Human Rights Defenders is used.
+- [x] **Preamble:** the Geneva Additional Protocols are dated 1977 · 2005; the UN Declaration on Human Rights Defenders is named as in the statutes (« Déclaration des Nations Unies sur les défenseurs des droits de l’homme »), not by its full official title.
+- [x] **Objectives (Art. 6) and meta descriptions:** written as aims (« a pour objectif », « entend »), not as work already under way.
+- [x] **Contact wording:** while no email or form exists, the site says the details will be published instead of inviting people to write.
 
-## Launch blockers (legal: LCEN art. 6 III and GDPR art. 13)
+## Launch blockers (legal: LCEN and GDPR art. 13)
+The publisher details are required by the LCEN. Since the SREN law of 21 May 2024, the list sits in art. 1-1 I of the LCEN (formerly art. 6 III); please confirm the consolidated text on Légifrance.
 Until these are supplied, the legal notice and privacy policy say "à communiquer prochainement". Set the values in `src/config/site.ts`.
 - [ ] **A monitored contact email** (`site.email`). Without it, nobody can reach ACJR or exercise their GDPR rights.
 - [ ] **A publishable postal address** (`site.postalAddress`): the registered office or a domiciliation address. Associations cannot use the LCEN anonymity option.
@@ -38,10 +41,14 @@ Until these are supplied, the legal notice and privacy policy say "à communique
 - [ ] **The host's phone number** (`site.host.phone`). Vercel does not publish one; confirm it with Vercel, or name a host that does.
 - [ ] **The Formspree endpoint** (`PUBLIC_FORMSPREE_ENDPOINT`, format `https://formspree.io/f/…`). Before activating it:
   - confirm Formspree's legal basis for US transfers (DPF or SCCs) and add it to the privacy policy;
-  - turn off reCAPTCHA in the Formspree dashboard, because it sets third-party cookies and the no-JS fallback posts straight to formspree.io.
+  - turn off reCAPTCHA in the Formspree dashboard, because it sets third-party cookies and the no-JS fallback posts straight to formspree.io;
+  - sign Formspree's data processing agreement (DPA), which the privacy policy needs in order to call Formspree a processor (« sous-traitant »).
 - [ ] **Message retention**: confirm the 12-month period stated in the privacy policy.
 
 ## Client decisions (open)
+- [ ] **Founded in Paris?** The statutes (Art. 1) say only « constituée le 25 avril 2024 ». The site says it was founded in Paris, which matches the Paris registration (RNA W75…). Please confirm.
+- [ ] **The logo's olive wreath.** The mark (Africa and scales inside two olive branches) is clearly not the UN emblem, and the site says ACJR is not affiliated with the UN. A wreath in light blue does evoke the UN style, though, so please accept it knowingly or ask for a different frame.
+- [ ] **Bequests (« libéralités »).** The site now mentions donations only. Ask counsel whether ACJR may accept bequests yet (1901 law, art. 6) before adding them back.
 - [ ] **Art. 19–20:** have the internal rules and any of the five policies actually been adopted yet? The site says only what the statutes say.
 - [ ] **Draft news dates:** both drafts are dated 23 October 2026 as a placeholder. Set `date` to the real publication day when you publish.
 - [ ] Social accounts.
