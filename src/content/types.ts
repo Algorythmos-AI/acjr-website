@@ -97,9 +97,10 @@ export interface Content {
     intro: string[];
     bureauTitle: string;
     bureauLead: string;
-    bureau: Three<{ name: string; role: string }>;
+    bureau: Three<{ name: string; role: string; duty: string }>;
+    bureauNote: string;
     bodiesTitle: string;
-    bodies: Three<Pair>;
+    bodies: Four<Pair & { facts: string[] }>;
     volunteerTitle: string;
     volunteer: string[];
     statutesTitle: string;
@@ -118,16 +119,19 @@ export interface Content {
     accountsTitle: string;
     accounts: string[];
     policiesTitle: string;
-    policies: Pair[];
+    policiesLead: string;
+    policies: Five<Pair>;
   };
   news: { emptyTitle: string; emptyText: string; followText: string };
   involved: {
     intro: string[];
     membershipTitle: string;
     membershipLead: string;
-    categories: Three<Pair>;
+    categories: Four<Pair>;
     admissionTitle: string;
     admission: string[];
+    lossTitle: string;
+    loss: string[];
     ways: Three<Pair & { cta: string }>;
     supportNote: string;
   };

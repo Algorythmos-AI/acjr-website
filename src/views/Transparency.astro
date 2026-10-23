@@ -38,7 +38,8 @@ const tr = content[lang].transparency;
 
     <section class="block" aria-labelledby="policies-title">
       <h2 id="policies-title">{tr.policiesTitle}</h2>
-      <ul class="grid grid--4 plain-list">
+      <p>{tr.policiesLead}</p>
+      <ul class="grid grid--3 plain-list">
         {tr.policies.map((p) => (<li><div class="card"><h3>{p.title}</h3><p>{p.text}</p></div></li>))}
       </ul>
     </section>
