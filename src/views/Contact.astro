@@ -28,7 +28,7 @@ const endpoint = site.formEndpoint;
 
       <section class="form-section" aria-labelledby="form-title">
         <h2 id="form-title">{f.formTitle}</h2>
-        <p>{f.intro}</p>
+        {endpoint && <p>{f.intro}</p>}
         {!endpoint && (
           <div class="notice" role="note">
             <Icon name="alert" size={22} />
@@ -204,6 +204,8 @@ const endpoint = site.formEndpoint;
     font: inherit;
   }
   .field textarea { resize: vertical; }
+  .contact-form fieldset:disabled .field :is(input, select, textarea) { background: var(--grey-50); cursor: not-allowed; }
+  .contact-form .btn:disabled { background: var(--grey-600); border-color: var(--grey-600); }
   .field [aria-invalid='true'] { border-color: var(--error); }
   .field-error { margin: 0; color: var(--error); font-weight: 700; }
   .field--check { grid-template-columns: auto 1fr; align-items: start; column-gap: var(--space-2); }
