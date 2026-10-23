@@ -2,7 +2,7 @@
 // Serves directory index.html files and dist's 404.html, like the production host.
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
-import { extname, join, normalize, resolve } from 'node:path';
+import { extname, join, normalize, resolve, sep } from 'node:path';
 import { gzipSync } from 'node:zlib';
 
 const [, , dir = 'dist', port = '4321'] = process.argv;
@@ -15,7 +15,8 @@ const types = {
 createServer(async (req, res) => {
   const url = decodeURIComponent(new URL(req.url ?? '/', 'http://x').pathname);
   let file = normalize(join(root, url));
-  if (!file.startsWith(root)) return res.writeHead(403).end();
+  // Compare with a trailing separator so /..%2Fdist-drafts cannot reach a sibling folder.
+  if (file !== root && !file.startsWith(root + sep)) return res.writeHead(403).end();
   try {
     if ((await stat(file)).isDirectory()) file = join(file, 'index.html');
     let body = await readFile(file);

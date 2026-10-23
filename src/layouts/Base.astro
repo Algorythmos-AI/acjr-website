@@ -6,6 +6,10 @@ import Footer from '../components/Footer.astro';
 import { languages, langMeta, pagePath, type Lang, type PageKey } from '../i18n/routes';
 import { ui } from '../i18n/ui';
 import { site } from '../config/site';
+import { jsClassScript } from '../config/inline-scripts.mjs';
+// Preloading the heading font keeps the largest text from being repainted late.
+import headingFontLatin from '@fontsource/merriweather/files/merriweather-latin-900-normal.woff2?url';
+import headingFontArabic from '@fontsource/noto-naskh-arabic/files/noto-naskh-arabic-arabic-700-normal.woff2?url';
 
 interface Props {
   lang: Lang;
@@ -55,7 +59,8 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script is:inline>document.documentElement.classList.add('js')</script>
+    <script is:inline set:html={jsClassScript} />
+    <link rel="preload" href={lang === 'ar' ? headingFontArabic : headingFontLatin} as="font" type="font/woff2" crossorigin />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}

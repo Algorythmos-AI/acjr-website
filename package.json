@@ -3,6 +3,9 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.22.0 <23"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -12,9 +15,10 @@
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:html": "html-validate \"dist/**/*.html\" \"dist-drafts/**/*.html\" \"dist-fixtures/**/*.html\"",
     "check:leaks": "node scripts/check-leaks.mjs",
+    "check:csp": "node scripts/check-csp.mjs",
     "check:links": "linkinator dist --recurse --skip \"^https://\"",
     "test:e2e": "playwright test",
-    "check": "npm run check:types && npm run check:content && npm run check:contrast && npm run build && npm run build:drafts && npm run build:fixtures && npm run check:leaks && npm run check:html && npm run check:links && npm run test:e2e && npm run check:lighthouse",
+    "check": "npm run check:types && npm run check:content && npm run check:contrast && npm run build && npm run build:drafts && npm run build:fixtures && npm run check:leaks && npm run check:csp && npm run check:html && npm run check:links && npm run test:e2e && npm run check:lighthouse",
     "build:fixtures": "node scripts/make-news-fixtures.mjs && NEWS_DIR=./.fixtures/news astro build --outDir dist-fixtures",
     "build:drafts": "SHOW_DRAFTS=1 PUBLIC_FORMSPREE_ENDPOINT=https://formspree.io/f/test-endpoint astro build --outDir dist-drafts",
     "check:lighthouse": "node scripts/check-lighthouse.mjs"

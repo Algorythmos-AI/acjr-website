@@ -2,6 +2,11 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import frenchTypography from './src/integrations/french-typography.mjs';
+import { createHash } from 'node:crypto';
+import { jsClassScript } from './src/config/inline-scripts.mjs';
+
+/** @param {string} text @returns {`sha256-${string}`} */
+const sha256 = (text) => `sha256-${createHash('sha256').update(text).digest('base64')}`;
 
 // Final domain is not decided yet; set SITE_URL in the deploy environment.
 const site = process.env.SITE_URL ?? 'https://acjr-website.vercel.app';
@@ -25,6 +30,8 @@ export default defineConfig({
         "base-uri 'self'",
         "object-src 'none'",
       ],
+      // Hand-written is:inline scripts are not hashed by Astro, so their hashes are added here.
+      scriptDirective: { hashes: [sha256(jsClassScript)] },
     },
   },
   markdown: { syntaxHighlight: false },
