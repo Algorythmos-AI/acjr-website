@@ -25,6 +25,16 @@ export function newsPagePath(lang: Lang, page: number): string {
   return page <= 1 ? pagePath(lang, 'news') : `${pagePath(lang, 'news')}page/${page}/`;
 }
 
+/** Real translations of this article only, for hreflang. Missing languages are left out. */
+export function articleTranslations(article: Article, all: Article[]): Partial<Record<Lang, string>> {
+  const out: Partial<Record<Lang, string>> = {};
+  for (const l of languages) {
+    const match = all.find((a) => articleLang(a) === l && a.data.translationKey === article.data.translationKey);
+    if (match) out[l] = newsPath(l, articleSlug(match));
+  }
+  return out;
+}
+
 /** Where each language switcher link should go for this article: its translation, or the news listing. */
 export function articleAlternates(article: Article, all: Article[]): Record<Lang, string> {
   const out = {} as Record<Lang, string>;

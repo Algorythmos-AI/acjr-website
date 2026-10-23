@@ -8,7 +8,8 @@ import { z } from 'astro/zod';
  * SHOW_DRAFTS=1 (local review and the drafts test build), never in production.
  */
 const news = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/news' }),
+  // NEWS_DIR points the fixtures test build at generated articles (scripts/make-news-fixtures.mjs).
+  loader: glob({ pattern: '**/*.md', base: process.env['NEWS_DIR'] ?? './src/news' }),
   schema: z.object({
     title: z.string().max(110),
     description: z.string().max(160),

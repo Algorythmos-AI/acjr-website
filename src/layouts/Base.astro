@@ -14,12 +14,14 @@ interface Props {
   title: string;
   description: string;
   noindex?: boolean;
-  /** Per-language URLs of this exact page, for pages outside the fixed page set (news articles, listing pages). */
+  /** Where the language switcher goes, for pages outside the fixed page set (news articles, listing pages). */
   altPaths?: Record<Lang, string> | undefined;
+  /** The URLs that really are this page in another language, for hreflang. Defaults to altPaths. */
+  hreflangPaths?: Partial<Record<Lang, string>> | undefined;
   ogType?: 'website' | 'article';
 }
 
-const { lang, pageKey, title, description, noindex = false, altPaths, ogType = 'website' } = Astro.props;
+const { lang, pageKey, title, description, noindex = false, altPaths, hreflangPaths, ogType = 'website' } = Astro.props;
 const meta = langMeta[lang];
 const t = ui[lang];
 const siteUrl = Astro.site ?? new URL('https://acjr-website.vercel.app');
@@ -28,7 +30,11 @@ const abs = (path: string) => new URL(path, siteUrl).href;
 const fullTitle = pageKey === 'home' ? `ACJR — ${title}` : `${title} | ACJR`;
 const pathFor = (l: Lang) => altPaths?.[l] ?? (pageKey ? pagePath(l, pageKey) : undefined);
 const canonical = pageKey ? abs(pathFor(lang)!) : undefined;
-const alternates = pageKey ? languages.map((l) => ({ hreflang: langMeta[l].hreflang, href: abs(pathFor(l)!) })) : [];
+// hreflang lists only real translations; a page with no translation gets none.
+const hreflangFor = (l: Lang) => (hreflangPaths ? hreflangPaths[l] : pathFor(l));
+const translated = pageKey ? languages.filter((l) => hreflangFor(l)) : [];
+const alternates = translated.length > 1 ? translated.map((l) => ({ hreflang: langMeta[l].hreflang, href: abs(hreflangFor(l)!) })) : [];
+const xDefault = alternates.length ? (hreflangFor('fr') ?? hreflangFor(lang)) : undefined;
 const ogImage = abs(`/brand/og-image-${lang}.png`);
 
 const jsonLd = {
@@ -55,7 +61,7 @@ const jsonLd = {
     {noindex && <meta name="robots" content="noindex" />}
     {canonical && <link rel="canonical" href={canonical} />}
     {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
-    {pageKey && <link rel="alternate" hreflang="x-default" href={abs(pathFor('fr')!)} />}
+    {xDefault && <link rel="alternate" hreflang="x-default" href={abs(xDefault)} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
