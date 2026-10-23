@@ -11,9 +11,10 @@ npm ci
 npm run dev            # http://localhost:4321/fr/
 npm run build          # production build in dist/ (drafts excluded)
 npm run build:drafts   # build in dist-drafts/ that includes draft news
+npm run build:fixtures # test-only build in dist-fixtures/ with generated news (pagination, hreflang)
 ```
 
-Requires Node 22.
+Requires Node 22.22 or later in the 22.x line (see `.nvmrc`).
 
 ## Where things live
 
@@ -24,7 +25,8 @@ Requires Node 22.
 | `src/news/{fr,en,ar}/*.md` | News articles. One `translationKey` links the three language versions. |
 | `src/views/`, `src/components/`, `src/layouts/` | Page templates and components |
 | `src/styles/tokens.css` | Colour, type and spacing tokens (contrast-checked) |
-| `public/brand/` | Logo set and brand guide. Regenerate with `scripts/brand/`. |
+| `public/brand/` | Logo files served by the site. Regenerate with `scripts/brand/`. |
+| `docs/brand/README.md` | Brand guide: colours, clear space, minimum sizes. Kept out of `public/`. |
 | `docs/` | Source statutes and design references. **Never served.** |
 
 ### Publishing a news article
@@ -39,12 +41,13 @@ Requires Node 22.
 1. `astro check`: types, including missing translations
 2. content parity across the three languages, including news
 3. WCAG contrast on every token pair
-4. the production and drafts builds
-5. the leak guard: no PV, récépissé, `docs/` content, draft markers or UN wordmark in `dist/`
-6. `html-validate` on both builds
-7. the internal link check
-8. Playwright + axe-core at 375, 768 and 1280 px
-9. Lighthouse in the mobile profile, which must score ≥ 95 in every category
+4. the production, drafts and fixtures builds
+5. the leak guard: no PV, récépissé, `docs/` content, documents, the street address, draft markers or UN wordmark in `dist/`
+6. every inline script and style has its hash in the page's CSP
+7. `html-validate` on all three builds
+8. the internal link check
+9. Playwright + axe-core at 375, 768 and 1280 px
+10. Lighthouse in the mobile profile, which must score ≥ 95 in every category
 
 To run the browser tests against a locally installed Chromium, set `PW_CHROMIUM=/path/to/chrome` for Playwright and `CHROME_PATH=/path/to/chrome` for Lighthouse.
 
@@ -52,9 +55,9 @@ To run the browser tests against a locally installed Chromium, set `PW_CHROMIUM=
 
 Copy `.env.example` to `.env`:
 - `SITE_URL`: the public URL, used for canonical links, hreflang and the sitemap.
-- `PUBLIC_FORMSPREE_ENDPOINT`: the contact form endpoint. While it is empty, the form shows a "coming soon" notice.
+- `PUBLIC_FORMSPREE_ENDPOINT`: the contact form endpoint, `https://formspree.io/f/…` (anything else is ignored, since the CSP allows only formspree.io). While it is unset, the form is disabled and shows a notice.
 
-Security headers are in `vercel.json`. Astro adds a hash-based CSP to every page.
+Security headers are in `vercel.json`, which also runs the leak guard as part of the Vercel build, so a leaky build cannot deploy. Astro adds a hash-based CSP to every page; hand-written inline scripts live in `src/config/inline-scripts.mjs` so their hashes are added automatically.
 
 ## Hard rules
 
