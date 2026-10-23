@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 // Final domain is not decided yet; set SITE_URL in the deploy environment.
-const site = process.env.SITE_URL ?? 'https://acjr.vercel.app';
+const site = process.env.SITE_URL ?? 'https://acjr-website.vercel.app';
 
 export default defineConfig({
   site,

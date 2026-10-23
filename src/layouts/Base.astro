@@ -22,7 +22,7 @@ interface Props {
 const { lang, pageKey, title, description, noindex = false, altPaths, ogType = 'website' } = Astro.props;
 const meta = langMeta[lang];
 const t = ui[lang];
-const siteUrl = Astro.site ?? new URL('https://acjr.vercel.app');
+const siteUrl = Astro.site ?? new URL('https://acjr-website.vercel.app');
 const abs = (path: string) => new URL(path, siteUrl).href;
 
 const fullTitle = pageKey === 'home' ? `ACJR — ${title}` : `${title} | ACJR`;
