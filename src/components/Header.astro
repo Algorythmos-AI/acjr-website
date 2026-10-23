@@ -222,9 +222,10 @@ const currentPath = (key: PageKey) => key === pageKey;
     padding-block: var(--space-2);
   }
   .brand { display: inline-flex; flex-shrink: 1; min-width: 0; }
-  .brand img { height: 3rem; width: auto; }
+  /* Sized so the full name in the lockup stays legible (about 10 px on phones, 14 px on desktop). */
+  .brand img { height: 3.25rem; width: auto; }
   @media (min-width: 768px) {
-    .brand img { height: 4rem; }
+    .brand img { height: 4.5rem; }
   }
   .masthead-actions { display: flex; align-items: center; gap: var(--space-2); }
   .masthead-contact { display: none; }

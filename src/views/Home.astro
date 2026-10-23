@@ -160,13 +160,13 @@ const t = ui[lang];
     overflow: hidden;
     color: var(--white);
     background:
-      linear-gradient(115deg, var(--navy-900) 0%, var(--navy-900) 45%, rgb(0 119 184 / 0.9) 100%),
+      linear-gradient(115deg, var(--navy-900) 0%, var(--navy-900) 45%, color-mix(in srgb, var(--blue-700) 90%, transparent) 100%),
       var(--navy-900);
     padding-block: var(--space-6) calc(var(--space-7) + var(--space-3));
   }
   :global([dir='rtl']) .hero {
     background:
-      linear-gradient(-115deg, var(--navy-900) 0%, var(--navy-900) 45%, rgb(0 119 184 / 0.9) 100%),
+      linear-gradient(-115deg, var(--navy-900) 0%, var(--navy-900) 45%, color-mix(in srgb, var(--blue-700) 90%, transparent) 100%),
       var(--navy-900);
   }
   .hero-art {

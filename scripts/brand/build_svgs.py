@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ACJR / CADJ brand mark + lockup generator.
+"""ACJR brand mark + lockup generator.
 
 Builds every SVG in public/brand/ (and public/favicon.svg) from geometry
 defined here. Text is shaped with HarfBuzz (uharfbuzz) and converted to
@@ -24,7 +24,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 OUT = os.path.join(ROOT, "public", "brand")
 FONTS = os.path.join(ROOT, "node_modules", "@fontsource")
 
-BLUE = "#0077B8"
+BLUE = "#0070AD"  # --blue-700 in src/styles/tokens.css
 OCHRE = "#C8963E"
 NAVY = "#0B2545"
 BLACK = "#000000"
@@ -342,8 +342,9 @@ def main():
     langs = {
         "en": dict(acr="ACJR", lines=["African Center for", "Justice Rights"],
                    title="ACJR – African Center for Justice Rights"),
-        "fr": dict(acr="CADJ", lines=["Centre Africain pour les", "Droits de la Justice"],
-                   title="CADJ – Centre Africain pour les Droits de la Justice"),
+        # ACJR is the legal reference name (statutes, Art. 1), so it is used in every language.
+        "fr": dict(acr="ACJR", lines=["Centre Africain pour les", "Droits de la Justice"],
+                   title="ACJR – Centre Africain pour les Droits de la Justice"),
         "ar": dict(acr=None, lines=["المركز الافريقي", "للحقوق والعدالة"],
                    title="المركز الافريقي للحقوق والعدالة"),
     }
@@ -353,11 +354,12 @@ def main():
             cm, cp, ct = PALETTES[suf]
             parts = []
             if lang != "ar":
-                acr_size, line_size = 84, 30
+                # The name is sized to stay legible at header size (the lockup is shown 52–72 px tall).
+                acr_size, line_size = 70, 40
                 text_x = 200 + gap * 2 + 3
-                d1, w1 = ROBOTO_B.path(cfg["acr"], acr_size, text_x, 102, tracking=0.02)
-                d2, w2 = ROBOTO_R.path(cfg["lines"][0], line_size, text_x + 2, 140)
-                d3, w3 = ROBOTO_R.path(cfg["lines"][1], line_size, text_x + 2, 176)
+                d1, w1 = ROBOTO_B.path(cfg["acr"], acr_size, text_x, 86, tracking=0.02)
+                d2, w2 = ROBOTO_R.path(cfg["lines"][0], line_size, text_x + 2, 132)
+                d3, w3 = ROBOTO_R.path(cfg["lines"][1], line_size, text_x + 2, 178)
                 width = text_x + max(w1, w2 + 2, w3 + 2) + 12
                 parts.append(f'<path fill="{ct}" d="{d1}"/>')
                 parts.append(f'<path fill="{ct}" d="{d2}{d3}"/>')
