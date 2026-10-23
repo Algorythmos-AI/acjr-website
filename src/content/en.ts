@@ -1,4 +1,7 @@
 import type { Content } from './types';
+import { site, pendingText } from '../config/site.ts';
+
+const p = pendingText.en;
 
 /* English translation of fr.ts. English carries the organisation's legal reference name. */
 export const en: Content = {
@@ -31,8 +34,8 @@ export const en: Content = {
     },
     advocacy: {
       title: 'International advocacy',
-      description: 'How ACJR carries the voices of victims to the UN and African human-rights mechanisms.',
-      lead: 'We bring documented facts before international and regional human-rights mechanisms.',
+      description: 'How ACJR aims to carry the voices of victims to the UN and African human-rights mechanisms.',
+      lead: 'We aim to bring documented facts before international and regional human-rights mechanisms.',
     },
     governance: {
       title: 'Governance',
@@ -121,7 +124,7 @@ export const en: Content = {
     principlesLead: 'Independence, universality of rights, impartiality, non-discrimination and a victim-centred approach.',
     advocacyTitle: 'A voice before international mechanisms',
     advocacyText:
-      'The Human Rights Council, the Universal Periodic Review, special procedures, treaty bodies and the African Commission on Human and Peoples’ Rights: we take the facts where they can make a difference.',
+      'The Human Rights Council, the Universal Periodic Review, special procedures, treaty bodies and the African Commission on Human and Peoples’ Rights: where it is permitted to take part and in line with their rules, ACJR aims to take documented facts where they can make a difference.',
     involvedTitle: 'Get involved',
     involvedText:
       'Lawyers, researchers, journalists, translators or concerned citizens: join a volunteer association committed to justice.',
@@ -274,10 +277,10 @@ export const en: Content = {
 
   advocacy: {
     intro: [
-      'Documented facts matter only if they reach those who can act. ACJR engages with international and regional human-rights mechanisms, independently and in line with their rules.',
+      'Documented facts matter only if they reach those who can act. ACJR seeks to engage with international and regional human-rights mechanisms, independently and in line with their rules.',
     ],
     unTitle: 'The UN system and the Human Rights Council',
-    unLead: 'Where it is admitted and in line with the applicable rules, ACJR contributes to the work of these mechanisms.',
+    unLead: 'Where it is permitted to take part, and in line with the applicable rules, ACJR may contribute to the work of these mechanisms.',
     un: [
       { title: 'Human Rights Council', text: 'Taking part in sessions, consultations and events, and organising or contributing to side events.' },
       { title: 'Universal Periodic Review', text: 'Preparing and submitting contributions, under the conditions the mechanism sets.' },
@@ -285,7 +288,7 @@ export const en: Content = {
       { title: 'Treaty bodies', text: 'Shadow reports and contributions; where the law allows, helping victims access complaint mechanisms.' },
     ],
     africaTitle: 'Regional and international cooperation',
-    africaLead: 'ACJR also acts at continental level and with international judicial institutions.',
+    africaLead: 'ACJR also aims to act at continental level and with international judicial institutions.',
     africa: [
       { title: 'African Commission on Human and Peoples’ Rights', text: 'Cooperation and advocacy with the Commission.' },
       { title: 'Other African mechanisms', text: 'Cooperation and advocacy with other competent African mechanisms, in line with their rules on referral and participation.' },
@@ -293,9 +296,9 @@ export const en: Content = {
     ],
     networksTitle: 'Alliances and networks',
     networks: [
-      'ACJR builds alliances and networks with non-governmental organisations, institutions and regional or international actors pursuing compatible goals.',
+      'ACJR seeks to build alliances and networks with non-governmental organisations, institutions and regional or international actors pursuing compatible goals.',
     ],
-    note: 'ACJR is an independent organisation. Its engagement with these mechanisms implies no affiliation with the United Nations, the African Union or their bodies.',
+    note: 'ACJR is an independent organisation. It does not currently hold consultative status with the UN Economic and Social Council (ECOSOC) and is not accredited to any UN or African Union body. Any engagement with these mechanisms implies no affiliation with, or endorsement by, them.',
   },
 
   governance: {
@@ -432,10 +435,11 @@ export const en: Content = {
     intro: 'For questions, partnership or membership requests, please use the form below.',
     safetyTitle: 'Victims and witnesses: your safety comes first',
     safety: [
-      'Do not send evidence, photos, videos or victims’ names through this form.',
-      'Use a device and connection you consider safe. Clear your browsing history if necessary.',
-      'Simply tell us how and when you can be reached safely: we will get back to you through a suitable channel.',
-      'If you are in immediate danger, contact local emergency services or a protection organisation in your country.',
+      'This form is not a secure channel: it is not end-to-end encrypted, and messages pass through a US-based provider (Formspree).',
+      'Do not describe what you experienced or witnessed, give names, places or dates, or send evidence, photos or videos.',
+      'Use a device, connection and email account that only you control: our reply will arrive in that inbox. Use private browsing and clear your history if necessary.',
+      'Simply tell us how and when you can be reached safely. We will try to contact you through a suitable channel, but cannot guarantee a response time.',
+      'If you are in immediate danger, contact emergency services or a protection organisation you trust, if you can do so safely.',
     ],
     formTitle: 'Write to us',
     fields: {
@@ -458,7 +462,7 @@ export const en: Content = {
     },
     success: 'Thank you, your message has been sent. We will reply as soon as possible.',
     failure: 'Your message could not be sent. Please try again later.',
-    inactive: 'The contact form will be activated very soon. Thank you for your patience.',
+    inactive: 'The contact form is not active yet, so no message can be sent for now. Our contact details will be published on this page very soon.',
     privacyLink: 'Read our privacy policy',
     locationTitle: 'Seat',
     location: 'Paris, France',
@@ -466,17 +470,22 @@ export const en: Content = {
     emailPending: 'Address coming soon',
   },
 
+  // LCEN art. 6 III. Missing client details render as "to be published shortly".
   legal: {
     sections: [
       {
         title: 'Publisher',
         body: [
-          'African Center for Justice Rights (ACJR), an association governed by the French law of 1 July 1901.',
-          'Registered seat: Paris, France. RNA number: W751274196.',
+          'African Center for Justice Rights (ACJR), a non-profit association governed by the French law of 1 July 1901. RNA number: W751274196.',
+          `Registered office: ${site.postalAddress ?? `Paris, France (postal address ${p})`}.`,
+          `Phone: ${site.phone ?? p}. Email: ${site.email ?? p}.`,
         ],
       },
       { title: 'Publication director', body: ['ABDELRAHIM GREIN Sadam, President of the association.'] },
-      { title: 'Hosting', body: ['Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA — vercel.com.'] },
+      {
+        title: 'Hosting',
+        body: [`${site.host.name}, ${site.host.address}, USA. Phone: ${site.host.phone ?? p}. Website: ${site.host.url}.`],
+      },
       {
         title: 'Intellectual property',
         body: [
@@ -487,38 +496,68 @@ export const en: Content = {
       {
         title: 'Independence',
         body: [
-          'ACJR is an independent organisation. References on this site to the United Nations, the African Union or their bodies describe mechanisms the association engages with; they imply no affiliation with, or endorsement by, them.',
+          'ACJR is an independent organisation. It does not currently hold consultative status with the UN Economic and Social Council (ECOSOC) and is not accredited to any UN or African Union body. References on this site to these mechanisms describe bodies the association may engage with; they imply no affiliation with, or endorsement by, them.',
         ],
       },
     ],
   },
 
+  // GDPR art. 13.
   privacy: {
-    updated: 'Last updated: October 2026',
+    updated: 'Last updated: 23 October 2026',
     sections: [
-      { title: 'Data controller', body: ['African Center for Justice Rights (ACJR), Paris, France.'] },
       {
-        title: 'Data we collect',
+        title: 'Data controller',
         body: [
-          'We only collect the data you choose to send us through the contact form: name, email address, subject and message.',
-          'This data is used solely to answer your request. The legal basis is your consent (Article 6(1)(a) GDPR).',
+          `African Center for Justice Rights (ACJR), a French non-profit association with its registered office in Paris, France. Contact: ${site.email ?? p}.`,
+          'The association has not appointed a data protection officer.',
+        ],
+      },
+      {
+        title: 'Hosting and connection data',
+        body: [
+          'The site is hosted by Vercel Inc. (USA). On every visit, Vercel processes technical connection data (IP address, date and time, page requested, browser type) to serve the pages and keep the service secure.',
+          'This processing is based on our legitimate interest in running a secure website (Article 6(1)(f) GDPR). Vercel keeps these logs for a limited period, as set out in its privacy policy.',
+        ],
+      },
+      {
+        title: 'Contact form',
+        body: [
+          'When it is active, the contact form collects your name, email address, subject and message. This data is used solely to reply to you.',
+          'The legal basis is your consent (Article 6(1)(a) GDPR), which you can withdraw at any time.',
+        ],
+      },
+      {
+        title: 'Sensitive data',
+        body: [
+          'Do not include information about your health, origins, political or religious opinions, or violations you experienced or witnessed. If you do, you explicitly consent to its processing solely to reply to you (Article 9(2)(a) GDPR).',
         ],
       },
       {
         title: 'Recipients and processors',
         body: [
-          'Messages are delivered by Formspree, acting as a processor, and read only by authorised members of the association. Your data is never sold or shared.',
+          'Your data is never sold. It is passed only to the processors listed here: Vercel Inc. for hosting and Formspree Inc. for delivering form messages. Only authorised members of the association read it.',
         ],
       },
-      { title: 'Retention', body: ['Messages are kept for no more than 12 months after the last exchange, then deleted.'] },
+      {
+        title: 'Transfers outside the European Union',
+        body: [
+          'Vercel Inc. and Formspree Inc. are based in the USA. Transfers to Vercel rely on the EU–US Data Privacy Framework, in which Vercel states it participates.',
+          'The safeguards for transfers to Formspree will be set out here before the form is activated.',
+        ],
+      },
+      {
+        title: 'Retention',
+        body: ['Messages are deleted no later than 12 months after the last exchange, including from Formspree and our mailboxes.'],
+      },
       {
         title: 'Cookies and analytics',
-        body: ['This site sets no advertising or tracking cookies and uses no third-party tracking tools, so no consent banner is needed.'],
+        body: ['This site sets no cookies and uses no third-party analytics or tracking tools, so no consent banner is needed.'],
       },
       {
         title: 'Your rights',
         body: [
-          'You have the right to access, rectify, erase, restrict, object to and port your data, and to withdraw your consent at any time. To exercise these rights, contact us through the contact form.',
+          'You have the right to access, rectify, erase, restrict, object to and port your data, and to withdraw your consent at any time. To exercise these rights, write to the data controller at the contact details above.',
           'You may also lodge a complaint with the French data-protection authority, the CNIL (cnil.fr).',
         ],
       },

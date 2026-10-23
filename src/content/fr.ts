@@ -1,4 +1,7 @@
 import type { Content } from './types';
+import { site, pendingText } from '../config/site.ts';
+
+const p = pendingText.fr;
 
 /*
  * French source content. Faithful to the statutes adopted on 17 September 2026,
@@ -34,8 +37,8 @@ export const fr: Content = {
     },
     advocacy: {
       title: 'Plaidoyer international',
-      description: "Comment l'ACJR porte la voix des victimes auprès des mécanismes onusiens et africains de protection des droits humains.",
-      lead: 'Nous portons les faits documentés devant les mécanismes internationaux et régionaux de protection des droits humains.',
+      description: 'Comment l’ACJR entend porter la voix des victimes auprès des mécanismes onusiens et africains de protection des droits humains.',
+      lead: 'Nous entendons porter les faits documentés devant les mécanismes internationaux et régionaux de protection des droits humains.',
     },
     governance: {
       title: 'Gouvernance',
@@ -125,7 +128,7 @@ export const fr: Content = {
     principlesLead: 'Indépendance, universalité des droits, impartialité, non-discrimination et approche centrée sur les victimes.',
     advocacyTitle: 'Une voix auprès des mécanismes internationaux',
     advocacyText:
-      'Conseil des droits de l’homme, Examen périodique universel, procédures spéciales, organes de traités, Commission africaine des droits de l’homme et des peuples : nous portons les faits là où ils peuvent faire changer les choses.',
+      'Conseil des droits de l’homme, Examen périodique universel, procédures spéciales, organes de traités, Commission africaine des droits de l’homme et des peuples : lorsqu’elle y est admise et selon leurs règles, l’ACJR entend porter les faits documentés là où ils peuvent faire changer les choses.',
     involvedTitle: 'Agir avec nous',
     involvedText:
       'Juristes, chercheurs, journalistes, traducteurs ou simples citoyens : rejoignez une association bénévole engagée pour la justice.',
@@ -318,10 +321,10 @@ export const fr: Content = {
   // Art. 7 and 8 — UN and African engagement
   advocacy: {
     intro: [
-      'Les faits documentés n’ont de valeur que s’ils parviennent à celles et ceux qui peuvent agir. L’ACJR interagit avec les mécanismes internationaux et régionaux de protection des droits humains, en toute indépendance et conformément à leurs règles.',
+      'Les faits documentés n’ont de valeur que s’ils parviennent à celles et ceux qui peuvent agir. L’ACJR entend interagir avec les mécanismes internationaux et régionaux de protection des droits humains, en toute indépendance et conformément à leurs règles.',
     ],
     unTitle: 'Le système onusien et le Conseil des droits de l’homme',
-    unLead: 'Lorsqu’elle y est admise et conformément aux règles applicables, l’ACJR contribue aux travaux des mécanismes suivants.',
+    unLead: 'Lorsqu’elle y est admise et conformément aux règles applicables, l’ACJR peut contribuer aux travaux des mécanismes suivants.',
     un: [
       { title: 'Conseil des droits de l’homme', text: 'Participation aux sessions, consultations et événements, et organisation ou contribution à des événements parallèles.' },
       { title: 'Examen périodique universel', text: 'Préparation et soumission de contributions, dans les conditions prévues par le mécanisme.' },
@@ -329,7 +332,7 @@ export const fr: Content = {
       { title: 'Organes conventionnels', text: 'Rapports alternatifs et contributions ; lorsque le droit le permet, accompagnement des victimes vers les mécanismes de plainte.' },
     ],
     africaTitle: 'Coopération régionale et internationale',
-    africaLead: 'L’ACJR agit aussi au niveau du continent et auprès des institutions judiciaires internationales.',
+    africaLead: 'L’ACJR entend aussi agir au niveau du continent et auprès des institutions judiciaires internationales.',
     africa: [
       { title: 'Commission africaine des droits de l’homme et des peuples', text: 'Coopération et plaidoyer auprès de la Commission.' },
       { title: 'Autres mécanismes africains', text: 'Coopération et plaidoyer auprès des autres mécanismes africains compétents, dans le respect de leurs règles de saisine et de participation.' },
@@ -337,9 +340,9 @@ export const fr: Content = {
     ],
     networksTitle: 'Alliances et réseaux',
     networks: [
-      'L’ACJR développe des alliances et des réseaux avec des organisations non gouvernementales, des institutions et des acteurs régionaux ou internationaux poursuivant des objectifs compatibles.',
+      'L’ACJR entend développer des alliances et des réseaux avec des organisations non gouvernementales, des institutions et des acteurs régionaux ou internationaux poursuivant des objectifs compatibles.',
     ],
-    note: 'L’ACJR est une organisation indépendante. Sa participation à ces mécanismes n’implique aucune affiliation au système onusien, à l’Union africaine ou à leurs organes.',
+    note: 'L’ACJR est une organisation indépendante. Elle ne dispose pas, à ce jour, du statut consultatif auprès du Conseil économique et social (ECOSOC) et n’est accréditée auprès d’aucun organe onusien ou de l’Union africaine. Son éventuelle participation à ces mécanismes n’implique aucune affiliation ni aucun soutien de leur part.',
   },
 
   // Art. 11–15 — governance
@@ -479,10 +482,11 @@ export const fr: Content = {
     intro: 'Pour toute question, demande de partenariat ou d’adhésion, utilisez le formulaire ci-dessous.',
     safetyTitle: 'Victimes et témoins : votre sécurité d’abord',
     safety: [
-      'N’envoyez pas de preuves, de photos, de vidéos ni de noms de victimes par ce formulaire.',
-      'Utilisez un appareil et une connexion que vous jugez sûrs. Pensez à effacer votre historique de navigation si nécessaire.',
-      'Indiquez simplement comment et quand vous joindre en sécurité : nous vous recontacterons par un canal adapté.',
-      'En cas de danger immédiat, contactez les services d’urgence locaux ou une organisation de protection présente dans votre pays.',
+      'Ce formulaire n’est pas un canal sécurisé : il n’est pas chiffré de bout en bout et les messages transitent par un prestataire établi aux États-Unis (Formspree).',
+      'N’y décrivez aucun fait subi ou observé, n’indiquez ni nom, ni lieu, ni date, et n’envoyez ni preuves, ni photos, ni vidéos.',
+      'Utilisez un appareil, une connexion et une adresse électronique que vous seul contrôlez : notre réponse arrivera dans cette boîte. Utilisez la navigation privée et effacez votre historique si nécessaire.',
+      'Indiquez simplement comment et quand vous joindre en sécurité ; nous chercherons à vous recontacter par un canal adapté, sans pouvoir garantir de délai.',
+      'En cas de danger immédiat, contactez, si vous pouvez le faire sans risque, les services d’urgence ou une organisation de protection de confiance.',
     ],
     formTitle: 'Écrivez-nous',
     fields: {
@@ -505,7 +509,7 @@ export const fr: Content = {
     },
     success: 'Merci, votre message a bien été envoyé. Nous vous répondrons dans les meilleurs délais.',
     failure: 'Le message n’a pas pu être envoyé. Veuillez réessayer plus tard.',
-    inactive: 'Le formulaire de contact sera activé très prochainement. Merci de votre patience.',
+    inactive: 'Le formulaire de contact n’est pas encore activé : aucun message ne peut être envoyé pour le moment. Nos coordonnées seront publiées sur cette page très prochainement.',
     privacyLink: 'Consulter notre politique de confidentialité',
     locationTitle: 'Siège',
     location: 'Paris, France',
@@ -513,17 +517,22 @@ export const fr: Content = {
     emailPending: 'Adresse bientôt disponible',
   },
 
+  // LCEN art. 6 III. Missing client details render as "à communiquer prochainement".
   legal: {
     sections: [
       {
         title: 'Éditeur du site',
         body: [
-          'African Center for Justice Rights (ACJR), en français Centre Africain pour les Droits de la Justice (CADJ), association régie par la loi du 1er juillet 1901.',
-          'Siège social : Paris, France. N° RNA : W751274196.',
+          'African Center for Justice Rights (ACJR), en français Centre Africain pour les Droits de la Justice, association à but non lucratif régie par la loi du 1er juillet 1901. N° RNA : W751274196.',
+          `Siège social : ${site.postalAddress ?? `Paris, France (adresse postale ${p})`}.`,
+          `Téléphone : ${site.phone ?? p}. Courriel : ${site.email ?? p}.`,
         ],
       },
       { title: 'Directeur de la publication', body: ['ABDELRAHIM GREIN Sadam, président de l’association.'] },
-      { title: 'Hébergement', body: ['Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com.'] },
+      {
+        title: 'Hébergement',
+        body: [`${site.host.name}, ${site.host.address}, États-Unis. Téléphone : ${site.host.phone ?? p}. Site : ${site.host.url}.`],
+      },
       {
         title: 'Propriété intellectuelle',
         body: [
@@ -537,38 +546,68 @@ export const fr: Content = {
       {
         title: 'Indépendance',
         body: [
-          'L’ACJR est une organisation indépendante. Les références faites sur ce site au système onusien, à l’Union africaine ou à leurs organes décrivent des mécanismes avec lesquels l’association interagit ; elles n’impliquent aucune affiliation ni aucun soutien de leur part.',
+          'L’ACJR est une organisation indépendante. Elle ne dispose pas, à ce jour, du statut consultatif auprès du Conseil économique et social (ECOSOC) et n’est accréditée auprès d’aucun organe onusien ou de l’Union africaine. Les références faites sur ce site à ces mécanismes décrivent des instances avec lesquelles l’association peut être amenée à interagir ; elles n’impliquent aucune affiliation ni aucun soutien de leur part.',
         ],
       },
     ],
   },
 
+  // GDPR art. 13.
   privacy: {
-    updated: 'Dernière mise à jour : octobre 2026',
+    updated: 'Dernière mise à jour : 23 octobre 2026',
     sections: [
-      { title: 'Responsable du traitement', body: ['African Center for Justice Rights (ACJR), Paris, France.'] },
       {
-        title: 'Données collectées',
+        title: 'Responsable du traitement',
         body: [
-          'Nous ne collectons que les données que vous nous transmettez volontairement via le formulaire de contact : nom, adresse électronique, objet et message.',
-          'Ces données servent uniquement à répondre à votre demande. Le fondement juridique est votre consentement (article 6.1.a du RGPD).',
+          `African Center for Justice Rights (ACJR), association loi 1901, siège social à Paris, France. Contact : ${site.email ?? p}.`,
+          'L’association n’a pas désigné de délégué à la protection des données.',
+        ],
+      },
+      {
+        title: 'Hébergement et données de connexion',
+        body: [
+          'Le site est hébergé par Vercel Inc. (États-Unis). À chaque visite, Vercel traite des données techniques de connexion (adresse IP, date et heure, page demandée, type de navigateur) afin d’afficher les pages et d’assurer la sécurité du service.',
+          'Ce traitement repose sur notre intérêt légitime à exploiter un site sûr (article 6.1.f du RGPD). Ces journaux sont conservés par Vercel pour une durée limitée, selon sa politique de confidentialité.',
+        ],
+      },
+      {
+        title: 'Formulaire de contact',
+        body: [
+          'Lorsqu’il est actif, le formulaire de contact recueille votre nom, votre adresse électronique, l’objet et le message. Ces données servent uniquement à vous répondre.',
+          'Le fondement juridique est votre consentement (article 6.1.a du RGPD), que vous pouvez retirer à tout moment.',
+        ],
+      },
+      {
+        title: 'Données sensibles',
+        body: [
+          'N’indiquez aucune information sur votre santé, vos origines, vos opinions politiques ou religieuses, ni sur des violations subies ou observées. Si vous le faites, vous consentez explicitement à leur traitement aux seules fins de vous répondre (article 9.2.a du RGPD).',
         ],
       },
       {
         title: 'Destinataires et sous-traitants',
         body: [
-          'Les messages sont transmis par le service Formspree, qui agit en tant que sous-traitant, puis lus par les seuls membres habilités de l’association. Vos données ne sont jamais vendues ni cédées.',
+          'Vos données ne sont jamais vendues. Elles ne sont transmises qu’aux sous-traitants mentionnés ici : Vercel Inc. pour l’hébergement et Formspree Inc. pour l’acheminement des messages du formulaire. Elles ne sont lues que par les membres habilités de l’association.',
         ],
       },
-      { title: 'Durée de conservation', body: ['Les messages sont conservés au maximum 12 mois après le dernier échange, puis supprimés.'] },
+      {
+        title: 'Transferts hors de l’Union européenne',
+        body: [
+          'Vercel Inc. et Formspree Inc. sont établis aux États-Unis. Les transferts vers Vercel reposent sur le cadre de protection des données UE–États-Unis (Data Privacy Framework), auquel Vercel déclare adhérer.',
+          'Les garanties applicables aux transferts vers Formspree seront précisées ici avant l’activation du formulaire.',
+        ],
+      },
+      {
+        title: 'Durée de conservation',
+        body: ['Les messages sont supprimés au plus tard 12 mois après le dernier échange, y compris de l’espace Formspree et de nos messageries.'],
+      },
       {
         title: 'Cookies et mesure d’audience',
-        body: ['Ce site ne dépose aucun cookie publicitaire ni de suivi et n’utilise aucun outil de traçage tiers. Aucun bandeau de consentement n’est donc nécessaire.'],
+        body: ['Ce site ne dépose aucun cookie et n’utilise aucun outil de mesure d’audience ou de traçage tiers. Aucun bandeau de consentement n’est donc nécessaire.'],
       },
       {
         title: 'Vos droits',
         body: [
-          'Vous disposez d’un droit d’accès, de rectification, d’effacement, de limitation, d’opposition et de portabilité de vos données, ainsi que du droit de retirer votre consentement à tout moment. Pour les exercer, contactez-nous via le formulaire de contact.',
+          'Vous disposez d’un droit d’accès, de rectification, d’effacement, de limitation, d’opposition et de portabilité de vos données, ainsi que du droit de retirer votre consentement à tout moment. Pour les exercer, écrivez au responsable du traitement aux coordonnées indiquées ci-dessus.',
           'Vous pouvez également introduire une réclamation auprès de la CNIL (cnil.fr).',
         ],
       },

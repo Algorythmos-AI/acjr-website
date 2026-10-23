@@ -27,12 +27,23 @@ The site copy was checked line by line against `docs/source/statuts-ACJR.md` (th
 - [x] **Names:** the Bureau is shown family name first, as in the statutes. The Arabic name is spelled المركز الافريقي للحقوق والعدالة, as confirmed.
 - [x] **Draft news:** facts only. The founders' invented "conviction" is removed.
 
+## Launch blockers (legal: LCEN art. 6 III and GDPR art. 13)
+Until these are supplied, the legal notice and privacy policy say "à communiquer prochainement". Set the values in `src/config/site.ts`.
+- [ ] **A monitored contact email** (`site.email`). Without it, nobody can reach ACJR or exercise their GDPR rights.
+- [ ] **A publishable postal address** (`site.postalAddress`): the registered office or a domiciliation address. Associations cannot use the LCEN anonymity option.
+- [ ] **A publisher phone number** (`site.phone`).
+- [ ] **The host's phone number** (`site.host.phone`). Vercel does not publish one; confirm it with Vercel, or name a host that does.
+- [ ] **The Formspree endpoint** (`PUBLIC_FORMSPREE_ENDPOINT`, format `https://formspree.io/f/…`). Before activating it:
+  - confirm Formspree's legal basis for US transfers (DPF or SCCs) and add it to the privacy policy;
+  - turn off reCAPTCHA in the Formspree dashboard, because it sets third-party cookies and the no-JS fallback posts straight to formspree.io.
+- [ ] **Message retention**: confirm the 12-month period stated in the privacy policy.
+
 ## Client decisions (open)
-- [ ] Contact email, the Formspree endpoint (`PUBLIC_FORMSPREE_ENDPOINT`) and social accounts.
-- [ ] LCEN normally requires the publisher's full address on the legal notice. The site shows "Paris, France" only, by choice. Please confirm, or supply a postal address that can be published.
+- [ ] Social accounts.
 - [ ] Confirm the President as publication director (legal notice).
 - [ ] Whether to publish the annual accounts. The statutes don't require it.
 - [ ] Whether to publish the statutes PDF on the site.
 - [ ] Publish the two draft news items: set `draft: false` in `src/news/*/`.
 - [ ] Native-speaker review of the English and Arabic copy.
 - [ ] Photos for the hero and news (licensed; no images of victims), and founders' photos and bios.
+- [ ] Donation method.

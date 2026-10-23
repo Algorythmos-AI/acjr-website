@@ -15,7 +15,7 @@
     "check:links": "linkinator dist --recurse --skip \"^https://\"",
     "test:e2e": "playwright test",
     "check": "npm run check:types && npm run check:content && npm run check:contrast && npm run build && npm run build:drafts && npm run check:leaks && npm run check:html && npm run check:links && npm run test:e2e && npm run check:lighthouse",
-    "build:drafts": "SHOW_DRAFTS=1 astro build --outDir dist-drafts",
+    "build:drafts": "SHOW_DRAFTS=1 PUBLIC_FORMSPREE_ENDPOINT=https://formspree.io/f/test-endpoint astro build --outDir dist-drafts",
     "check:lighthouse": "node scripts/check-lighthouse.mjs"
   },
   "devDependencies": {
