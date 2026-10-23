@@ -17,18 +17,21 @@ import PageHeader from '../../components/PageHeader.astro';
 import { content } from '../../content';
 import { ui } from '../../i18n/ui';
 import { languages, pageKeys, slugs, type Lang, type PageKey } from '../../i18n/routes';
-import { PAGE_SIZE, allArticles, articleAlternates, articleLang, articleSlug, formatDate, newsPagePath, type Article } from '../../lib/news';
+import { PAGE_SIZE, allArticles, articleAlternates, articleLang, articleSlug, articleTranslations, formatDate, newsPagePath, type Article } from '../../lib/news';
 import { categoryLabel } from '../../lib/categories';
 
+type Listing = { articles: Article[]; page: number; totalPages: number };
 type Props =
-  | { kind: 'page'; lang: Lang; pageKey: PageKey; news?: { articles: Article[]; page: number; totalPages: number } }
-  | { kind: 'article'; lang: Lang; pageKey: 'news'; article: Article; related: Article[]; altPaths: Record<Lang, string> };
+  | { kind: 'page'; lang: Lang; pageKey: PageKey; news?: Listing; altPaths?: Record<Lang, string>; hreflangPaths?: Partial<Record<Lang, string>> }
+  | { kind: 'article'; lang: Lang; pageKey: 'news'; article: Article; related: Article[]; altPaths: Record<Lang, string>; hreflangPaths: Partial<Record<Lang, string>> };
 
 export async function getStaticPaths() {
   const articles = await allArticles();
+  const pageCount = (l: Lang) => Math.max(1, Math.ceil(articles.filter((a) => articleLang(a) === l).length / PAGE_SIZE));
+  const totals = Object.fromEntries(languages.map((l) => [l, pageCount(l)])) as Record<Lang, number>;
   return languages.flatMap((lang) => {
     const own = articles.filter((a) => articleLang(a) === lang);
-    const totalPages = Math.max(1, Math.ceil(own.length / PAGE_SIZE));
+    const totalPages = totals[lang];
     const newsSlug = slugs[lang].news;
 
     const pages = pageKeys.map((key) => ({
@@ -43,7 +46,16 @@ export async function getStaticPaths() {
     }));
     const listing = Array.from({ length: totalPages - 1 }, (_, i) => i + 2).map((page) => ({
       params: { lang, slug: `${newsSlug}/page/${page}` },
-      props: { kind: 'page' as const, lang, pageKey: 'news' as const, news: { articles: own.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE), page, totalPages } },
+      props: {
+        kind: 'page' as const,
+        lang,
+        pageKey: 'news' as const,
+        news: { articles: own.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE), page, totalPages },
+        // Another language may have fewer pages: the switcher falls back to its last page,
+        // and hreflang lists only languages that really have this page.
+        altPaths: Object.fromEntries(languages.map((l) => [l, newsPagePath(l, Math.min(page, totals[l]))])) as Record<Lang, string>,
+        hreflangPaths: Object.fromEntries(languages.filter((l) => totals[l] >= page).map((l) => [l, newsPagePath(l, page)])),
+      },
     }));
     const items = own.map((article) => ({
       params: { lang, slug: `${newsSlug}/${articleSlug(article)}` },
@@ -54,6 +66,7 @@ export async function getStaticPaths() {
         article,
         related: own.filter((a) => a !== article).slice(0, 2),
         altPaths: articleAlternates(article, articles),
+        hreflangPaths: articleTranslations(article, articles),
       },
     }));
     return [...pages, ...listing, ...items];
@@ -88,6 +101,7 @@ const View = pageKey in views ? views[pageKey as keyof typeof views] : null;
       title={props.article.data.title.length > 50 ? `${props.article.data.title.slice(0, 48)}…` : props.article.data.title}
       description={props.article.data.description}
       altPaths={props.altPaths}
+      hreflangPaths={props.hreflangPaths}
       ogType="article"
       noindex={props.article.data.draft}
     >
@@ -105,7 +119,8 @@ const View = pageKey in views ? views[pageKey as keyof typeof views] : null;
       pageKey={pageKey}
       title={props.news && props.news.page > 1 && pageKey === 'news' ? `${meta.title} (${props.news.page})` : meta.title}
       description={meta.description}
-      altPaths={pageKey === 'news' && props.news && props.news.page > 1 ? (Object.fromEntries(languages.map((l) => [l, newsPagePath(l, props.news!.page)])) as Record<Lang, string>) : undefined}
+      altPaths={props.altPaths}
+      hreflangPaths={props.hreflangPaths}
     >
       {pageKey !== 'home' && <PageHeader lang={lang} pageKey={pageKey} />}
       {pageKey === 'news' && props.news && <News lang={lang} {...props.news} />}

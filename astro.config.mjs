@@ -30,12 +30,11 @@ export default defineConfig({
   markdown: { syntaxHighlight: false },
   integrations: [
     frenchTypography(),
+    // No sitemap i18n option: it assumes the same slug in every language, which is wrong here.
+    // Each page declares its real alternates with <link rel="alternate" hreflang>.
+    // The root language chooser is left out because it is not a canonical page.
     sitemap({
-      filter: (page) => !page.includes('/_styleguide/'),
-      i18n: {
-        defaultLocale: 'fr',
-        locales: { fr: 'fr-FR', en: 'en', ar: 'ar' },
-      },
+      filter: (page) => new URL(page).pathname !== '/' && !page.includes('/_styleguide/'),
     }),
   ],
 });
