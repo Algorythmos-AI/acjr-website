@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import { languages, langMeta, pagePath, type PageKey } from '../i18n/routes';
+import { ui } from '../i18n/ui';
+import { content } from '../content';
+
+// A single static 404 serves every language, so it shows all three.
+const links: PageKey[] = ['home', 'about', 'work', 'contact'];
+---
+
+<Base lang="fr" pageKey={null} title={ui.fr.notFoundTitle} description={ui.fr.notFoundText} noindex>
+  <div class="page-body">
+    <div class="container nf">
+      {
+        languages.map((l) => (
+          <section lang={l} dir={langMeta[l].dir}>
+            <p class="nf-code" aria-hidden="true">404</p>
+            <h1>{ui[l].notFoundTitle}</h1>
+            <p>{ui[l].notFoundText}</p>
+            <ul class="plain-list nf-links">
+              {links.map((k) => <li><a href={pagePath(l, k)}>{content[l].nav[k]}</a></li>)}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</Base>
+
+<style>
+  .nf { display: grid; gap: var(--space-4); }
+  @media (min-width: 1024px) { .nf { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .nf section { padding: var(--space-3); border-top: var(--rule); background: var(--grey-50); }
+  .nf h1 { font-size: var(--fs-h2); }
+  .nf section[lang='ar'] h1 { font-family: var(--font-ar-serif); }
+  .nf section[lang='ar'] { font-family: var(--font-ar-sans); }
+  .nf-code { font: 900 3rem/1 var(--font-serif); color: var(--ochre-700); margin-bottom: var(--space-2); }
+  .nf-links li + li { margin-top: 0.5rem; }
+</style>

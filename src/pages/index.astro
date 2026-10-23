@@ -1,0 +1,43 @@
+---
+import '../styles/fonts.css';
+import '../styles/global.css';
+import { languages, langMeta, type Lang } from '../i18n/routes';
+import { content } from '../content';
+import { lockups } from '../config/brand';
+
+const siteUrl = Astro.site ?? new URL('https://acjr.vercel.app');
+const labels: Record<Lang, string> = { fr: 'Entrer sur le site en français', en: 'Enter the site in English', ar: 'الدخول إلى الموقع بالعربية' };
+---
+
+<!doctype html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ACJR — Centre Africain pour les Droits de la Justice</title>
+    <meta name="description" content={content.fr.meta.home.description} />
+    <link rel="canonical" href={new URL('/fr/', siteUrl).href} />
+    {languages.map((l) => <link rel="alternate" hreflang={langMeta[l].hreflang} href={new URL(`/${l}/`, siteUrl).href} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL('/fr/', siteUrl).href} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#0b2545" />
+    <script src="/lang-redirect.js" is:inline></script>
+  </head>
+  <body>
+    <main class="chooser">
+      <img src={lockups.fr.src} alt="ACJR — Centre Africain pour les Droits de la Justice" width="291" height="100" />
+      <ul class="plain-list">
+        {languages.map((l) => (
+          <li><a class="btn btn--block" href={`/${l}/`} lang={l} hreflang={langMeta[l].hreflang}>{labels[l]}</a></li>
+        ))}
+      </ul>
+    </main>
+  </body>
+</html>
+
+<style>
+  .chooser { min-height: 100vh; display: grid; place-content: center; gap: var(--space-4); padding: var(--space-3); border-top: var(--rule); }
+  .chooser img { margin-inline: auto; }
+  .chooser ul { display: grid; gap: var(--space-2); }
+  .chooser a[lang='ar'] { font-family: var(--font-ar-sans); }
+</style>

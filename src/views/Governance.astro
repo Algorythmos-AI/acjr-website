@@ -1,0 +1,65 @@
+---
+import Icon from '../components/Icon.astro';
+import { content } from '../content';
+import { pagePath, type Lang } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = content[lang];
+const g = c.governance;
+---
+
+<!-- Art. 11–15: governance -->
+<div class="page-body">
+  <div class="container">
+    <div class="prose">{g.intro.map((p) => <p class="lead">{p}</p>)}</div>
+
+    <section class="block" aria-labelledby="bureau-title">
+      <h2 id="bureau-title">{g.bureauTitle}</h2>
+      <p>{g.bureauLead}</p>
+      <ul class="bureau grid grid--3 plain-list">
+        {
+          g.bureau.map((m) => (
+            <li class="person">
+              <span class="person-avatar" aria-hidden="true"><Icon name="users" size={28} /></span>
+              <p class="person-name" dir="ltr" lang="fr">{m.name}</p>
+              <p class="person-role">{m.role}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="block" aria-labelledby="bodies-title">
+      <h2 id="bodies-title">{g.bodiesTitle}</h2>
+      <ul class="grid grid--3 plain-list">
+        {g.bodies.map((b) => (<li><div class="card"><h3>{b.title}</h3><p>{b.text}</p></div></li>))}
+      </ul>
+    </section>
+
+    <div class="grid grid--2 block">
+      <section aria-labelledby="volunteer-title" class="prose">
+        <h2 id="volunteer-title">{g.volunteerTitle}</h2>
+        {g.volunteer.map((p) => <p>{p}</p>)}
+        <p><a href={pagePath(lang, 'transparency')}>{c.nav.transparency}</a></p>
+      </section>
+      <section aria-labelledby="statutes-title" class="aside-box">
+        <h2 id="statutes-title">{g.statutesTitle}</h2>
+        <ul class="checklist">{g.statutes.map((s) => <li>{s}</li>)}</ul>
+        <p class="note">{g.statutesNote} <a href={pagePath(lang, 'contact')}>{c.nav.contact}</a></p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<style>
+  .block { margin-block: var(--space-5); }
+  .person { padding: var(--space-3); border: 1px solid var(--grey-200); border-top: var(--rule); text-align: center; }
+  .person-avatar { display: inline-grid; place-items: center; width: 4.5rem; height: 4.5rem; margin-bottom: var(--space-2); border-radius: 50%; background: var(--grey-50); color: var(--navy-900); }
+  .person-name { margin: 0; font: 700 1.125rem/1.4 var(--font-serif); color: var(--navy-900); unicode-bidi: isolate; }
+  .person-role { margin: 0; color: var(--grey-600); }
+  .note { font-size: var(--fs-small); color: var(--grey-600); margin: 0; }
+</style>

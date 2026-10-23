@@ -1,0 +1,32 @@
+---
+import Icon from '../components/Icon.astro';
+import { content } from '../content';
+import { pagePath, type Lang } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = content[lang];
+const n = c.news;
+---
+
+<!-- No articles are published yet. The listing and article template are added with the first real post. -->
+<div class="page-body">
+  <div class="container">
+    <div class="empty">
+      <Icon name="doc" size={40} />
+      <h2>{n.emptyTitle}</h2>
+      <p>{n.emptyText}</p>
+      <p>{n.followText}</p>
+      <a class="btn" href={pagePath(lang, 'contact')}>{c.nav.contact}</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .empty { max-width: 40rem; margin-inline: auto; padding: var(--space-5) var(--space-3); text-align: center; background: var(--grey-50); border-top: var(--rule); }
+  .empty :global(.icon) { margin: 0 auto var(--space-2); color: var(--blue-700); }
+  .empty h2 { font-size: var(--fs-h3); }
+</style>

@@ -1,0 +1,53 @@
+---
+import { content } from '../content';
+import { pagePath, type Lang } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = content[lang];
+const p = c.principles;
+---
+
+<!-- Art. 4: principles -->
+<div class="page-body">
+  <div class="container">
+    <p class="lead prose">{p.intro}</p>
+    <ol class="principles plain-list">
+      {
+        p.items.map((item, i) => (
+          <li>
+            <span class="principle-num" aria-hidden="true">{i + 1}</span>
+            <div>
+              <h2>{item.title}</h2>
+              <p>{item.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+    <p><a href={pagePath(lang, 'framework')}>{c.nav.framework}</a> · <a href={pagePath(lang, 'about')}>{c.nav.about}</a></p>
+  </div>
+</div>
+
+<style>
+  .principles { display: grid; gap: var(--space-3); margin-block: var(--space-4); }
+  @media (min-width: 1024px) {
+    .principles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .principles li:last-child { grid-column: 1 / -1; }
+  }
+  .principles li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-top: var(--rule);
+  }
+  .principle-num { font: 900 2.5rem/1 var(--font-serif); color: var(--ochre-700); min-width: 2ch; }
+  .principles h2 { font-size: var(--fs-h3); }
+  .principles p { margin: 0; }
+</style>

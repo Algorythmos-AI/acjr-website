@@ -1,0 +1,58 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Home from '../../views/Home.astro';
+import About from '../../views/About.astro';
+import Principles from '../../views/Principles.astro';
+import Framework from '../../views/Framework.astro';
+import Work from '../../views/Work.astro';
+import Advocacy from '../../views/Advocacy.astro';
+import Governance from '../../views/Governance.astro';
+import Transparency from '../../views/Transparency.astro';
+import News from '../../views/News.astro';
+import Involved from '../../views/Involved.astro';
+import Contact from '../../views/Contact.astro';
+import Sections from '../../views/Sections.astro';
+import { content } from '../../content';
+import { languages, pageKeys, slugs, type Lang, type PageKey } from '../../i18n/routes';
+
+export function getStaticPaths() {
+  return languages.flatMap((lang) =>
+    pageKeys.map((key) => ({
+      params: { lang, slug: slugs[lang][key] || undefined },
+      props: { lang, pageKey: key },
+    })),
+  );
+}
+
+interface Props {
+  lang: Lang;
+  pageKey: PageKey;
+}
+
+const { lang, pageKey } = Astro.props;
+const c = content[lang];
+const meta = c.meta[pageKey];
+
+const views = {
+  home: Home,
+  about: About,
+  principles: Principles,
+  framework: Framework,
+  work: Work,
+  advocacy: Advocacy,
+  governance: Governance,
+  transparency: Transparency,
+  news: News,
+  involved: Involved,
+  contact: Contact,
+} as const;
+const View = pageKey in views ? views[pageKey as keyof typeof views] : null;
+---
+
+<Base lang={lang} pageKey={pageKey} title={meta.title} description={meta.description}>
+  {pageKey !== 'home' && <PageHeader lang={lang} pageKey={pageKey} />}
+  {View && <View lang={lang} />}
+  {pageKey === 'legal' && <Sections sections={c.legal.sections} />}
+  {pageKey === 'privacy' && <Sections sections={c.privacy.sections} updated={c.privacy.updated} />}
+</Base>

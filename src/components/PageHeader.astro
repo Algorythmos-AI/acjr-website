@@ -1,0 +1,73 @@
+---
+import { breadcrumbs } from '../i18n/nav';
+import { ui } from '../i18n/ui';
+import { content } from '../content';
+import type { Lang, PageKey } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+  pageKey: PageKey;
+}
+
+const { lang, pageKey } = Astro.props;
+const meta = content[lang].meta[pageKey];
+const trail = breadcrumbs(lang, pageKey);
+---
+
+<div class="page-header on-dark">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label={ui[lang].breadcrumb}>
+      <ol>
+        {
+          trail.map((crumb, i) =>
+            i === trail.length - 1 ? (
+              <li aria-current="page">{crumb.label}</li>
+            ) : (
+              <li>
+                <a href={crumb.href}>{crumb.label}</a>
+              </li>
+            ),
+          )
+        }
+      </ol>
+    </nav>
+    <h1>{meta.title}</h1>
+    <hr class="rule-ochre" />
+    {meta.lead && <p class="page-lead">{meta.lead}</p>}
+  </div>
+</div>
+
+<style>
+  .page-header {
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgb(0 158 219 / 0.22), transparent 55%),
+      var(--navy-900);
+    color: var(--white);
+    padding-block: var(--space-3) var(--space-5);
+  }
+  :global([dir='rtl']) .page-header {
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgb(0 158 219 / 0.22), transparent 55%),
+      var(--navy-900);
+  }
+  .page-header h1 { color: var(--white); margin-top: var(--space-4); max-width: 22ch; }
+  .page-header .rule-ochre { margin-bottom: var(--space-2); }
+  .page-lead { font-size: var(--fs-lead); max-width: 46rem; margin: 0; color: rgb(255 255 255 / 0.9); }
+  .breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: var(--fs-small);
+    color: rgb(255 255 255 / 0.85);
+  }
+  .breadcrumbs li { margin: 0; }
+  .breadcrumbs li + li::before {
+    content: '/';
+    margin-inline: 0.5rem;
+    color: rgb(255 255 255 / 0.5);
+  }
+  .breadcrumbs a { color: var(--link-on-dark); }
+  .breadcrumbs a:hover { color: var(--white); }
+</style>

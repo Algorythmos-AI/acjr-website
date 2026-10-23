@@ -1,0 +1,218 @@
+---
+import Icon from '../components/Icon.astro';
+import { content } from '../content';
+import { pagePath, type Lang } from '../i18n/routes';
+import { site } from '../config/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = content[lang];
+const f = c.contact;
+const endpoint = site.formEndpoint;
+---
+
+<div class="page-body">
+  <div class="container layout-aside">
+    <div>
+      <!-- Art. 4.5 and Art. 20: protection of sources -->
+      <section class="notice notice--warn safety" aria-labelledby="safety-title">
+        <Icon name="shield" size={24} />
+        <div>
+          <h2 id="safety-title">{f.safetyTitle}</h2>
+          <ul>{f.safety.map((s) => <li>{s}</li>)}</ul>
+        </div>
+      </section>
+
+      <section class="form-section" aria-labelledby="form-title">
+        <h2 id="form-title">{f.formTitle}</h2>
+        <p>{f.intro}</p>
+        {!endpoint && (
+          <div class="notice" role="note">
+            <Icon name="alert" size={22} />
+            <p>{f.inactive}</p>
+          </div>
+        )}
+
+        <div class="error-summary" role="alert" tabindex="-1" hidden>
+          <h3>{f.errorSummary}</h3>
+          <ul></ul>
+        </div>
+        <div class="form-status" role="status" aria-live="polite"></div>
+
+        <form
+          class="contact-form"
+          method="post"
+          action={endpoint ?? undefined}
+          data-endpoint={endpoint ?? ''}
+          data-msg-success={f.success}
+          data-msg-failure={f.failure}
+          data-msg-inactive={f.inactive}
+          data-msg-sending={f.sending}
+        >
+          <div class="field">
+            <label for="cf-name">{f.fields.name} <span class="req">({f.required})</span></label>
+            <p class="field-error" id="cf-name-error" hidden>{f.errors.name}</p>
+            <input id="cf-name" name="name" type="text" autocomplete="name" required aria-describedby="cf-name-error" />
+          </div>
+          <div class="field">
+            <label for="cf-email">{f.fields.email} <span class="req">({f.required})</span></label>
+            <p class="field-error" id="cf-email-error" hidden>{f.errors.email}</p>
+            <input id="cf-email" name="email" type="email" autocomplete="email" required dir="ltr" aria-describedby="cf-email-error" />
+          </div>
+          <div class="field">
+            <label for="cf-subject">{f.fields.subject}</label>
+            <select id="cf-subject" name="subject">
+              {f.subjects.map((s) => <option value={s}>{s}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="cf-message">{f.fields.message} <span class="req">({f.required})</span></label>
+            <p class="field-error" id="cf-message-error" hidden>{f.errors.message}</p>
+            <textarea id="cf-message" name="message" rows="7" required aria-describedby="cf-message-error"></textarea>
+          </div>
+          <div class="hp" aria-hidden="true">
+            <label for="cf-website">Website</label>
+            <input id="cf-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <div class="field field--check">
+            <p class="field-error" id="cf-consent-error" hidden>{f.errors.consent}</p>
+            <input id="cf-consent" name="consent" type="checkbox" value="yes" required aria-describedby="cf-consent-error cf-consent-help" />
+            <label for="cf-consent">{f.fields.consent}</label>
+            <p id="cf-consent-help" class="help"><a href={pagePath(lang, 'privacy')}>{f.privacyLink}</a></p>
+          </div>
+          <input type="hidden" name="language" value={lang} />
+          <button class="btn btn--block" type="submit">{f.submit}</button>
+        </form>
+      </section>
+    </div>
+
+    <aside class="aside-stack">
+      <div class="aside-box">
+        <h2><Icon name="pin" size={20} /> {f.locationTitle}</h2>
+        <p>{f.location}</p>
+      </div>
+      <div class="aside-box">
+        <h2><Icon name="mail" size={20} /> {f.emailTitle}</h2>
+        {site.email ? <p><a href={`mailto:${site.email}`} dir="ltr">{site.email}</a></p> : <p>{f.emailPending}</p>}
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('.contact-form');
+  const summary = document.querySelector<HTMLElement>('.error-summary');
+  const status = document.querySelector<HTMLElement>('.form-status');
+
+  if (form && summary && status) {
+    form.noValidate = true;
+    const fields = ['name', 'email', 'message', 'consent'] as const;
+
+    const isValid = (el: HTMLInputElement | HTMLTextAreaElement) => {
+      if (el instanceof HTMLInputElement && el.type === 'checkbox') return el.checked;
+      if (el.type === 'email') return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+      return el.value.trim().length > 0;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      status.textContent = '';
+      const list = summary.querySelector('ul')!;
+      list.replaceChildren();
+      let firstInvalid: HTMLElement | null = null;
+
+      for (const name of fields) {
+        const el = form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement;
+        const error = document.getElementById(`${el.id}-error`)!;
+        const ok = isValid(el);
+        error.hidden = ok;
+        el.setAttribute('aria-invalid', String(!ok));
+        if (!ok) {
+          firstInvalid ??= el;
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = `#${el.id}`;
+          a.textContent = error.textContent;
+          a.addEventListener('click', (e) => {
+            e.preventDefault();
+            el.focus();
+          });
+          li.append(a);
+          list.append(li);
+        }
+      }
+
+      if (firstInvalid) {
+        summary.hidden = false;
+        summary.focus();
+        return;
+      }
+      summary.hidden = true;
+
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) {
+        status.textContent = form.dataset.msgInactive ?? '';
+        return;
+      }
+
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      const label = button.textContent;
+      button.disabled = true;
+      button.textContent = form.dataset.msgSending ?? '';
+      try {
+        const res = await fetch(endpoint, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        status.textContent = form.dataset.msgSuccess ?? '';
+        status.classList.add('is-success');
+      } catch {
+        status.textContent = form.dataset.msgFailure ?? '';
+        status.classList.remove('is-success');
+      } finally {
+        button.disabled = false;
+        button.textContent = label;
+      }
+    });
+  }
+</script>
+
+<style>
+  .safety { margin-bottom: var(--space-5); }
+  .safety h2 { font-size: 1.25rem; margin-bottom: var(--space-1); }
+  .safety ul { margin: 0; }
+  .form-section > .notice { margin-bottom: var(--space-3); }
+  .contact-form { display: grid; gap: var(--space-3); max-width: 40rem; }
+  .field { display: grid; gap: 0.375rem; }
+  .field label { font-weight: 700; color: var(--navy-900); }
+  .req { font-weight: 400; color: var(--grey-600); font-size: var(--fs-small); }
+  .field input:not([type='checkbox']), .field select, .field textarea {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.625rem 0.75rem;
+    border: 2px solid var(--grey-600);
+    border-radius: var(--radius);
+    background: var(--white);
+    color: var(--ink);
+    font: inherit;
+  }
+  .field textarea { resize: vertical; }
+  .field [aria-invalid='true'] { border-color: var(--error); }
+  .field-error { margin: 0; color: var(--error); font-weight: 700; }
+  .field--check { grid-template-columns: auto 1fr; align-items: start; column-gap: var(--space-2); }
+  .field--check .field-error, .field--check .help { grid-column: 1 / -1; }
+  .field--check input { width: 1.5rem; height: 1.5rem; margin-top: 0.15rem; accent-color: var(--blue-700); }
+  .field--check label { font-weight: 400; color: var(--ink); }
+  .help { margin: 0; font-size: var(--fs-small); }
+  .hp { position: absolute; inset-inline-start: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .error-summary { margin-bottom: var(--space-3); padding: var(--space-3); border: 3px solid var(--error); }
+  .error-summary h3 { font-family: var(--font-sans); font-size: 1.125rem; color: var(--error); }
+  .error-summary ul { margin: 0; }
+  .error-summary a { color: var(--error); font-weight: 700; }
+  .form-status:not(:empty) { margin-bottom: var(--space-3); padding: var(--space-2) var(--space-3); background: var(--grey-50); border-inline-start: 4px solid var(--blue-700); font-weight: 700; }
+  .form-status.is-success { border-inline-start-color: var(--success); color: var(--success); }
+  .aside-stack { display: grid; gap: var(--space-3); align-content: start; }
+  .aside-box h2 { display: flex; align-items: center; gap: 0.5rem; }
+</style>
