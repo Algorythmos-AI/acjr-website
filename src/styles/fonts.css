@@ -1,0 +1,14 @@
+/* Self-hosted fonts (no third-party requests). Only the weights and subsets the site uses. */
+@import '@fontsource/merriweather/latin-700.css';
+@import '@fontsource/merriweather/latin-ext-700.css';
+@import '@fontsource/merriweather/latin-900.css';
+@import '@fontsource/merriweather/latin-ext-900.css';
+@import '@fontsource/roboto/latin-400.css';
+@import '@fontsource/roboto/latin-ext-400.css';
+@import '@fontsource/roboto/latin-500.css';
+@import '@fontsource/roboto/latin-ext-500.css';
+@import '@fontsource/roboto/latin-700.css';
+@import '@fontsource/roboto/latin-ext-700.css';
+@import '@fontsource/noto-naskh-arabic/arabic-700.css';
+@import '@fontsource/noto-sans-arabic/arabic-400.css';
+@import '@fontsource/noto-sans-arabic/arabic-700.css';
