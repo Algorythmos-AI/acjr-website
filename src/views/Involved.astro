@@ -36,12 +36,14 @@ const icons = ['heart', 'handshake', 'shield'] as const;
     <section class="block" aria-labelledby="membership-title">
       <h2 id="membership-title">{v.membershipTitle}</h2>
       <p>{v.membershipLead}</p>
-      <ul class="grid grid--3 plain-list">
+      <ul class="grid grid--4 plain-list">
         {v.categories.map((cat) => (<li><div class="card"><h3>{cat.title}</h3><p>{cat.text}</p></div></li>))}
       </ul>
       <div class="prose admission">
         <h3>{v.admissionTitle}</h3>
         {v.admission.map((p) => <p>{p}</p>)}
+        <h3>{v.lossTitle}</h3>
+        {v.loss.map((p) => <p>{p}</p>)}
         <a class="btn" href={pagePath(lang, 'contact')}>{c.home.involvedCta}</a>
       </div>
     </section>

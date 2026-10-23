@@ -27,16 +27,28 @@ const g = c.governance;
               <span class="person-avatar" aria-hidden="true"><Icon name="users" size={28} /></span>
               <p class="person-name" dir="ltr" lang="fr">{m.name}</p>
               <p class="person-role">{m.role}</p>
+              <p class="person-duty">{m.duty}</p>
             </li>
           ))
         }
       </ul>
+      <p class="note bureau-note">{g.bureauNote}</p>
     </section>
 
     <section class="block" aria-labelledby="bodies-title">
       <h2 id="bodies-title">{g.bodiesTitle}</h2>
-      <ul class="grid grid--3 plain-list">
-        {g.bodies.map((b) => (<li><div class="card"><h3>{b.title}</h3><p>{b.text}</p></div></li>))}
+      <ul class="grid grid--2 plain-list">
+        {
+          g.bodies.map((b) => (
+            <li>
+              <div class="card">
+                <h3>{b.title}</h3>
+                <p>{b.text}</p>
+                <ul class="facts">{b.facts.map((f) => <li>{f}</li>)}</ul>
+              </div>
+            </li>
+          ))
+        }
       </ul>
     </section>
 
@@ -60,6 +72,10 @@ const g = c.governance;
   .person { padding: var(--space-3); border: 1px solid var(--grey-200); border-top: var(--rule); text-align: center; }
   .person-avatar { display: inline-grid; place-items: center; width: 4.5rem; height: 4.5rem; margin-bottom: var(--space-2); border-radius: 50%; background: var(--grey-50); color: var(--navy-900); }
   .person-name { margin: 0; font: 700 1.125rem/1.4 var(--font-serif); color: var(--navy-900); unicode-bidi: isolate; }
-  .person-role { margin: 0; color: var(--grey-600); }
+  .person-role { margin: 0; color: var(--blue-700); font-weight: 700; }
+  .person-duty { margin: var(--space-1) 0 0; color: var(--grey-600); font-size: 1rem; }
+  .bureau-note { margin-top: var(--space-2); }
+  .facts { display: flex; flex-wrap: wrap; gap: var(--space-1); list-style: none; padding: 0; margin: var(--space-2) 0 0; }
+  .facts li { margin: 0; padding: 0.25rem 0.625rem; background: var(--blue-50); color: var(--navy-900); font-size: var(--fs-small); font-weight: 500; }
   .note { font-size: var(--fs-small); color: var(--grey-600); margin: 0; }
 </style>

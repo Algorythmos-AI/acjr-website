@@ -7,6 +7,8 @@ category: association
 draft: true
 ---
 
-Le 25 avril 2024, des personnes engagées pour la paix et les droits humains en Afrique ont fondé à Paris l’association « Paix et la Transition Démocratique », régie par la loi du 1er juillet 1901.
+Le 25 avril 2024, l’association « Paix et la Transition Démocratique » a été constituée à Paris, sous le régime de la loi du 1er juillet 1901.
 
-Ses fondateurs partageaient une conviction : il n’y a pas de paix durable sans vérité, sans justice et sans institutions démocratiques. Cette conviction se retrouve aujourd’hui dans l’objectif de justice transitionnelle de l’ACJR.
+Ses trois membres fondateurs, signataires de l’acte constitutif, sont ABDELRAHIM GREIN Sadam, MAHMUD MOHAMED Hruia et EL TAHER AISSA Issam.
+
+En septembre 2026, l’association a adopté de nouveaux statuts et pris le nom d’African Center for Justice Rights (ACJR), dont elle constitue la continuation juridique. La justice transitionnelle reste l’un de ses six objectifs stratégiques.

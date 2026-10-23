@@ -4,7 +4,7 @@ import { join } from 'node:path';
 
 const root = new URL('../dist/', import.meta.url).pathname;
 // Draft articles must never reach production: their badge class and labels are forbidden too.
-const forbidden = [/draft-badge/, /Brouillon — exemple/, /Draft — sample/, /recepisse/i, /récépissé/i, /PV_AGE/i, /\bLoeb\b/i, /nations unies/i, /united nations emblem/i, /\bONU\b/];
+const forbidden = [/statuts-ACJR/i, /Adresse retirée/, /onu-info-(header|footer)/, /draft-badge/, /Brouillon — exemple/, /Draft — sample/, /recepisse/i, /récépissé/i, /PV_AGE/i, /\bLoeb\b/i, /nations unies/i, /united nations emblem/i, /\bONU\b/];
 
 const problems = [];
 function walk(dir) {
@@ -13,7 +13,8 @@ function walk(dir) {
     if (statSync(path).isDirectory()) walk(path);
     else if (/\.pdf$/i.test(name)) problems.push(`PDF file published: ${path}`);
     else if (/\.(html|xml|txt|js|json|svg)$/.test(name)) {
-      const text = readFileSync(path, 'utf8');
+      // The preamble cites the UN Charter by its official French title; that is a reference, not a wordmark.
+      const text = readFileSync(path, 'utf8').replaceAll('Charte des Nations Unies', '');
       for (const re of forbidden) if (re.test(text)) problems.push(`${re} found in ${path.replace(root, 'dist/')}`);
     }
   }
