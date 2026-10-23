@@ -16,7 +16,8 @@
     "check:html": "html-validate \"dist/**/*.html\" \"dist-drafts/**/*.html\" \"dist-fixtures/**/*.html\"",
     "check:leaks": "node scripts/check-leaks.mjs",
     "check:csp": "node scripts/check-csp.mjs",
-    "check:links": "linkinator dist --recurse --skip \"^https://\"",
+    "check:links": "node scripts/check-links.mjs",
+    "check:external-links": "node scripts/check-links.mjs && node scripts/check-external-links.mjs",
     "test:e2e": "playwright test",
     "check": "npm run check:types && npm run check:content && npm run check:contrast && npm run build && npm run build:drafts && npm run build:fixtures && npm run check:leaks && npm run check:csp && npm run check:html && npm run check:links && npm run test:e2e && npm run check:lighthouse",
     "build:fixtures": "node scripts/make-news-fixtures.mjs && NEWS_DIR=./.fixtures/news astro build --outDir dist-fixtures",
@@ -29,7 +30,6 @@
     "@playwright/test": "^1.64.1",
     "html-validate": "^11.17.0",
     "lighthouse": "^12.8.2",
-    "linkinator": "^8.1.0",
     "typescript": "^6.0.3"
   },
   "dependencies": {

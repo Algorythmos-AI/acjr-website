@@ -28,12 +28,16 @@ test.describe('every page', () => {
   }
 });
 
-test('Arabic pages are right-to-left', async ({ page }) => {
-  await page.goto('/ar/');
-  await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
-  const brand = await page.locator('.brand').boundingBox();
-  const width = page.viewportSize()!.width;
-  expect(brand!.x + brand!.width / 2).toBeGreaterThan(width / 2);
+test.describe('Arabic pages are right-to-left', () => {
+  for (const key of pageKeys) {
+    test(`ar/${key}`, async ({ page }) => {
+      await page.goto(pagePath('ar', key));
+      await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+      const brand = await page.locator('.brand').boundingBox();
+      const width = page.viewportSize()!.width;
+      expect(brand!.x + brand!.width / 2, 'logo sits on the right').toBeGreaterThan(width / 2);
+    });
+  }
 });
 
 test('language switcher keeps the same page', async ({ page }) => {
@@ -42,6 +46,69 @@ test('language switcher keeps the same page', async ({ page }) => {
   await expect(page).toHaveURL(/\/en\/governance\/$/);
   await page.locator('.lang-switch a[lang="ar"]').click();
   await expect(page).toHaveURL(/\/ar\/governance\/$/);
+});
+
+test('every page links each language to the same page', async ({ page }) => {
+  for (const { lang, key, path } of allPages) {
+    await page.goto(path);
+    for (const other of languages) {
+      if (other === lang) continue;
+      await expect(page.locator(`.lang-switch a[lang="${other}"]`), `${path} → ${other}`).toHaveAttribute('href', pagePath(other, key));
+    }
+  }
+});
+
+test.describe('404 page', () => {
+  for (const path of ['/fr/introuvable/', '/en/missing-page/', '/ar/missing-page/']) {
+    test(`${path} returns 404 with links in every language`, async ({ page }) => {
+      const res = await page.goto(path);
+      expect(res?.status()).toBe(404);
+      await expect(page.locator('h1')).toHaveCount(1);
+      for (const l of languages) {
+        const home = page.locator(`section[lang="${l}"] a[href="${pagePath(l, 'home')}"]`);
+        await expect(home).toBeVisible();
+      }
+    });
+  }
+});
+
+test.describe('root redirect follows the browser language', () => {
+  const cases: [string, string][] = [['fr-FR', '/fr/'], ['en-GB', '/en/'], ['ar-EG', '/ar/'], ['de-DE', '/fr/']];
+  for (const [locale, target] of cases) {
+    test(`${locale} → ${target}`, async ({ browser }) => {
+      const context = await browser.newContext({ locale });
+      const page = await context.newPage();
+      await page.goto('/');
+      await expect(page).toHaveURL(new RegExp(`${target}$`));
+      await context.close();
+    });
+  }
+});
+
+test('the skip link is the first Tab stop and moves focus to the content', async ({ page }) => {
+  await page.goto('/en/about/');
+  await page.keyboard.press('Tab');
+  const skip = page.locator('.skip-link');
+  await expect(skip).toBeFocused();
+  await expect(skip).toBeVisible();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#main')).toBeFocused();
+});
+
+test('mobile menu: closed links are unreachable, opened links come next in Tab order', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'desktop', 'the menu button only exists below 1024px');
+  await page.goto('/en/');
+  const menu = page.locator('.nav-toggle');
+  // On small screens each section heading is an accordion button, so look for any visible control.
+  const nav = page.locator('#site-nav');
+  await expect(nav).toBeHidden();
+  await menu.focus();
+  await page.keyboard.press('Enter');
+  await expect(nav.locator('a:visible, button:visible').first()).toBeVisible();
+  // The open menu follows the button in the DOM, so the next Tab stops inside it.
+  await page.keyboard.press('Tab');
+  const focusedInNav = await page.evaluate(() => !!document.activeElement?.closest('#site-nav'));
+  expect(focusedInNav).toBe(true);
 });
 
 test('navigation works by keyboard', async ({ page }, testInfo) => {
