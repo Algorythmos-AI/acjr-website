@@ -230,7 +230,7 @@ export const en: Content = {
     timeline: [
       { date: '25 April 2024', title: 'Founded', text: '« Paix et la Transition Démocratique » is created in Paris.' },
       { date: '17 September 2026', title: 'New statutes', text: 'Statutes of the African Center for Justice Rights adopted.' },
-      { date: '30 September 2026', title: 'Registered', text: 'Prefecture receipt issued — RNA W751274196.' },
+      { date: '30 September 2026', title: 'Registered', text: 'Change registered with the prefecture — RNA W751274196.' },
     ],
     visionTitle: 'Our vision',
     vision: 'An Africa where justice, human dignity and the rule of law are guaranteed for everyone, and where no serious violation goes unpunished.',

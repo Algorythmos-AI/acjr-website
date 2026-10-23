@@ -23,15 +23,15 @@ UN blue `#009EDB` on white is only **3.04:1**, which fails AA for body text. Usi
 | Token | Hex | Role | Contrast |
 |---|---|---|---|
 | `--blue-500` "UN-spirit blue" | `#009EDB` | Decorative only: 4px top rules, icons, hero accents, focus-ring outer | 5.07:1 on navy |
-| `--blue-700` "ACJR blue" (primary) | `#0077B8` | Buttons, links, active nav. This is the tweak: deeper and more judicial | **4.85:1** with white ✔ |
-| `--blue-800` | `#006DA8` | Button hover and visited links | 5.6:1 ✔ |
+| `--blue-700` "ACJR blue" (primary) | `#0070AD` | Buttons, links, active nav (was `#0077B8`, which failed AA on the grey and pale-blue bands) | **5.36:1** with white, 4.77:1 on `--blue-50` ✔ |
+| `--blue-800` | `#00609A` | Button hover | 6.5:1 ✔ |
 | `--navy-900` | `#0B2545` | Utility bar, hero overlay, page-header band | 15.4:1 ✔ |
 | `--charcoal` | `#333333` | Footer and date strips (straight from ONU Info) | 12.6:1 ✔ |
 | `--ink` | `#222222` | Body text | 14.4:1 on `--grey-50` ✔ |
 | `--grey-600` | `#4D4D4D` | Meta text and captions | 8.45:1 ✔ |
 | `--grey-50` / `--grey-200` | `#F2F4F7` / `#D9DEE5` | Section bands, borders | – |
 | `--ochre-500` "African gold" | `#C8963E` | Accent rules, numerals and the logo detail **on dark backgrounds only** | 5.78:1 on navy ✔ (2.66 on white ✘) |
-| `--ochre-700` | `#9A6B1F` | Ochre text on white when needed | 4.67:1 ✔ |
+| `--ochre-700` | `#8F631D` | Ochre text on white or grey (was `#9A6B1F`, 4.24:1 on grey) | 5.29:1 ✔ |
 | `--link-on-dark` | `#7FD3F7` | Links in the footer and navy bands | 7.56:1 on charcoal ✔ |
 
 The tokens live in `src/styles/tokens.css`. A unit test (see §6) recomputes every declared foreground/background pair, so no regression can slip in.

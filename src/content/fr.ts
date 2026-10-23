@@ -185,7 +185,7 @@ export const fr: Content = {
       short: 'Soutenir les défenseurs, avocats et journalistes menacés en raison de leur travail.',
       body: [
         "Les défenseurs des droits humains, les avocats et les journalistes paient souvent un lourd tribut pour leur engagement : menaces, détentions arbitraires, disparitions.",
-        "L'ACJR alerte, mobilise et accompagne, en s’appuyant sur la Déclaration des Nations Unies sur les défenseurs des droits de l’homme et sur les mécanismes de protection existants.",
+        "L'ACJR alerte, mobilise et accompagne, en s’appuyant sur la Déclaration de 1998 sur les défenseurs des droits de l’homme et sur les mécanismes de protection existants.",
       ],
       points: [
         'Alertes et appels urgents',
@@ -235,7 +235,7 @@ export const fr: Content = {
     timeline: [
       { date: '25 avril 2024', title: 'Fondation', text: 'Création à Paris de « Paix et la Transition Démocratique ».' },
       { date: '17 septembre 2026', title: 'Nouveaux statuts', text: 'Adoption des statuts du Centre Africain pour les Droits de la Justice.' },
-      { date: '30 septembre 2026', title: 'Enregistrement', text: 'Récépissé de la préfecture — RNA W751274196.' },
+      { date: '30 septembre 2026', title: 'Enregistrement', text: 'Modification enregistrée en préfecture — RNA W751274196.' },
     ],
     visionTitle: 'Notre vision',
     vision: 'Une Afrique où la justice, la dignité humaine et l’état de droit sont garantis à chacun, et où aucune violation grave ne reste impunie.',
@@ -323,7 +323,7 @@ export const fr: Content = {
     intro: [
       'Les faits documentés n’ont de valeur que s’ils parviennent à celles et ceux qui peuvent agir. L’ACJR dialogue avec les mécanismes internationaux et régionaux de protection des droits humains et contribue à leurs travaux, en toute indépendance.',
     ],
-    unTitle: 'Le système des droits humains des Nations Unies',
+    unTitle: 'Le système onusien des droits de l’homme',
     unLead: 'Nous contribuons aux travaux des mécanismes onusiens ouverts à la société civile.',
     un: [
       { title: 'Conseil des droits de l’homme', text: 'Déclarations, participation aux sessions et organisation d’événements parallèles à Genève.' },
@@ -342,7 +342,7 @@ export const fr: Content = {
     networks: [
       'L’ACJR coopère avec des organisations de la société civile africaines et internationales, des barreaux, des universités et des médias, afin de mutualiser l’expertise et d’amplifier la voix des victimes.',
     ],
-    note: 'L’ACJR est une organisation indépendante. Sa participation à ces mécanismes n’implique aucune affiliation à l’Organisation des Nations Unies, à l’Union africaine ou à leurs organes.',
+    note: 'L’ACJR est une organisation indépendante. Sa participation à ces mécanismes n’implique aucune affiliation au système onusien, à l’Union africaine ou à leurs organes.',
   },
 
   // Art. 11–15 — governance
@@ -372,7 +372,7 @@ export const fr: Content = {
       'Préambule et références juridiques internationales',
       'Dénomination, siège à Paris et durée (art. 1 à 3)',
       'Principes (art. 4), vision et mission (art. 5), objectifs (art. 6)',
-      'Engagement auprès des Nations Unies et du système africain (art. 7 et 8)',
+      'Engagement auprès du système onusien et du système africain (art. 7 et 8)',
       'Membres, admission et perte de la qualité de membre (art. 9 et 10)',
       'Gouvernance (art. 11 à 15)',
       'Ressources, indépendance financière et comptes (art. 16 à 18)',
@@ -510,7 +510,7 @@ export const fr: Content = {
       {
         title: 'Indépendance',
         body: [
-          'L’ACJR est une organisation indépendante. Les références faites sur ce site aux Nations Unies, à l’Union africaine ou à leurs organes décrivent des mécanismes avec lesquels l’association interagit ; elles n’impliquent aucune affiliation ni aucun soutien de leur part.',
+          'L’ACJR est une organisation indépendante. Les références faites sur ce site au système onusien, à l’Union africaine ou à leurs organes décrivent des mécanismes avec lesquels l’association interagit ; elles n’impliquent aucune affiliation ni aucun soutien de leur part.',
         ],
       },
     ],

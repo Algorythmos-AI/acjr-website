@@ -12,7 +12,7 @@
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:html": "html-validate \"dist/**/*.html\"",
     "check:leaks": "node scripts/check-leaks.mjs",
-    "check:links": "linkinator dist --recurse --skip \"^https?://\"",
+    "check:links": "linkinator dist --recurse --skip \"^https://\"",
     "test:e2e": "playwright test",
     "check": "npm run check:types && npm run check:content && npm run check:contrast && npm run build && npm run check:leaks && npm run check:html && npm run check:links && npm run test:e2e"
   },

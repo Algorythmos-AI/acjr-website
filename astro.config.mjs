@@ -9,6 +9,23 @@ export default defineConfig({
   site,
   trailingSlash: 'always',
   build: { format: 'directory' },
+  security: {
+    // Emits a CSP <meta> with hashes for every inline script and style. Header-only
+    // directives (frame-ancestors, HSTS…) are set in vercel.json.
+    csp: {
+      algorithm: 'SHA-256',
+      directives: [
+        "default-src 'self'",
+        "img-src 'self' data:",
+        "font-src 'self'",
+        "connect-src 'self' https://formspree.io",
+        "form-action 'self' https://formspree.io",
+        "base-uri 'self'",
+        "object-src 'none'",
+      ],
+    },
+  },
+  markdown: { syntaxHighlight: false },
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/_styleguide/'),
