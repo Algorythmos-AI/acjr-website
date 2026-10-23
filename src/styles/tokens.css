@@ -24,6 +24,8 @@
   --font-sans: 'Roboto', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
   --font-ar-serif: 'Noto Naskh Arabic', 'Geeza Pro', 'Arabic Typesetting', serif;
   --font-ar-sans: 'Noto Sans Arabic', 'Geeza Pro', Tahoma, sans-serif;
+  /* For the few Arabic words on French and English pages, so they don't download Arabic web fonts. */
+  --font-ar-system: 'Geeza Pro', 'Segoe UI', 'Noto Sans Arabic UI', Tahoma, sans-serif;
 
   --fs-small: 0.9375rem;
   --fs-body: 1.125rem;
