@@ -1,0 +1,27 @@
+{
+  "name": "acjr-website",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check:types": "astro check",
+    "check:content": "node scripts/check-parity.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check:html": "html-validate \"dist/**/*.html\"",
+    "check:leaks": "node scripts/check-leaks.mjs",
+    "check:links": "linkinator dist --recurse --skip \"^https?://\"",
+    "test:e2e": "playwright test",
+    "check": "npm run check:types && npm run check:content && npm run check:contrast && npm run build && npm run check:leaks && npm run check:html && npm run check:links && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
+    "html-validate": "^11.17.0",
+    "linkinator": "^8.1.0",
+    "typescript": "^6.0.3"
+  }
+}
