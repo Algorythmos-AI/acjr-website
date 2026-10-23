@@ -93,7 +93,8 @@ const next: PageKey[] = ['principles', 'framework', 'governance', 'transparency'
   :global(:lang(ar)) .vision { font-family: var(--font-ar-serif); }
   .aside-stack { display: grid; gap: var(--space-3); align-content: start; }
   .names li { padding-block: 0.5rem; border-bottom: 1px solid var(--grey-200); }
-  .names li[lang='ar'] { font-family: var(--font-ar-sans); text-align: start; }
+  .names li[lang='ar'] { font-family: var(--font-ar-system); text-align: start; }
+  :global(html[lang='ar']) .names li[lang='ar'] { font-family: var(--font-ar-sans); }
   .names span { color: var(--grey-600); }
   .next-links a { display: flex; justify-content: space-between; align-items: center; padding-block: 0.5rem; font-weight: 500; }
   .fact-gap { margin-top: var(--space-5); }

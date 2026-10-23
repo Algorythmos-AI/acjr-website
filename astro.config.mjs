@@ -35,6 +35,12 @@ export default defineConfig({
     },
   },
   markdown: { syntaxHighlight: false },
+  vite: {
+    build: {
+      // Never inline fonts as data: URLs; the CSP allows fonts from 'self' only.
+      assetsInlineLimit: (file) => (/\.(woff2?|ttf|otf)$/.test(file) ? false : undefined),
+    },
+  },
   integrations: [
     frenchTypography(),
     // No sitemap i18n option: it assumes the same slug in every language, which is wrong here.
