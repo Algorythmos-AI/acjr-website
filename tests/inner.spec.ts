@@ -38,6 +38,26 @@ test.describe('"On this page" list', () => {
     }
   }
 
+  test('after a jump, scrolling by hand moves the mark again', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'sections are marked on desktop only');
+    await page.goto('/en/what-we-do/');
+    const links = page.locator('.page-toc-list a');
+    await links.first().click();
+    await expect(links.first()).toHaveAttribute('aria-current', 'location');
+    // Let the jump's smooth scroll finish, as a reader would, before scrolling by hand.
+    let last = -1;
+    await expect.poll(async () => {
+      const y = await page.evaluate(() => scrollY);
+      const settled = y === last;
+      last = y;
+      return settled;
+    }, { intervals: [200] }).toBe(true);
+    await page.mouse.move(400, 400);
+    for (let i = 0; i < 8; i++) await page.mouse.wheel(0, 600);
+    await expect(links.first()).not.toHaveAttribute('aria-current', 'location');
+    await expect(page.locator('.page-toc-list a[aria-current]')).toHaveCount(1);
+  });
+
   test('the desktop list stays in view while reading', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'the list is a sticky sidebar from 1024px');
     await page.goto('/en/what-we-do/');
