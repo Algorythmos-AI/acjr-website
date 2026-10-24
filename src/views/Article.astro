@@ -29,13 +29,13 @@ const { Content } = await render(article);
         </div>
       )}
       <Content />
-      <div class="share" data-copied={t.linkCopied}>
+      <div class="share" data-pagefind-ignore data-copied={t.linkCopied}>
         <button class="btn btn--ghost share-btn" type="button"><Icon name="external" size={18} />{t.share}</button>
         <p class="share-status" role="status"></p>
       </div>
       {
         (newer || older) && (
-          <nav class="pager" aria-label={t.latestNews}>
+          <nav class="pager" data-pagefind-ignore aria-label={t.latestNews}>
             {newer && (
               <a class="pager-link pager-newer" href={newsPath(lang, articleSlug(newer))}>
                 <span class="pager-label">{t.newerArticle}</span>
@@ -57,7 +57,7 @@ const { Content } = await render(article);
     </article>
     {
       related.length > 0 && (
-        <aside aria-labelledby="related-title">
+        <aside aria-labelledby="related-title" data-pagefind-ignore>
           <h2 id="related-title" class="related-title">{t.latestNews}</h2>
           <ul class="plain-list related">
             {related.map((a) => (

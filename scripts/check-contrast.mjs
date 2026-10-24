@@ -32,6 +32,8 @@ const pairs = [
   ['ochre-700', 'ochre-50', 3, 'large principle numerals on the ochre band'],
   ['grey-600', 'blue-50', 4.5, 'menu descriptions on hover'],
   ['error', 'white', 4.5, 'form errors'],
+  ['white', 'error', 4.5, 'quick-exit button'],
+  ['white', 'error-800', 4.5, 'quick-exit button hover'],
   ['success', 'grey-50', 4.5, 'form success'],
 ];
 

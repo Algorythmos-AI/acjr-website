@@ -1,5 +1,7 @@
 ---
 import Icon from '../components/Icon.astro';
+import QuickExit from '../components/QuickExit.astro';
+import { ui } from '../i18n/ui';
 import { content } from '../content';
 import { pagePath, type Lang } from '../i18n/routes';
 import { site } from '../config/site';
@@ -23,6 +25,7 @@ const endpoint = site.formEndpoint;
         <div>
           <h2 id="safety-title">{f.safetyTitle}</h2>
           <ul>{f.safety.map((s) => <li>{s}</li>)}</ul>
+          <p class="cover-tracks">{ui[lang].coverTracks}</p>
         </div>
       </section>
 
@@ -183,7 +186,10 @@ const endpoint = site.formEndpoint;
   }
 </script>
 
+<QuickExit lang={lang} />
+
 <style>
+  .cover-tracks { margin: var(--space-2) 0 0; font-size: var(--fs-small); }
   .safety { margin-bottom: var(--space-5); }
   .safety h2 { font-size: 1.25rem; margin-bottom: var(--space-1); }
   .safety ul { margin: 0; }

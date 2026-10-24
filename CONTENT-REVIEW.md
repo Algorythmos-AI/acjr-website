@@ -46,6 +46,7 @@ Until these are supplied, the legal notice and privacy policy say "à communique
 - [ ] **Message retention**: confirm the 12-month period stated in the privacy policy.
 
 ## Client decisions (open)
+- [ ] **Quick-exit destination.** The « Quitter le site » button on the Contact page goes to `https://www.google.com/` (`site.quickExitUrl` in `src/config/site.ts`). Confirm, or choose another neutral site that visitors in the regions concerned would find unremarkable.
 - [ ] **Founded in Paris?** The statutes (Art. 1) say only « constituée le 25 avril 2024 ». The site says it was founded in Paris, which matches the Paris registration (RNA W75…). Please confirm.
 - [ ] **The logo's olive wreath.** The mark (Africa and scales inside two olive branches) is clearly not the UN emblem, and the site says ACJR is not affiliated with the UN. A wreath in light blue does evoke the UN style, though, so please accept it knowingly or ask for a different frame.
 - [ ] **Bequests (« libéralités »).** The site now mentions donations only. Ask counsel whether ACJR may accept bequests yet (1901 law, art. 6) before adding them back.
@@ -62,5 +63,7 @@ Until these are supplied, the legal notice and privacy policy say "à communique
   - the statute badge label (`statutesArticle` in `src/i18n/ui.ts`), especially the Arabic « النظام الأساسي، المادة 6.1 ».
   - inner pages: « Sur cette page », « Poursuivre la visite », the org chart labels (« Qui élit qui », « élit », « élit en son sein », « Membres disposant du droit de vote »), and on articles « Partager », « Lien copié », « Article plus récent / précédent » (`src/i18n/ui.ts`);
   - Arabic reading time, which follows number agreement: « دقيقة واحدة », « دقيقتان », « 3 دقائق », « 11 دقيقة » (`readingTimeLabel` in `src/lib/news.ts`).
+  - search: the page title and lead (`meta.search`), and the `search*` strings in `src/i18n/ui.ts`;
+  - safety: « Quitter le site », the Esc hint, and the « pour ne pas laisser de trace » note on the Contact page (`quickExit*`, `coverTracks`).
 - [ ] Photos for the hero and news (licensed; no images of victims), and founders' photos and bios.
 - [ ] Donation method.

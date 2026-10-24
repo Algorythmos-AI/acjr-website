@@ -12,6 +12,8 @@ const pages = [
   ['dist', '/fr/', []],
   ['dist', '/en/about/', []],
   ['dist', '/ar/contact/', []],
+  ['dist', '/fr/gouvernance/', []],
+  ['dist', '/en/search/', []],
   ['dist-drafts', '/fr/actualites/nouveaux-statuts/', ['seo']],
 ];
 

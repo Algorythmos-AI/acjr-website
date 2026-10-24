@@ -12,7 +12,7 @@ interface Props {
 const { lang, article } = Astro.props;
 ---
 
-<span class="art-ref">{ui[lang].statutesArticle}&nbsp;<bdi>{article}</bdi></span>
+<span class="art-ref" data-pagefind-ignore>{ui[lang].statutesArticle}&nbsp;<bdi>{article}</bdi></span>
 
 <style>
   .art-ref {
