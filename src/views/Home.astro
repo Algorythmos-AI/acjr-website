@@ -3,6 +3,9 @@ import Icon from '../components/Icon.astro';
 import ObjectiveTile from '../components/ObjectiveTile.astro';
 import FactStrip from '../components/FactStrip.astro';
 import NewsCard from '../components/NewsCard.astro';
+import Seal from '../components/Seal.astro';
+import Media from '../components/Media.astro';
+import ArtRef from '../components/ArtRef.astro';
 import type { Article } from '../lib/news';
 import { content } from '../content';
 import { pagePath, type Lang } from '../i18n/routes';
@@ -18,48 +21,78 @@ const { lang, latest = [] } = Astro.props;
 const c = content[lang];
 const h = c.home;
 const t = ui[lang];
+
+// "Where to start": each card leads to an existing section; nothing here promises a service.
+const pathTargets = [
+  { href: pagePath(lang, 'contact', 'safety-title'), icon: 'shield', tone: 'safety' },
+  { href: pagePath(lang, 'advocacy', 'networks-title'), icon: 'scale', tone: '' },
+  { href: pagePath(lang, 'involved', 'membership-title'), icon: 'users', tone: '' },
+] as const;
+const paths = h.paths.map((p, i) => ({ ...p, ...pathTargets[i]! }));
+// Mechanisms named in Art. 7–8, reusing the titles from the advocacy page.
+const mechanisms = [...c.advocacy.un.map((m) => m.title), c.advocacy.africa[0].title];
 ---
 
-<section class="hero on-dark" aria-labelledby="hero-title">
-  <svg class="hero-art" viewBox="0 0 600 600" aria-hidden="true" focusable="false">
-    <g fill="none" stroke="currentColor">
-      <circle cx="300" cy="300" r="290" stroke-width="1" />
-      <circle cx="300" cy="300" r="230" stroke-width="1" />
-      <circle cx="300" cy="300" r="170" stroke-width="1" />
-      <path d="M40 300h520" stroke-width="1" />
-      <path d="M300 40v520" stroke-width="1" />
-    </g>
-  </svg>
-  <div class="container hero-inner">
-    <p class="eyebrow hero-eyebrow">{h.eyebrow}</p>
-    <h1 id="hero-title">{h.heroTitle}</h1>
-    <hr class="rule-ochre" />
-    <p class="hero-lead">{h.heroLead}</p>
-    <div class="btn-row">
-      <a class="btn" href={pagePath(lang, 'work')}>{h.ctaPrimary}<Icon name="arrow" size={18} flip /></a>
-      <a class="btn btn--outline-light" href={pagePath(lang, 'about')}>{h.ctaSecondary}</a>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <p class="eyebrow">{h.eyebrow}</p>
+      <h1 id="hero-title">{h.heroTitle}</h1>
+      <p class="hero-lead">{h.heroLead}</p>
+      <div class="btn-row">
+        <a class="btn" href={pagePath(lang, 'work')}>{h.ctaPrimary}<Icon name="arrow" size={18} flip /></a>
+        <a class="btn btn--ghost" href={pagePath(lang, 'about')}>{h.ctaSecondary}</a>
+      </div>
     </div>
+    <div class="hero-seal"><Seal /></div>
   </div>
 </section>
 
-<div class="container fact-wrap">
-  <FactStrip lang={lang} />
+<div class="fact-band">
+  <div class="container"><FactStrip lang={lang} /></div>
 </div>
 
-<section class="section" aria-labelledby="mission-title">
-  <div class="container mission">
+<section class="section" aria-labelledby="paths-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="paths-title">{h.pathsTitle}</h2>
+      <p class="lead">{h.pathsLead}</p>
+    </div>
+    <ul class="grid grid--3 plain-list">
+      {
+        paths.map((p) => (
+          <li>
+            <article class:list={['path reveal', p.tone && `path--${p.tone}`]}>
+              <Icon name={p.icon} size={40} class="path-icon" />
+              <h3><a href={p.href}>{p.title}</a></h3>
+              <p>{p.text}</p>
+              <span class="path-more" aria-hidden="true">{p.cta}<Icon name="arrow" size={18} flip /></span>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="section section--grey" aria-labelledby="mission-title">
+  <div class="container split">
     <div>
       <p class="eyebrow">{h.missionEyebrow}</p>
       <h2 id="mission-title">{h.missionTitle}</h2>
     </div>
     <div class="prose">
       {h.missionText.map((p) => <p>{p}</p>)}
+      <figure class="vision">
+        <blockquote><p>{c.about.vision}</p></blockquote>
+        <figcaption>{c.about.visionTitle} <ArtRef lang={lang} article="5" /></figcaption>
+      </figure>
       <a href={pagePath(lang, 'about')}>{t.learnMore}<span class="visually-hidden"> — {c.nav.about}</span></a>
     </div>
   </div>
 </section>
 
-<section class="section section--grey" aria-labelledby="objectives-title">
+<section class="section" aria-labelledby="objectives-title">
   <div class="container">
     <div class="section-head">
       <h2 id="objectives-title">{h.objectivesTitle}</h2>
@@ -69,7 +102,7 @@ const t = ui[lang];
       {
         c.objectives.map((o, i) => (
           <li>
-            <ObjectiveTile objective={o} index={i} href={pagePath(lang, 'work', o.id)} cta={t.learnMore} />
+            <ObjectiveTile lang={lang} objective={o} index={i} href={pagePath(lang, 'work', o.id)} cta={t.learnMore} />
           </li>
         ))
       }
@@ -77,17 +110,17 @@ const t = ui[lang];
   </div>
 </section>
 
-<section class="section" aria-labelledby="how-title">
+<section class="section section--grey" aria-labelledby="how-title">
   <div class="container">
     <div class="section-head">
       <h2 id="how-title">{h.howTitle}</h2>
       <p class="lead">{h.howLead}</p>
     </div>
-    <ol class="how grid grid--4">
+    <ol class="steps plain-list">
       {
         h.how.map((step, i) => (
           <li>
-            <span class="how-num" aria-hidden="true">{i + 1}</span>
+            <span class="step-num" aria-hidden="true">{i + 1}</span>
             <h3>{step.title}</h3>
             <p>{step.text}</p>
           </li>
@@ -97,30 +130,38 @@ const t = ui[lang];
   </div>
 </section>
 
-<section class="section section--navy on-dark" aria-labelledby="principles-title">
+<section class="section principles-band" aria-labelledby="principles-title">
   <div class="container split">
     <div>
       <h2 id="principles-title">{h.principlesTitle}</h2>
       <hr class="rule-ochre" />
-      <p class="lead on-navy">{h.principlesLead}</p>
-      <a class="btn btn--light" href={pagePath(lang, 'principles')}>{c.nav.principles}<Icon name="arrow" size={18} flip /></a>
+      <p class="lead">{c.principles.intro}</p>
+      <a class="btn btn--ghost" href={pagePath(lang, 'principles')}>{c.nav.principles}<Icon name="arrow" size={18} flip /></a>
     </div>
-    <ul class="principle-chips">
-      {c.principles.items.map((p) => <li><Icon name="check" size={20} />{p.title}</li>)}
-    </ul>
+    <ol class="principles plain-list">
+      {
+        c.principles.items.map((p) => (
+          <li>
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </li>
+        ))
+      }
+    </ol>
   </div>
 </section>
 
 <section class="section" aria-labelledby="advocacy-title">
-  <div class="container split">
+  <div class="container advocacy">
     <div>
       <p class="eyebrow">{c.nav.advocacy}</p>
       <h2 id="advocacy-title">{h.advocacyTitle}</h2>
-    </div>
-    <div class="prose">
+      <ul class="mechanisms plain-list">{mechanisms.map((m) => <li>{m}</li>)}</ul>
       <p>{h.advocacyText}</p>
+      <p class="advocacy-note">{c.advocacy.note}</p>
       <a class="btn btn--ghost" href={pagePath(lang, 'advocacy')}>{t.learnMore}<span class="visually-hidden"> — {c.nav.advocacy}</span></a>
     </div>
+    <Media lang={lang} photo="home-advocacy" illo="dossier" class="advocacy-media reveal" />
   </div>
 </section>
 
@@ -155,74 +196,105 @@ const t = ui[lang];
 </section>
 
 <style>
-  .hero {
-    position: relative;
-    overflow: hidden;
-    color: var(--white);
-    background:
-      linear-gradient(115deg, var(--navy-900) 0%, var(--navy-900) 45%, color-mix(in srgb, var(--blue-700) 90%, transparent) 100%),
-      var(--navy-900);
-    padding-block: var(--space-6) calc(var(--space-7) + var(--space-3));
-  }
-  :global([dir='rtl']) .hero {
-    background:
-      linear-gradient(-115deg, var(--navy-900) 0%, var(--navy-900) 45%, color-mix(in srgb, var(--blue-700) 90%, transparent) 100%),
-      var(--navy-900);
-  }
-  .hero-art {
-    position: absolute;
-    width: min(46rem, 90vw);
-    inset-inline-end: -12rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: rgb(255 255 255 / 0.14);
-    pointer-events: none;
-  }
-  .hero-inner { position: relative; }
-  .hero h1 { color: var(--white); max-width: 26ch; }
-  .hero-eyebrow { color: var(--link-on-dark); }
-  .hero-lead { font-size: var(--fs-lead); max-width: 40rem; color: rgb(255 255 255 / 0.92); margin-bottom: var(--space-4); }
-
-  .fact-wrap { margin-top: calc(-1 * var(--space-6)); position: relative; }
-
-  .mission, .split { display: grid; gap: var(--space-4); }
+  /* Hero: calm white, serif headline beside the seal (direction A, "Institutional Editorial"). */
+  .hero { background: var(--white); padding-block: var(--space-5); }
+  .hero-grid { display: grid; gap: var(--space-4); align-items: center; }
   @media (min-width: 1024px) {
-    .mission, .split { grid-template-columns: 5fr 7fr; gap: var(--space-6); }
+    .hero { padding-block: var(--space-6); }
+    .hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-6); }
+  }
+  .hero h1 { font-size: var(--fs-display); line-height: 1.15; max-width: 22ch; }
+  .hero-lead { font-size: var(--fs-lead); color: var(--grey-600); max-width: 40rem; margin-block: var(--space-3) var(--space-4); }
+  .hero-seal { width: min(100%, 17rem); justify-self: center; }
+  @media (min-width: 1024px) { .hero-seal { width: min(100%, 26rem); } }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-text > * { animation: hero-rise var(--dur-3) var(--ease-out) both; }
+    .hero-text > :nth-child(2) { animation-delay: 60ms; }
+    .hero-text > :nth-child(3) { animation-delay: 120ms; }
+    .hero-text > :nth-child(4) { animation-delay: 180ms; }
+  }
+  /* Movement only, never opacity: the headline is the largest paint and must be visible at once. */
+  @keyframes hero-rise { from { translate: 0 0.75rem; } }
+
+  /* The ONU Info-style dark strip carries the statute facts. */
+  .fact-band { background: var(--charcoal); }
+  .fact-band :global(.fact-strip) { border-top: 0; }
+
+  .split { display: grid; gap: var(--space-4); }
+  @media (min-width: 1024px) {
+    .split { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-6); }
   }
 
-  .how { list-style: none; padding: 0; counter-reset: how; }
-  .how li { margin: 0; padding-top: var(--space-2); border-top: 2px solid var(--grey-200); }
-  :global(:lang(ar)) .how-num { font-family: var(--font-ar-sans); }
-  .how-num {
-    display: inline-grid;
-    place-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    margin-bottom: var(--space-2);
-    background: var(--blue-700);
-    color: var(--white);
-    font: 700 1.125rem/1 var(--font-sans);
-    border-radius: 50%;
-  }
-  .how h3 { font-size: 1.25rem; }
-  .how p { color: var(--grey-600); }
-
-  .on-navy { color: rgb(255 255 255 / 0.9); }
-  .principle-chips { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-1); }
-  .principle-chips li {
+  /* Pathway cards: the whole card is clickable through its heading link. */
+  .path {
+    position: relative;
     display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    margin: 0;
-    padding: var(--space-2);
-    background: rgb(255 255 255 / 0.06);
-    border-inline-start: 4px solid var(--ochre-500);
-    font-weight: 500;
+    flex-direction: column;
+    height: 100%;
+    padding: var(--space-3);
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-top: var(--rule);
+    transition: box-shadow var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
   }
-  .principle-chips :global(.icon) { color: var(--ochre-500); flex-shrink: 0; }
+  .path:hover { box-shadow: var(--shadow-3); }
+  @media (prefers-reduced-motion: no-preference) { .path:hover { transform: translateY(-3px); } }
+  .path:focus-within { outline: 3px solid var(--blue-700); outline-offset: 2px; }
+  .path :global(.path-icon) { color: var(--blue-700); margin-bottom: var(--space-2); }
+  .path--safety { border-top-color: var(--ochre-500); }
+  .path--safety :global(.path-icon) { color: var(--ochre-700); }
+  .path h3 { font-size: 1.25rem; }
+  .path h3 a { color: var(--navy-900); text-decoration: none; }
+  .path h3 a::after { content: ''; position: absolute; inset: 0; }
+  .path h3 a:focus-visible { outline: none; box-shadow: none; }
+  .path p { color: var(--grey-600); flex-grow: 1; }
+  .path-more { display: inline-flex; align-items: center; gap: 0.375rem; font-weight: 700; color: var(--blue-700); }
+
+  .vision { margin: var(--space-3) 0; padding-inline-start: var(--space-3); border-inline-start: 4px solid var(--ochre-500); }
+  .vision blockquote { margin: 0; }
+  .vision blockquote p { font: 700 1.1875rem/1.6 var(--font-serif); color: var(--navy-900); margin-bottom: var(--space-1); }
+  :global(:lang(ar)) .vision blockquote p { font-family: var(--font-ar-serif); }
+  .vision figcaption { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); font-size: var(--fs-small); color: var(--grey-600); }
+
+  /* Method: a real sequence, so a numbered stepper (vertical on phones, horizontal on desktop). */
+  .steps { display: grid; }
+  .steps li { position: relative; margin: 0; padding-inline-start: 4rem; padding-bottom: var(--space-4); }
+  .steps li::before { content: ''; position: absolute; inset-inline-start: 1.3125rem; top: 2.75rem; bottom: 0; width: 2px; background: var(--grey-200); }
+  .steps li:last-child { padding-bottom: 0; }
+  .steps li:last-child::before { display: none; }
+  .step-num {
+    position: absolute; inset-inline-start: 0; top: 0;
+    display: grid; place-items: center; width: 2.75rem; height: 2.75rem;
+    border-radius: 50%; background: var(--blue-700); color: var(--white);
+    font: 700 1.125rem/1 var(--font-sans);
+  }
+  :global(:lang(ar)) .step-num { font-family: var(--font-ar-sans); }
+  .steps h3 { font-size: 1.25rem; padding-top: 0.5rem; }
+  .steps p { color: var(--grey-600); margin: 0; }
+  @media (min-width: 1024px) {
+    .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); }
+    .steps li { padding-inline-start: 0; padding-top: 4rem; padding-bottom: 0; }
+    .steps li::before { inset-inline: 3.25rem calc(-1 * var(--space-3)); top: 1.3125rem; bottom: auto; width: auto; height: 2px; }
+    .steps h3 { padding-top: 0; }
+  }
+
+  .principles-band { background: var(--ochre-50); }
+  .principles { counter-reset: principle; }
+  .principles li { counter-increment: principle; display: grid; grid-template-columns: 3rem minmax(0, 1fr); column-gap: var(--space-2); margin: 0; padding-block: var(--space-2); border-top: 1px solid var(--grey-200); }
+  .principles li::before { content: counter(principle); grid-row: span 2; font: 900 1.75rem/1 var(--font-serif); color: var(--ochre-700); }
+  :global(:lang(ar)) .principles li::before { font-family: var(--font-ar-serif); font-weight: 700; }
+  .principles h3 { font-size: 1.125rem; margin-bottom: 0.25rem; }
+  .principles p { margin: 0; color: var(--grey-600); }
+
+  .advocacy { display: grid; gap: var(--space-4); align-items: center; }
+  @media (min-width: 1024px) { .advocacy { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-6); } }
+  .mechanisms { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-block: var(--space-3); }
+  .mechanisms li { margin: 0; padding: 0.375rem 0.75rem; border: 1px solid var(--grey-200); font-size: var(--fs-small); font-weight: 500; color: var(--navy-900); }
+  .advocacy-note { font-size: var(--fs-small); color: var(--grey-600); }
+  .advocacy :global(.advocacy-media) { max-width: 24rem; width: 100%; justify-self: center; }
 
   .news-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--space-2); max-width: none; }
-  .cta-band { border-top: 1px solid var(--grey-200); }
+  .cta-band { background: var(--grey-50); }
   .cta-inner { display: grid; gap: var(--space-3); align-items: center; }
   @media (min-width: 1024px) {
     .cta-inner { grid-template-columns: 2fr 1fr; gap: var(--space-6); }

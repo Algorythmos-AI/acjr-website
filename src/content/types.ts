@@ -41,6 +41,10 @@ export interface Content {
     heroLead: string;
     ctaPrimary: string;
     ctaSecondary: string;
+    /** "Where to start": entry points by visitor intent, linking to existing sections. */
+    pathsTitle: string;
+    pathsLead: string;
+    paths: Three<Pair & { cta: string }>;
     missionEyebrow: string;
     missionTitle: string;
     missionText: string[];

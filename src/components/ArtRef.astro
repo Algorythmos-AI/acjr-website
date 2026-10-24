@@ -1,0 +1,28 @@
+---
+import { ui } from '../i18n/ui';
+import type { Lang } from '../i18n/routes';
+
+/** Small badge citing the article of the statutes a section comes from, e.g. "Statuts, art. 6.1". */
+interface Props {
+  lang: Lang;
+  /** Article number as written in the statutes: "5", "6.1"… */
+  article: string;
+}
+
+const { lang, article } = Astro.props;
+---
+
+<span class="art-ref">{ui[lang].statutesArticle}&nbsp;<bdi>{article}</bdi></span>
+
+<style>
+  .art-ref {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--grey-200);
+    border-radius: var(--radius);
+    font: 500 0.8125rem/1.2 var(--font-sans);
+    color: var(--grey-600);
+    white-space: nowrap;
+  }
+  :global(:lang(ar)) .art-ref { font-family: var(--font-ar-sans); font-weight: 400; }
+</style>
