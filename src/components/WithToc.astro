@@ -40,7 +40,15 @@ const t = ui[lang];
   const targets = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1)))).filter((el): el is HTMLElement => !!el);
   const readingLine = () => (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 0) + 0.15 * innerHeight;
 
+  // On smaller screens the list sits above the content, out of sight while reading, so no section
+  // is marked there.
+  const desktop = matchMedia('(min-width: 1024px)');
+
   function update() {
+    if (!desktop.matches) {
+      links.forEach((a) => a.removeAttribute('aria-current'));
+      return;
+    }
     const line = readingLine();
     // Measure the enclosing section, not the heading: side-by-side sections then start level, even
     // when one has a badge above its heading.
@@ -85,6 +93,7 @@ const t = ui[lang];
     addEventListener('scrollend', update);
     addEventListener('hashchange', schedule);
     addEventListener('resize', schedule);
+    desktop.addEventListener('change', update);
     update();
   }
 </script>
@@ -108,7 +117,8 @@ const t = ui[lang];
     text-decoration: none;
   }
   .page-toc-list a:hover { color: var(--blue-700); background: var(--blue-50); }
-  .page-toc-list a[aria-current='location'] { border-inline-start-color: var(--blue-700); color: var(--blue-700); font-weight: 700; }
+  /* Colour and rule only, never bolder: a wider label could wrap and shift the page. */
+  .page-toc-list a[aria-current='location'] { border-inline-start-color: var(--blue-700); color: var(--blue-700); }
   .toc-col { display: grid; gap: var(--space-3); align-content: start; }
 
   @media (min-width: 1024px) {

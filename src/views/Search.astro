@@ -76,11 +76,9 @@ const allPages = pageKeys.filter((k) => k !== 'search');
   async function run(query: string) {
     if (!status || !list) return;
     const id = ++latest;
+    // The terms are not written into the address or history: on a site with a safety exit, what
+    // someone searched for should not stay in their browser. A shared ?q= link still works.
     const q = query.trim();
-    const url = new URL(location.href);
-    if (q) url.searchParams.set('q', q);
-    else url.searchParams.delete('q');
-    history.replaceState(null, '', url);
     if (!q) {
       list.replaceChildren();
       status.textContent = '';

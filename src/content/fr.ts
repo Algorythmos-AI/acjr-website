@@ -121,7 +121,7 @@ export const fr: Content = {
     pathsTitle: 'Par où commencer ?',
     pathsLead: 'Trois portes d’entrée, selon ce qui vous amène.',
     paths: [
-      { title: 'Victime ou témoin', text: 'Avant de nous transmettre quoi que ce soit, lisez nos conseils pour communiquer en sécurité.', cta: 'Conseils de sécurité' },
+      { title: 'Victime ou témoin', text: canContact ? 'Avant de nous transmettre quoi que ce soit, lisez nos conseils pour communiquer en sécurité.' : 'Nos conseils de sécurité pour les victimes et les témoins.', cta: 'Conseils de sécurité' },
       { title: 'Juriste, chercheur ou organisation', text: 'Comment l’ACJR entend développer des alliances et des réseaux avec les organisations qui poursuivent des objectifs compatibles.', cta: 'Alliances et réseaux' },
       { title: 'Rejoindre l’association', text: 'Membres, bénévoles et partenaires : les modalités prévues par nos statuts.', cta: 'Agir avec nous' },
     ],

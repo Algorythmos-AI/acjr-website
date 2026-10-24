@@ -1,6 +1,5 @@
 ---
 import Icon from '../components/Icon.astro';
-import QuickExit from '../components/QuickExit.astro';
 import { ui } from '../i18n/ui';
 import { content } from '../content';
 import { pagePath, type Lang } from '../i18n/routes';
@@ -185,8 +184,6 @@ const endpoint = site.formEndpoint;
     });
   }
 </script>
-
-<QuickExit lang={lang} />
 
 <style>
   .cover-tracks { margin: var(--space-2) 0 0; font-size: var(--fs-small); }
