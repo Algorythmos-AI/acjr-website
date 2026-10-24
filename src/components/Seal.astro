@@ -1,0 +1,46 @@
+---
+import markSvg from '../../public/brand/mark.svg?raw';
+import { site } from '../config/site';
+
+/**
+ * The home-page seal: the ACJR mark inside a ring of ticks and the association's legal name.
+ * Decorative (the name is already in the header). It draws itself once on load, unless the
+ * visitor prefers reduced motion. Strokes use pathLength="1" so the animation needs no inline styles.
+ */
+const mark = markSvg.replace(/^[\s\S]*?<g>|<\/g>[\s\S]*$/g, '');
+const ticks = Array.from({ length: 72 }, (_, i) => {
+  const a = (i / 72) * Math.PI * 2;
+  const [r1, r2] = [178, i % 6 === 0 ? 192 : 186];
+  const p = (r: number) => `${(200 + r * Math.cos(a)).toFixed(1)} ${(200 + r * Math.sin(a)).toFixed(1)}`;
+  return `M${p(r1)}L${p(r2)}`;
+}).join('');
+const ring = `${site.legalName} · ${site.acronymFr} · ${site.city} · ${site.foundingDate.slice(0, 4)} · `.toUpperCase();
+---
+
+<svg class="seal" viewBox="0 0 400 400" fill="none" aria-hidden="true" focusable="false">
+  <defs>
+    <path id="seal-ring" d="M200 200m-152 0a152 152 0 1 1 304 0a152 152 0 1 1-304 0" />
+  </defs>
+  <circle class="seal-line seal-soft" cx="200" cy="200" r="198" pathLength="1" />
+  <path class="seal-line seal-ticks seal-d2" d={ticks} pathLength="1" />
+  <circle class="seal-line seal-d2" cx="200" cy="200" r="170" pathLength="1" />
+  <text class="seal-text seal-fade" direction="ltr"><textPath href="#seal-ring" textLength="948" lengthAdjust="spacing">{ring}</textPath></text>
+  <circle class="seal-line seal-d3" cx="200" cy="200" r="134" pathLength="1" />
+  <g class="seal-fade" transform="translate(110 110) scale(0.9)" set:html={mark} />
+</svg>
+
+<style>
+  .seal { width: 100%; height: auto; }
+  .seal-line { stroke: var(--navy-900); stroke-width: 1; }
+  .seal-soft { stroke: var(--grey-200); }
+  .seal-ticks { stroke: var(--blue-500); stroke-width: 1.5; }
+  .seal-text { fill: var(--grey-600); font: 500 13px var(--font-sans); }
+  @media (prefers-reduced-motion: no-preference) {
+    .seal-line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: seal-draw 1.6s var(--ease-out) forwards; }
+    .seal-d2 { animation-delay: 0.2s; }
+    .seal-d3 { animation-delay: 0.4s; }
+    .seal-fade { opacity: 0; animation: seal-fade 0.8s var(--ease-out) 0.7s forwards; }
+  }
+  @keyframes seal-draw { to { stroke-dashoffset: 0; } }
+  @keyframes seal-fade { to { opacity: 1; } }
+</style>

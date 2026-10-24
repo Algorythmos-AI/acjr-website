@@ -1,23 +1,26 @@
 ---
 import ObjectiveIcon from './ObjectiveIcon.astro';
 import Icon from './Icon.astro';
+import ArtRef from './ArtRef.astro';
 import type { Objective } from '../content/types';
+import type { Lang } from '../i18n/routes';
 
 interface Props {
+  lang: Lang;
   objective: Objective;
+  /** Position in Art. 6 of the statutes, from 0. */
   index: number;
   href: string;
   cta: string;
 }
 
-const { objective, index, href, cta } = Astro.props;
-const number = String(index + 1).padStart(2, '0');
+const { lang, objective, index, href, cta } = Astro.props;
 ---
 
-<article class="tile" data-index={index}>
+<article class="tile reveal">
   <div class="tile-top">
-    <span class="tile-number" aria-hidden="true">{number}</span>
     <ObjectiveIcon id={objective.id} />
+    <ArtRef lang={lang} article={`6.${index + 1}`} />
   </div>
   <h3>
     <a href={href}>{objective.title}</a>
@@ -28,7 +31,6 @@ const number = String(index + 1).padStart(2, '0');
 
 <style>
   .tile {
-    --stripe: var(--blue-700);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -36,23 +38,15 @@ const number = String(index + 1).padStart(2, '0');
     padding: var(--space-3);
     background: var(--white);
     border: 1px solid var(--grey-200);
-    border-top: 6px solid var(--stripe);
-    transition: box-shadow 0.15s, transform 0.15s;
+    border-top: var(--rule);
+    transition: box-shadow var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
   }
-  .tile[data-index='1'] { --stripe: var(--navy-800); }
-  .tile[data-index='2'] { --stripe: var(--ochre-700); }
-  .tile[data-index='3'] { --stripe: var(--blue-800); }
-  .tile[data-index='4'] { --stripe: var(--charcoal); }
-  .tile[data-index='5'] { --stripe: var(--ochre-700); }
-  .tile:hover { box-shadow: var(--shadow); }
+  .tile:hover { box-shadow: var(--shadow-3); }
   @media (prefers-reduced-motion: no-preference) {
-    .tile:hover { transform: translateY(-2px); }
+    .tile:hover { transform: translateY(-3px); }
   }
   .tile:focus-within { outline: 3px solid var(--blue-700); outline-offset: 2px; }
-  .tile-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-2); color: var(--stripe); }
-  .tile-number { font: 900 2rem/1 var(--font-serif); color: var(--stripe); }
-  /* The Arabic fonts already on the page have these digits, so no Latin font is fetched for them. */
-  :global(:lang(ar)) .tile-number { font-family: var(--font-ar-serif); font-weight: 700; }
+  .tile-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--blue-700); }
   .tile h3 { font-size: 1.25rem; }
   .tile h3 a { color: var(--navy-900); text-decoration: none; }
   /* Whole tile is clickable through the heading link. */

@@ -56,6 +56,9 @@ Until these are supplied, the legal notice and privacy policy say "à communique
 - [ ] Whether to publish the annual accounts. The statutes don't require it.
 - [ ] Whether to publish the statutes PDF on the site.
 - [ ] Publish the two draft news items: set `draft: false` in `src/news/*/`.
-- [ ] Native-speaker review of the English and Arabic copy.
+- [ ] Native-speaker review of the English and Arabic copy. **New on the home page (Oct 2026):**
+  - the « Par où commencer ? » cards (`home.pathsTitle`, `pathsLead`, `paths` in `src/content/{fr,en,ar}.ts`);
+  - the shortened advocacy sentence (`home.advocacyText`), since the mechanism names now appear as separate labels;
+  - the statute badge label (`statutesArticle` in `src/i18n/ui.ts`), especially the Arabic « النظام الأساسي، المادة 6.1 ».
 - [ ] Photos for the hero and news (licensed; no images of victims), and founders' photos and bios.
 - [ ] Donation method.

@@ -108,6 +108,13 @@ export const en: Content = {
       'Our mission: to document serious human-rights violations, support victims and bring documented facts before the competent African and international courts and mechanisms.',
     ctaPrimary: 'Explore our work',
     ctaSecondary: 'About us',
+    pathsTitle: 'Where to start',
+    pathsLead: 'Three ways in, depending on what brings you here.',
+    paths: [
+      { title: 'Victim or witness', text: 'Before you send us anything, read our advice on contacting us safely.', cta: 'Safety advice' },
+      { title: 'Lawyer, researcher or organisation', text: 'How ACJR intends to build alliances and networks with organisations that pursue compatible aims.', cta: 'Alliances and networks' },
+      { title: 'Join the association', text: 'Members, volunteers and partners: the arrangements set out in our statutes.', cta: 'Get involved' },
+    ],
     missionEyebrow: 'Our mission',
     missionTitle: 'Establish the facts, defend rights, demand accountability',
     missionText: [
@@ -128,7 +135,7 @@ export const en: Content = {
     principlesLead: 'Independence, universality of rights, impartiality, non-discrimination and a victim-centred approach.',
     advocacyTitle: 'Seeking a voice before international mechanisms',
     advocacyText:
-      'The Human Rights Council, the Universal Periodic Review, special procedures, treaty bodies and the African Commission on Human and Peoples’ Rights: where it is permitted to take part and in line with their rules, ACJR aims to take documented facts where they can make a difference.',
+      'Where it is permitted to take part and in line with their rules, ACJR aims to take documented facts where they can make a difference.',
     involvedTitle: 'Get involved',
     involvedText:
       'Lawyers, researchers, journalists, translators or concerned citizens: join a volunteer association committed to justice.',
