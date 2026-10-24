@@ -26,6 +26,11 @@ const pairs = [
   ['ochre-500', 'charcoal', 3, 'fact strip numerals'],
   ['ochre-700', 'white', 4.5, 'ochre text on white'],
   ['ochre-700', 'grey-50', 4.5, 'ochre labels on grey cards'],
+  ['navy-900', 'ochre-50', 4.5, 'headings on the ochre principles band'],
+  ['grey-600', 'ochre-50', 4.5, 'meta text on the ochre band'],
+  ['blue-700', 'ochre-50', 4.5, 'links and ghost buttons on the ochre band'],
+  ['ochre-700', 'ochre-50', 3, 'large principle numerals on the ochre band'],
+  ['grey-600', 'blue-50', 4.5, 'menu descriptions on hover'],
   ['error', 'white', 4.5, 'form errors'],
   ['success', 'grey-50', 4.5, 'form success'],
 ];

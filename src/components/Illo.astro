@@ -1,0 +1,62 @@
+---
+/**
+ * Line illustrations in the logo's style (320×240 grid, round 2px strokes), inlined at build time.
+ * They are decorative: no people, no globe or map grid, and never mirrored (Africa must not flip).
+ * Parts marked `a` take the ochre accent, parts marked `s` the soft grey; the rest use currentColor.
+ * Keep each one under 3 KB of markup: scripts/check-budgets.mjs enforces it on the built pages.
+ */
+interface Props {
+  name: keyof typeof drawings;
+  class?: string;
+}
+
+const drawings = {
+  // Simplified contour of the continent with Madagascar.
+  africa:
+    '<path d="M118 40 140 30l25 2 17 8 23 4 9 18 14 24 22 12-10 14-14 16-4 22-8 20-8 16-10 16-12 12-14 4-8-12-6-20-6-20-4-18-10-16-16-6-20-2-14-10-6-16 4-18 12-18z"/><path d="m236 160 6 4-2 16-6 6-4-6 2-14z"/><path class="a" d="M110 230h100"/>',
+  // Balance with ochre pans.
+  scales:
+    '<path d="M160 36v164"/><path d="M120 204h80"/><path d="M84 64h152"/><circle cx="160" cy="44" r="8"/><path d="m96 64-28 64m28-64 28 64m100-64-28 64m28-64 28 64"/><path class="a" d="M64 128a32 14 0 0 0 64 0zm128 0a32 14 0 0 0 64 0z"/>',
+  // Stacked case files with a verified seal.
+  dossier:
+    '<rect class="s" x="70" y="52" width="150" height="172" rx="4"/><rect class="s" x="86" y="40" width="150" height="172" rx="4"/><rect x="102" y="28" width="150" height="172" rx="4"/><path d="M124 62h96m-96 20h106m-106 20h80m-80 20h100m-100 20h60"/><circle class="a" cx="222" cy="168" r="18"/><path class="a" d="m213 168 6 6 12-12"/>',
+  // Columned facade of a court building, without a gavel.
+  columns:
+    '<path d="m60 84 100-52 100 52z"/><path d="M68 92h184M72 196h176M60 212h200"/><path d="M92 100v88m40-88v88m56-88v88m40-88v88"/><path class="a" d="M150 64h20"/>',
+  // Linked nodes: networks and coalitions.
+  network:
+    '<circle cx="160" cy="120" r="18"/><circle cx="72" cy="72" r="12"/><circle cx="248" cy="64" r="12"/><circle cx="84" cy="184" r="12"/><circle cx="244" cy="180" r="12"/><circle class="a" cx="160" cy="32" r="8"/><circle class="a" cx="160" cy="212" r="8"/><path d="M144.2 111.4 82.5 77.7m92.7 32.6 62.7-39.9m-91.7 61.2-53 44.7m81.5-45.8 59.5 42.5M160 102V40m0 98v66"/><path class="s" d="M72 84v88m176-96v92M84 72h152"/>',
+  // Open book: research and training.
+  book:
+    '<path d="M160 64c-24-20-60-24-104-24v148c44 0 80 4 104 24 24-20 60-24 104-24V40c-44 0-80 4-104 24z"/><path d="M160 64v148"/><path d="M76 76c24 0 44 4 60 10M76 104c24 0 44 4 60 10m-60 18c24 0 44 4 60 10m108-66c-24 0-44 4-60 10m60 18c-24 0-44 4-60 10"/><path class="a" d="M184 132c24 0 44 4 60 10"/>',
+  // Shield with olive sprig: protection.
+  shield:
+    '<path d="M160 220s76-34 76-104V56l-76-28-76 28v60c0 70 76 104 76 104z"/><path class="a" d="M160 172V84"/><path class="a" d="M160 104c-14-8-26-6-34 2 10 8 22 8 34-2zm0 26c14-8 26-6 34 2-10 8-22 8-34-2zm0 22c-14-8-26-6-34 2 10 8 22 8 34-2z"/>',
+  // Round table seen from above: deliberation and advocacy forums.
+  table:
+    '<circle cx="160" cy="120" r="52"/><circle class="s" cx="160" cy="120" r="80"/><circle cx="160" cy="40" r="10"/><circle cx="160" cy="200" r="10"/><circle cx="80" cy="120" r="10"/><circle cx="240" cy="120" r="10"/><circle cx="104" cy="64" r="10"/><circle cx="216" cy="64" r="10"/><circle cx="104" cy="176" r="10"/><circle cx="216" cy="176" r="10"/><path class="a" d="M136 120h48"/>',
+} as const;
+
+const { name, class: className } = Astro.props;
+---
+
+<svg
+  class:list={['illo', className]}
+  viewBox="0 0 320 240"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  set:html={drawings[name]}
+/>
+
+<style>
+  .illo { width: 100%; height: auto; color: var(--blue-700); }
+  .illo :global(.a) { stroke: var(--ochre-500); }
+  .illo :global(.s) { stroke: var(--grey-200); }
+  :global(.on-dark) .illo { color: rgb(255 255 255 / 0.9); }
+  :global(.on-dark) .illo :global(.s) { stroke: rgb(255 255 255 / 0.25); }
+</style>

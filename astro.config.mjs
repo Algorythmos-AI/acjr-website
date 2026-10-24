@@ -47,7 +47,7 @@ export default defineConfig({
     // Each page declares its real alternates with <link rel="alternate" hreflang>.
     // The root language chooser is left out because it is not a canonical page.
     sitemap({
-      filter: (page) => new URL(page).pathname !== '/' && !page.includes('/_styleguide/'),
+      filter: (page) => new URL(page).pathname !== '/' && !page.includes('/styleguide/'),
     }),
   ],
 });

@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro';
+import Illo from '../../components/Illo.astro';
+import Media from '../../components/Media.astro';
+import { showDrafts } from '../../lib/news';
+import { languages, type Lang } from '../../i18n/routes';
+import { content } from '../../content';
+
+/** Internal review page for the design foundations. Built only with SHOW_DRAFTS=1, never in production. */
+export function getStaticPaths() {
+  return showDrafts ? languages.map((lang) => ({ params: { lang } })) : [];
+}
+
+const lang = Astro.params.lang as Lang;
+const c = content[lang];
+const names = ['africa', 'scales', 'dossier', 'columns', 'network', 'book', 'shield', 'table'] as const;
+---
+
+<Base lang={lang} pageKey={null} title="Styleguide" description="Internal design review page." noindex>
+  <div class="page-body">
+    <div class="container">
+      <p class="eyebrow">{c.home.eyebrow}</p>
+      <h1>{c.home.heroTitle}</h1>
+      <p class="lead">{c.home.heroLead}</p>
+      <h2>{c.home.missionTitle}</h2>
+      <div class="prose">{c.home.missionText.map((p) => <p>{p}</p>)}</div>
+
+      <h2>Illustrations</h2>
+      <ul class="plain-list grid grid--4 sg-illos">
+        {names.map((n) => <li class="reveal"><Illo name={n} /><code>{n}</code></li>)}
+      </ul>
+
+      <h2>Media (no photo yet → illustration)</h2>
+      <div class="grid grid--2">
+        <Media lang={lang} photo="hero-home" illo="africa" />
+        <div class="section--navy on-dark sg-dark"><Media lang={lang} photo="hero-advocacy" illo="table" /></div>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .sg-illos li { border: 1px solid var(--grey-200); padding: var(--space-2); }
+  .sg-illos code { display: block; margin-top: var(--space-1); font-size: var(--fs-small); color: var(--grey-600); }
+  .sg-dark { padding: var(--space-3); }
+</style>

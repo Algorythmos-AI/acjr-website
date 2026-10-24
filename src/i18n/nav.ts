@@ -6,6 +6,8 @@ export interface NavLink {
   label: string;
   href: string;
   key: PageKey;
+  /** One line shown under the link in the desktop dropdowns (reuses existing page leads). */
+  description?: string;
 }
 export interface NavItem extends NavLink {
   children?: NavLink[];
@@ -15,16 +17,20 @@ export interface NavItem extends NavLink {
 export function primaryNav(lang: Lang): NavItem[] {
   const c = content[lang];
   const link = (key: PageKey, hash = ''): NavLink => ({ key, label: c.nav[key], href: pagePath(lang, key, hash) });
-  const overview = (key: PageKey): NavLink => ({ ...link(key), label: ui[lang].overview });
+  const child = (key: PageKey): NavLink => ({ ...link(key), description: c.meta[key].lead });
+  const overview = (key: PageKey): NavLink => ({ ...child(key), label: ui[lang].overview });
 
   return [
-    { ...link('about'), children: [overview('about'), link('principles'), link('framework')] },
+    { ...link('about'), children: [overview('about'), child('principles'), child('framework')] },
     {
       ...link('work'),
-      children: [overview('work'), ...c.objectives.map((o) => ({ key: 'work' as const, label: o.title, href: pagePath(lang, 'work', o.id) }))],
+      children: [
+        overview('work'),
+        ...c.objectives.map((o) => ({ key: 'work' as const, label: o.title, href: pagePath(lang, 'work', o.id), description: o.short })),
+      ],
     },
     link('advocacy'),
-    { ...link('governance'), children: [overview('governance'), link('transparency')] },
+    { ...link('governance'), children: [overview('governance'), child('transparency')] },
     link('news'),
     link('involved'),
   ];
