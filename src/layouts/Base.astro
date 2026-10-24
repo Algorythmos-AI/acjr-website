@@ -3,6 +3,7 @@ import '../styles/fonts.css';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import QuickExit from '../components/QuickExit.astro';
 import { languages, langMeta, pagePath, type Lang, type PageKey } from '../i18n/routes';
 import { ui } from '../i18n/ui';
 import { site } from '../config/site';
@@ -66,6 +67,8 @@ const jsonLd = {
     <link rel="preload" href={lang === 'ar' ? headingFontArabic : headingFontLatin} as="font" type="font/woff2" crossorigin />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {/* The safety exit leaves by script too; no-referrer keeps the neutral site from learning where the visitor came from. */}
+    {pageKey === 'contact' && <meta name="referrer" content="no-referrer" />}
     {noindex && <meta name="robots" content="noindex" />}
     {canonical && <link rel="canonical" href={canonical} />}
     {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
@@ -89,6 +92,8 @@ const jsonLd = {
   </head>
   <body>
     <a class="skip-link" href="#main">{t.skip}</a>
+    {/* Second in the Tab order on the Contact page, so the safety exit is reached at once. */}
+    {pageKey === 'contact' && <QuickExit lang={lang} />}
     <Header lang={lang} pageKey={pageKey} altPaths={altPaths} />
     <main id="main" tabindex="-1" data-pagefind-body={searchable ? '' : undefined}>
       <slot />

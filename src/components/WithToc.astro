@@ -40,7 +40,22 @@ const t = ui[lang];
   const targets = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1)))).filter((el): el is HTMLElement => !!el);
   const readingLine = () => (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 0) + 0.15 * innerHeight;
 
+  // On smaller screens the list sits above the content, out of sight while reading, so no section
+  // is marked there.
+  const desktop = matchMedia('(min-width: 1024px)');
+
+  // A jump (a click in the list, or any link to a section) is explicit: that section stays marked
+  // until the reader scrolls by hand. Working it out from positions during the smooth scroll races.
+  let pinned = -1;
+  const mark = (current: number) =>
+    links.forEach((a, i) => (i === current ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current')));
+
   function update() {
+    if (!desktop.matches) {
+      links.forEach((a) => a.removeAttribute('aria-current'));
+      return;
+    }
+    if (pinned >= 0) return mark(pinned);
     const line = readingLine();
     // Measure the enclosing section, not the heading: side-by-side sections then start level, even
     // when one has a badge above its heading.
@@ -65,8 +80,25 @@ const t = ui[lang];
       if (jumpedOnScreen) current = jumped;
       else if (atBottom) current = targets.length - 1;
     }
-    links.forEach((a, i) => (i === current ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current')));
+    mark(current);
   }
+
+  // The hashchange caused by a click in the list arrives after the click, possibly after the reader
+  // has started scrolling; that click already pinned its section, so its hashchange is skipped.
+  let clickedHash = '';
+  function pinToHash() {
+    if (location.hash === clickedHash) {
+      clickedHash = '';
+      return;
+    }
+    pinned = targets.findIndex((el) => `#${el.id}` === decodeURIComponent(location.hash));
+    update();
+  }
+  const unpin = () => {
+    if (pinned < 0) return;
+    pinned = -1;
+    schedule();
+  };
 
   // Recompute at most once per frame while scrolling (passive, so scrolling is never delayed),
   // and after jumps and resizes.
@@ -83,8 +115,21 @@ const t = ui[lang];
   if (targets.length) {
     addEventListener('scroll', schedule, { passive: true });
     addEventListener('scrollend', update);
-    addEventListener('hashchange', schedule);
+    addEventListener('hashchange', pinToHash);
+    links.forEach((a, i) =>
+      a.addEventListener('click', () => {
+        // Clicking the entry already in the URL fires no hashchange, so there is nothing to skip.
+        clickedHash = a.hash === location.hash ? '' : a.hash;
+        pinned = i;
+        update();
+      }),
+    );
+    for (const type of ['wheel', 'touchmove']) addEventListener(type, unpin, { passive: true });
+    addEventListener('keydown', (e) => {
+      if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(e.key)) unpin();
+    });
     addEventListener('resize', schedule);
+    desktop.addEventListener('change', update);
     update();
   }
 </script>
@@ -108,7 +153,8 @@ const t = ui[lang];
     text-decoration: none;
   }
   .page-toc-list a:hover { color: var(--blue-700); background: var(--blue-50); }
-  .page-toc-list a[aria-current='location'] { border-inline-start-color: var(--blue-700); color: var(--blue-700); font-weight: 700; }
+  /* Colour and rule only, never bolder: a wider label could wrap and shift the page. */
+  .page-toc-list a[aria-current='location'] { border-inline-start-color: var(--blue-700); color: var(--blue-700); }
   .toc-col { display: grid; gap: var(--space-3); align-content: start; }
 
   @media (min-width: 1024px) {

@@ -1,12 +1,15 @@
 import { test, expect } from '@playwright/test';
 import { languages, pagePath, type PageKey } from '../src/i18n/routes';
+import { content } from '../src/content';
+import { ui } from '../src/i18n/ui';
 
 const tocPages: PageKey[] = ['work', 'governance', 'transparency', 'advocacy', 'framework', 'legal', 'privacy'];
 
 test.describe('"On this page" list', () => {
   for (const lang of languages) {
     for (const key of tocPages) {
-      test(`${lang}/${key}: every entry leads to its section, which becomes current`, async ({ page }) => {
+      test(`${lang}/${key}: every entry leads to its section, which becomes current on desktop`, async ({ page }, testInfo) => {
+        const desktop = testInfo.project.name === 'desktop';
         await page.goto(pagePath(lang, key));
         const links = page.locator('.page-toc-list a');
         const count = await links.count();
@@ -23,12 +26,37 @@ test.describe('"On this page" list', () => {
             )
             .toBeGreaterThanOrEqual(-1);
           await expect(target).toBeInViewport();
-          await expect(link).toHaveAttribute('aria-current', 'location');
-          await expect(page.locator('.page-toc-list a[aria-current]')).toHaveCount(1);
+          // On smaller screens the list sits above the content, so no entry is marked.
+          if (desktop) {
+            await expect(link).toHaveAttribute('aria-current', 'location');
+            await expect(page.locator('.page-toc-list a[aria-current]')).toHaveCount(1);
+          } else {
+            await expect(page.locator('.page-toc-list a[aria-current]')).toHaveCount(0);
+          }
         }
       });
     }
   }
+
+  test('after a jump, scrolling by hand moves the mark again', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'sections are marked on desktop only');
+    await page.goto('/en/what-we-do/');
+    const links = page.locator('.page-toc-list a');
+    await links.first().click();
+    await expect(links.first()).toHaveAttribute('aria-current', 'location');
+    // Let the jump's smooth scroll finish, as a reader would, before scrolling by hand.
+    let last = -1;
+    await expect.poll(async () => {
+      const y = await page.evaluate(() => scrollY);
+      const settled = y === last;
+      last = y;
+      return settled;
+    }, { intervals: [200] }).toBe(true);
+    await page.mouse.move(400, 400);
+    for (let i = 0; i < 8; i++) await page.mouse.wheel(0, 600);
+    await expect(links.first()).not.toHaveAttribute('aria-current', 'location');
+    await expect(page.locator('.page-toc-list a[aria-current]')).toHaveCount(1);
+  });
 
   test('the desktop list stays in view while reading', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'the list is a sticky sidebar from 1024px');
@@ -43,8 +71,8 @@ test.describe('statute references', () => {
     ['work', ['6.1', '6.2', '6.3', '6.4', '6.5', '6.6']],
     ['principles', ['4.1', '4.2', '4.3', '4.4', '4.5']],
     ['advocacy', ['7', '8.1–8.2', '8.3']],
-    ['transparency', ['16', '17', '18', '21', '20']],
-    ['governance', ['14', '11–14', '11–12', '13', '14', '15']],
+    ['transparency', ['16', '17', '11, 18', '21', '20']],
+    ['governance', ['14', '11–14', '11', '13', '14', '15']],
     ['involved', ['9–10']],
   ];
   for (const [key, articles] of cases) {
@@ -63,6 +91,10 @@ test.describe('governance', () => {
       await expect(steps).toHaveCount(3);
       await expect(steps.nth(2).locator('.org-roles li')).toHaveCount(3);
       await expect(page.locator('.person-avatar')).toHaveText(['SA', 'HM', 'IT']);
+      // Only the ordinary assembly elects the Board (Art. 11); the extraordinary one is not in the chain.
+      const g = content[lang].governance;
+      await expect(steps.nth(0)).toContainText(g.bodies[0].title);
+      await expect(steps.nth(0)).not.toContainText(g.bodies[1].title);
     });
   }
 });
@@ -105,6 +137,11 @@ test.describe('news article', () => {
     const wasNewer = (await page.locator('.pager-newer').count()) === 1;
     await links.click();
     await expect(page.locator(wasNewer ? '.pager-older' : '.pager-newer')).toHaveAttribute('href', start);
+  });
+
+  test('the newer/older links have their own label', async ({ page }) => {
+    await page.goto(`${base}/fr/actualites/nouveaux-statuts/`);
+    await expect(page.locator('.pager')).toHaveAttribute('aria-label', ui.fr.moreArticles);
   });
 
   test('Arabic reading time agrees with the number', async ({ page }) => {

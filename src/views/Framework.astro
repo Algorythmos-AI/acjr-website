@@ -32,12 +32,12 @@ const toc = [
           f.references.map((r) => (
             <li>
               <a class="ref" href={r.url} rel="external noopener">
-                <span class="ref-year">{r.year}</span>
-                <span class="ref-name">{r.name}</span>
-                <span class="ref-note">{r.note}</span>
+                <span class="ref-year">{r.year}</span>{' '}
+                <span class="ref-name">{r.name}</span>{' '}
+                <span class="ref-note">{r.note}</span>{' '}
                 <span class="ref-ext">
                   <Icon name="external" size={16} />
-                  <span class="visually-hidden">{t.externalLink}</span>
+                  <span class="visually-hidden" data-pagefind-ignore>{t.externalLink}</span>
                 </span>
               </a>
             </li>

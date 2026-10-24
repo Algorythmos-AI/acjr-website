@@ -24,12 +24,19 @@ test.describe('search', () => {
       // Excerpts keep only text and <mark>: nothing from the index is inserted as HTML.
       const tags = await results(page).locator('p *').evaluateAll((els) => [...new Set(els.map((e) => e.tagName))]);
       expect(tags).toEqual(['MARK']);
-      // The query is in the URL, so a search can be shared or reloaded.
-      await expect(page).toHaveURL(new RegExp(`\\?q=${encodeURIComponent(queries[lang]).replace(/%/g, '%')}`));
+      // What someone types is not written into the address bar or history.
+      expect(new URL(page.url()).search).toBe('');
       // WebAssembly runs under the CSP, so nothing is blocked.
       expect(errors).toEqual([]);
     });
   }
+
+  test('excerpts keep words apart and leave out hidden labels', async ({ page }) => {
+    await page.goto('/en/search/?q=defenders');
+    const text = (await results(page).locator('p').allTextContents()).join(' ');
+    expect(text).not.toContain('(external site)');
+    expect(text).not.toMatch(/[a-z][A-Z][a-z]/);
+  });
 
   test('a shared search link shows its results', async ({ page }) => {
     await page.goto('/en/search/?q=Minnesota');
@@ -97,6 +104,28 @@ test.describe('quick exit', () => {
       await expect(page).toHaveURL(new RegExp(`${pagePath(lang, 'home')}$`));
     });
   }
+
+  test('the exit is the second Tab stop, and leaves no referrer', async ({ page }) => {
+    await page.goto('/fr/contact/');
+    await page.keyboard.press('Tab');
+    await expect(page.locator('.skip-link')).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(page.locator('.quick-exit-link')).toBeFocused();
+    await expect(page.locator('meta[name="referrer"]')).toHaveAttribute('content', 'no-referrer');
+    let referer: string | undefined = 'unset';
+    await page.route('https://www.google.com/**', (route) => {
+      referer = route.request().headers()['referer'];
+      return route.fulfill({ contentType: 'text/html', body: '' });
+    });
+    await page.locator('.quick-exit-link').click();
+    await expect(page).toHaveURL('https://www.google.com/');
+    expect(referer).toBeUndefined();
+  });
+
+  test('the victim card does not suggest a contact channel that does not exist yet', async ({ page }) => {
+    await page.goto('/en/');
+    await expect(page.locator('.path').first()).not.toContainText('send us');
+  });
 
   test('Esc twice leaves; once does not', async ({ page }) => {
     await page.goto('/en/contact/');

@@ -26,7 +26,10 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       # Types, parity, contrast, three builds, leak guard, CSP hashes, HTML, links, e2e + axe, Lighthouse.
+      # VISUAL=1 also compares the pages with the Linux baselines in tests/visual.spec.ts-snapshots/.
       - run: npm run check
+        env:
+          VISUAL: '1'
       - if: failure()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:

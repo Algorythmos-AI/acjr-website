@@ -117,7 +117,7 @@ export const en: Content = {
     pathsTitle: 'Where to start',
     pathsLead: 'Three ways in, depending on what brings you here.',
     paths: [
-      { title: 'Victim or witness', text: 'Before you send us anything, read our advice on contacting us safely.', cta: 'Safety advice' },
+      { title: 'Victim or witness', text: canContact ? 'Before you send us anything, read our advice on contacting us safely.' : 'Our safety advice for victims and witnesses.', cta: 'Safety advice' },
       { title: 'Lawyer, researcher or organisation', text: 'How ACJR intends to build alliances and networks with organisations that pursue compatible aims.', cta: 'Alliances and networks' },
       { title: 'Join the association', text: 'Members, volunteers and partners: the arrangements set out in our statutes.', cta: 'Get involved' },
     ],

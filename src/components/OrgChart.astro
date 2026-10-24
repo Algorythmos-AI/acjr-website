@@ -6,8 +6,10 @@ import { ui } from '../i18n/ui';
 import type { Lang } from '../i18n/routes';
 
 /**
- * Who elects whom (Art. 11, 13 and 14): the members with voting rights form the General Assembly,
- * which elects the Board, which elects the Executive Bureau from among its members.
+ * Who elects whom (Art. 11, 13 and 14): the members with voting rights form the Ordinary General
+ * Assembly, which elects the Board, which elects the Executive Bureau from among its members.
+ * The Extraordinary General Assembly (Art. 12) only amends the statutes or dissolves the
+ * association, so it is not part of this chain.
  * An ordered list, so it reads in order without the chart styling; every fact comes from the
  * governance content, which follows the statutes.
  */
@@ -18,7 +20,7 @@ interface Props {
 const { lang } = Astro.props;
 const g = content[lang].governance;
 const t = ui[lang];
-const [ordinary, extraordinary, board, bureau] = g.bodies;
+const [ordinary, , board, bureau] = g.bodies;
 ---
 
 <figure class="org">
@@ -27,9 +29,8 @@ const [ordinary, extraordinary, board, bureau] = g.bodies;
     <li class="org-step">
       <div class="org-box">
         <p class="org-name">{ordinary.title}</p>
-        <p class="org-meta">{extraordinary.title}</p>
         <p class="org-meta">{t.orgMembers}</p>
-        <ArtRef lang={lang} article="11–12" />
+        <ArtRef lang={lang} article="11" />
       </div>
     </li>
     <li class="org-step">
