@@ -3,16 +3,18 @@ import { render } from 'astro:content';
 import Icon from '../components/Icon.astro';
 import NewsCard from '../components/NewsCard.astro';
 import { ui } from '../i18n/ui';
-import { pagePath, type Lang } from '../i18n/routes';
-import type { Article } from '../lib/news';
+import { newsPath, pagePath, type Lang } from '../i18n/routes';
+import { articleSlug, type Article } from '../lib/news';
 
 interface Props {
   lang: Lang;
   article: Article;
   related: Article[];
+  newer?: Article | undefined;
+  older?: Article | undefined;
 }
 
-const { lang, article, related } = Astro.props;
+const { lang, article, related, newer, older } = Astro.props;
 const t = ui[lang];
 const { Content } = await render(article);
 ---
@@ -27,6 +29,28 @@ const { Content } = await render(article);
         </div>
       )}
       <Content />
+      <div class="share" data-copied={t.linkCopied}>
+        <button class="btn btn--ghost share-btn" type="button"><Icon name="external" size={18} />{t.share}</button>
+        <p class="share-status" role="status"></p>
+      </div>
+      {
+        (newer || older) && (
+          <nav class="pager" aria-label={t.latestNews}>
+            {newer && (
+              <a class="pager-link pager-newer" href={newsPath(lang, articleSlug(newer))}>
+                <span class="pager-label">{t.newerArticle}</span>
+                <span class="pager-title">{newer.data.title}</span>
+              </a>
+            )}
+            {older && (
+              <a class="pager-link pager-older" href={newsPath(lang, articleSlug(older))}>
+                <span class="pager-label">{t.olderArticle}</span>
+                <span class="pager-title">{older.data.title}</span>
+              </a>
+            )}
+          </nav>
+        )
+      }
       <p class="back">
         <a href={pagePath(lang, 'news')}><Icon name="arrow" size={16} class="back-icon" flip />{t.backToNews}</a>
       </p>
@@ -48,7 +72,38 @@ const { Content } = await render(article);
   </div>
 </div>
 
+<script>
+  // Share: the system share sheet where there is one, otherwise copy the link. Hidden without JS.
+  const box = document.querySelector<HTMLElement>('.share');
+  const button = box?.querySelector('button');
+  const status = box?.querySelector('.share-status');
+  button?.addEventListener('click', async () => {
+    const data = { title: document.title, url: location.href };
+    try {
+      if (navigator.share) await navigator.share(data);
+      else {
+        await navigator.clipboard.writeText(data.url);
+        if (status) status.textContent = box?.dataset.copied ?? '';
+      }
+    } catch {
+      // Cancelling the share sheet, or a refused clipboard, is not an error worth showing.
+    }
+  });
+</script>
+
 <style>
+  .share { display: none; align-items: center; gap: var(--space-2); margin-top: var(--space-4); }
+  :global(html.js) .share { display: flex; }
+  .share-status { margin: 0; color: var(--success); font-weight: 700; font-size: var(--fs-small); }
+  .pager { display: grid; gap: var(--space-2); margin-top: var(--space-4); }
+  @media (min-width: 768px) { .pager { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .pager-link { display: grid; gap: 0.25rem; padding: var(--space-2) var(--space-3); border: 1px solid var(--grey-200); border-top: var(--rule); text-decoration: none; color: var(--navy-900); }
+  .pager-link:hover { background: var(--blue-50); color: var(--navy-900); }
+  .pager-older { text-align: end; }
+  @media (min-width: 768px) { .pager-older { grid-column: 2; } }
+  .pager-label { font-size: var(--fs-small); color: var(--grey-600); font-weight: 500; }
+  .pager-title { font: 700 1.0625rem/1.4 var(--font-serif); }
+  :global(:lang(ar)) .pager-title { font-family: var(--font-ar-serif); }
   .article :global(.notice) { margin-bottom: var(--space-4); }
   .article :global(h2) { font-size: var(--fs-h3); }
   .article > :global(p:first-of-type) { font-size: var(--fs-lead); }

@@ -1,0 +1,80 @@
+---
+import Icon from './Icon.astro';
+import ArtRef from './ArtRef.astro';
+import { content } from '../content';
+import { ui } from '../i18n/ui';
+import type { Lang } from '../i18n/routes';
+
+/**
+ * Who elects whom (Art. 11, 13 and 14): the members with voting rights form the General Assembly,
+ * which elects the Board, which elects the Executive Bureau from among its members.
+ * An ordered list, so it reads in order without the chart styling; every fact comes from the
+ * governance content, which follows the statutes.
+ */
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const g = content[lang].governance;
+const t = ui[lang];
+const [ordinary, extraordinary, board, bureau] = g.bodies;
+---
+
+<figure class="org">
+  <figcaption class="org-title">{t.orgChartTitle}</figcaption>
+  <ol class="org-flow plain-list">
+    <li class="org-step">
+      <div class="org-box">
+        <p class="org-name">{ordinary.title}</p>
+        <p class="org-meta">{extraordinary.title}</p>
+        <p class="org-meta">{t.orgMembers}</p>
+        <ArtRef lang={lang} article="11–12" />
+      </div>
+    </li>
+    <li class="org-step">
+      <p class="org-edge"><Icon name="arrow" size={18} flip class="org-arrow" />{t.orgElects}</p>
+      <div class="org-box">
+        <p class="org-name">{board.title}</p>
+        {board.facts.slice(0, 2).map((f) => <p class="org-meta">{f}</p>)}
+        <ArtRef lang={lang} article="13" />
+      </div>
+    </li>
+    <li class="org-step">
+      <p class="org-edge"><Icon name="arrow" size={18} flip class="org-arrow" />{t.orgElectsFromMembers}</p>
+      <div class="org-box org-box--bureau">
+        <p class="org-name">{bureau.title}</p>
+        <ul class="org-roles plain-list">{g.bureau.map((m) => <li>{m.role}</li>)}</ul>
+        <p class="org-meta">{bureau.facts[0]}</p>
+        <ArtRef lang={lang} article="14" />
+      </div>
+    </li>
+  </ol>
+</figure>
+
+<style>
+  .org { margin: 0 0 var(--space-4); }
+  .org-title { font: 700 var(--fs-small)/1.3 var(--font-sans); letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-600); margin-bottom: var(--space-2); }
+  :global(:lang(ar)) .org-title { font-family: var(--font-ar-sans); letter-spacing: 0; }
+  .org-flow { display: grid; gap: var(--space-1); }
+  .org-step { margin: 0; display: grid; gap: var(--space-1); }
+  .org-box { display: grid; gap: 0.25rem; justify-items: start; padding: var(--space-2) var(--space-3); background: var(--white); border: 1px solid var(--grey-200); border-top: var(--rule); }
+  .org-box--bureau { border-top-color: var(--ochre-500); }
+  .org-name { margin: 0; font: 700 1.125rem/1.35 var(--font-serif); color: var(--navy-900); }
+  :global(:lang(ar)) .org-name { font-family: var(--font-ar-serif); }
+  .org-meta { margin: 0; font-size: var(--fs-small); color: var(--grey-600); }
+  .org-roles { display: flex; flex-wrap: wrap; gap: 0.25rem; margin: 0.25rem 0; }
+  .org-roles li { margin: 0; padding: 0.125rem 0.5rem; background: var(--blue-50); color: var(--navy-900); font-size: var(--fs-small); font-weight: 500; }
+  .org-box :global(.art-ref) { margin-top: var(--space-1); }
+  /* The connector: an arrow pointing down on phones, along the flow on wider screens. */
+  .org-edge { display: flex; align-items: center; gap: 0.5rem; margin: 0; padding-inline-start: var(--space-3); font-size: var(--fs-small); font-weight: 700; color: var(--blue-700); }
+  .org-edge :global(.org-arrow) { transform: rotate(90deg); }
+  @media (min-width: 900px) {
+    .org-flow { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; gap: var(--space-2); }
+    .org-step { grid-template-rows: auto 1fr; }
+    .org-step:first-child { grid-template-rows: 1fr; padding-top: calc(1.5rem + var(--space-1)); }
+    .org-edge { padding-inline-start: 0; min-height: 1.5rem; }
+    .org-edge :global(.org-arrow) { transform: none; }
+    :global([dir='rtl']) .org-edge :global(.org-arrow) { transform: scaleX(-1); }
+  }
+</style>

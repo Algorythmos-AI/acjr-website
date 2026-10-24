@@ -1,5 +1,6 @@
 ---
 import Icon from '../components/Icon.astro';
+import WithToc from '../components/WithToc.astro';
 import { content } from '../content';
 import { ui } from '../i18n/ui';
 import type { Lang } from '../i18n/routes';
@@ -11,11 +12,17 @@ interface Props {
 const { lang } = Astro.props;
 const f = content[lang].framework;
 const t = ui[lang];
+const toc = [
+  { id: 'refs-title', label: f.referencesTitle },
+  { id: 'protocols-title', label: f.protocolsTitle },
+  { id: 'law-title', label: f.lawTitle },
+];
 ---
 
 <!-- Preamble: legal references -->
 <div class="page-body">
   <div class="container">
+    <WithToc lang={lang} items={toc}>
     <div class="prose">{f.intro.map((p) => <p class="lead">{p}</p>)}</div>
 
     <section aria-labelledby="refs-title" class="refs-section">
@@ -49,6 +56,7 @@ const t = ui[lang];
         <div class="card">{f.law.map((p) => <p>{p}</p>)}</div>
       </section>
     </div>
+    </WithToc>
   </div>
 </div>
 

@@ -1,5 +1,6 @@
 ---
 import Icon from '../components/Icon.astro';
+import ArtRef from '../components/ArtRef.astro';
 import { content } from '../content';
 import { pagePath, type Lang } from '../i18n/routes';
 
@@ -34,6 +35,7 @@ const icons = ['heart', 'handshake', 'shield'] as const;
     </ul>
 
     <section class="block" aria-labelledby="membership-title">
+      <ArtRef lang={lang} article="9–10" />
       <h2 id="membership-title">{v.membershipTitle}</h2>
       <p>{v.membershipLead}</p>
       <ul class="grid grid--4 plain-list">
