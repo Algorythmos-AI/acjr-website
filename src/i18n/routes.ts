@@ -10,7 +10,7 @@ export const langMeta: Record<Lang, { label: string; short: string; dir: 'ltr' |
 
 export const pageKeys = [
   'home', 'about', 'principles', 'framework', 'work', 'advocacy',
-  'governance', 'transparency', 'news', 'involved', 'contact', 'legal', 'privacy',
+  'governance', 'transparency', 'news', 'involved', 'contact', 'legal', 'privacy', 'search',
 ] as const;
 export type PageKey = (typeof pageKeys)[number];
 
@@ -29,6 +29,7 @@ const enSlugs: Record<PageKey, string> = {
   contact: 'contact',
   legal: 'legal-notice',
   privacy: 'privacy',
+  search: 'search',
 };
 
 export const slugs: Record<Lang, Record<PageKey, string>> = {
@@ -46,6 +47,7 @@ export const slugs: Record<Lang, Record<PageKey, string>> = {
     contact: 'contact',
     legal: 'mentions-legales',
     privacy: 'confidentialite',
+    search: 'recherche',
   },
   en: enSlugs,
   ar: enSlugs,

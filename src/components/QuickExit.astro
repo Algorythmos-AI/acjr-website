@@ -1,0 +1,88 @@
+---
+import { site } from '../config/site';
+import { ui } from '../i18n/ui';
+import type { Lang } from '../i18n/routes';
+
+/**
+ * Safety exit for victims and witnesses, on the pages where they are most likely to be.
+ * It is a plain link to a neutral site, so it works without JavaScript. With JavaScript it
+ * uses location.replace(), so Back does not return here, and Esc pressed twice also leaves.
+ * Esc is ignored while a menu is open (Esc closes it) or while typing in a form field.
+ */
+interface Props {
+  lang: Lang;
+}
+
+const t = ui[Astro.props.lang];
+---
+
+<div class="quick-exit" data-pagefind-ignore>
+  <a class="quick-exit-link" href={site.quickExitUrl} rel="noreferrer">{t.quickExit}</a>
+  <span class="quick-exit-hint" aria-hidden="true">{t.quickExitHint}</span>
+</div>
+
+<script>
+  const link = document.querySelector<HTMLAnchorElement>('.quick-exit-link');
+  const leave = () => link && location.replace(link.href);
+
+  link?.addEventListener('click', (event) => {
+    event.preventDefault();
+    leave();
+  });
+
+  // Time of the previous Esc; -Infinity so a single press right after the page loads never counts.
+  let lastEsc = -Infinity;
+  // Capture phase: this runs before the header's own Esc handler, so a menu that is open now is
+  // seen as open, and closing it does not count as the first press.
+  document.addEventListener(
+    'keydown',
+    (event) => {
+      if (event.key !== 'Escape' || event.repeat) return;
+      const typing = (event.target as Element | null)?.closest('input, textarea, select, [contenteditable]');
+      const menuOpen = document.querySelector('.site-header [aria-expanded="true"]');
+      if (typing || menuOpen) {
+        lastEsc = -Infinity;
+        return;
+      }
+      const now = performance.now();
+      if (now - lastEsc < 1000) leave();
+      lastEsc = now;
+    },
+    { capture: true },
+  );
+</script>
+
+<style>
+  .quick-exit {
+    position: fixed;
+    inset-inline-end: max(var(--space-2), env(safe-area-inset-right, 0px));
+    bottom: max(var(--space-2), env(safe-area-inset-bottom, 0px));
+    z-index: 45;
+    display: grid;
+    justify-items: center;
+    gap: 0.25rem;
+  }
+  .quick-exit-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--error);
+    color: var(--white);
+    border: 2px solid var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-3);
+    font: 700 1rem/1 var(--font-sans);
+    text-decoration: none;
+  }
+  :global(:lang(ar)) .quick-exit-link { font-family: var(--font-ar-sans); }
+  .quick-exit-link:hover { background: var(--error-800); color: var(--white); text-decoration: underline; }
+  /* The shortcut hint only makes sense where JavaScript runs it, and on screens with a keyboard. */
+  .quick-exit-hint { display: none; padding: 0.125rem 0.5rem; background: var(--white); color: var(--grey-600); font-size: 0.8125rem; border-radius: var(--radius); box-shadow: var(--shadow-1); }
+  @media (hover: hover) and (pointer: fine) {
+    :global(html.js) .quick-exit-hint { display: block; }
+  }
+  /* Keep the end of the page clear of the fixed button. */
+  :global(body:has(.quick-exit)) { padding-bottom: 6rem; }
+  @media print { .quick-exit { display: none; } }
+</style>

@@ -26,7 +26,7 @@ const { lang, objective, index, href, cta } = Astro.props;
     <a href={href}>{objective.title}</a>
   </h3>
   <p>{objective.short}</p>
-  <span class="tile-more" aria-hidden="true">{cta}<Icon name="arrow" size={18} flip /></span>
+  <span class="tile-more" aria-hidden="true" data-pagefind-ignore>{cta}<Icon name="arrow" size={18} flip /></span>
 </article>
 
 <style>

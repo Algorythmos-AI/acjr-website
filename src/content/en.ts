@@ -76,6 +76,11 @@ export const en: Content = {
       description: 'How ACJR handles your personal data under the GDPR. No tracking cookies.',
       lead: 'We collect the bare minimum and set no tracking cookies.',
     },
+    search: {
+      title: 'Search',
+      description: 'Search the pages and news of the ACJR website.',
+      lead: 'Every page and news item on the site, in English.',
+    },
   },
 
   nav: {
@@ -92,6 +97,7 @@ export const en: Content = {
     contact: 'Contact',
     legal: 'Legal notice',
     privacy: 'Privacy',
+    search: 'Search',
   },
 
   facts: [

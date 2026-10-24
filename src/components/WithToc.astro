@@ -19,7 +19,7 @@ const t = ui[lang];
 
 <div class="with-toc">
   <div class="toc-col">
-    <nav class="page-toc" aria-labelledby="page-toc-title">
+    <nav class="page-toc" data-pagefind-ignore aria-labelledby="page-toc-title">
       <h2 id="page-toc-title" class="page-toc-title">{t.onThisPage}</h2>
       <ol class="page-toc-list">
         {items.map((item) => <li><a href={`#${item.id}`}>{item.label}</a></li>)}
