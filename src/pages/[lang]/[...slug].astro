@@ -14,16 +14,17 @@ import Contact from '../../views/Contact.astro';
 import Sections from '../../views/Sections.astro';
 import ArticleView from '../../views/Article.astro';
 import PageHeader from '../../components/PageHeader.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
 import { content } from '../../content';
 import { ui } from '../../i18n/ui';
 import { languages, pageKeys, slugs, type Lang, type PageKey } from '../../i18n/routes';
-import { PAGE_SIZE, allArticles, articleAlternates, articleLang, articleSlug, articleTranslations, formatDate, newsPagePath, type Article } from '../../lib/news';
+import { PAGE_SIZE, allArticles, articleAlternates, articleLang, articleSlug, articleTranslations, formatDate, newsPagePath, readingMinutes, readingTimeLabel, type Article } from '../../lib/news';
 import { categoryLabel } from '../../lib/categories';
 
 type Listing = { articles: Article[]; page: number; totalPages: number };
 type Props =
   | { kind: 'page'; lang: Lang; pageKey: PageKey; news?: Listing; altPaths?: Record<Lang, string>; hreflangPaths?: Partial<Record<Lang, string>> }
-  | { kind: 'article'; lang: Lang; pageKey: 'news'; article: Article; related: Article[]; altPaths: Record<Lang, string>; hreflangPaths: Partial<Record<Lang, string>> };
+  | { kind: 'article'; lang: Lang; pageKey: 'news'; article: Article; related: Article[]; newer?: Article; older?: Article; altPaths: Record<Lang, string>; hreflangPaths: Partial<Record<Lang, string>> };
 
 export async function getStaticPaths() {
   const articles = await allArticles();
@@ -57,7 +58,8 @@ export async function getStaticPaths() {
         hreflangPaths: Object.fromEntries(languages.filter((l) => totals[l] >= page).map((l) => [l, newsPagePath(l, page)])),
       },
     }));
-    const items = own.map((article) => ({
+    // `own` is newest first, so the newer article is the previous entry and the older one the next.
+    const items = own.map((article, i) => ({
       params: { lang, slug: `${newsSlug}/${articleSlug(article)}` },
       props: {
         kind: 'article' as const,
@@ -65,6 +67,8 @@ export async function getStaticPaths() {
         pageKey: 'news' as const,
         article,
         related: own.filter((a) => a !== article).slice(0, 2),
+        newer: own[i - 1],
+        older: own[i + 1],
         altPaths: articleAlternates(article, articles),
         hreflangPaths: articleTranslations(article, articles),
       },
@@ -108,10 +112,11 @@ const View = pageKey in views ? views[pageKey as keyof typeof views] : null;
       <PageHeader lang={lang} pageKey="news" title={props.article.data.title} lead="" currentCrumb={props.article.data.title}>
         <p class="article-meta">
           <span>{categoryLabel(props.article.data.category, lang)}</span> ·{' '}
-          <span>{t.publishedOn} <time datetime={props.article.data.date.toISOString().slice(0, 10)}>{formatDate(props.article.data.date, lang)}</time></span>
+          <span>{t.publishedOn} <time datetime={props.article.data.date.toISOString().slice(0, 10)}>{formatDate(props.article.data.date, lang)}</time></span> ·{' '}
+          <span>{readingTimeLabel(readingMinutes(props.article), lang)}</span>
         </p>
       </PageHeader>
-      <ArticleView lang={lang} article={props.article} related={props.related} />
+      <ArticleView lang={lang} article={props.article} related={props.related} newer={props.newer} older={props.older} />
     </Base>
   ) : (
     <Base
@@ -126,8 +131,9 @@ const View = pageKey in views ? views[pageKey as keyof typeof views] : null;
       {pageKey === 'news' && props.news && <News lang={lang} {...props.news} />}
       {pageKey === 'home' && <Home lang={lang} latest={props.news?.articles ?? []} />}
       {View && <View lang={lang} />}
-      {pageKey === 'legal' && <Sections sections={c.legal.sections} />}
-      {pageKey === 'privacy' && <Sections sections={c.privacy.sections} updated={c.privacy.updated} />}
+      {pageKey === 'legal' && <Sections lang={lang} sections={c.legal.sections} />}
+      {pageKey === 'privacy' && <Sections lang={lang} sections={c.privacy.sections} updated={c.privacy.updated} />}
+      {pageKey !== 'home' && <RelatedLinks lang={lang} pageKey={pageKey} />}
     </Base>
   )
 }

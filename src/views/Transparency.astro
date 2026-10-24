@@ -1,4 +1,7 @@
 ---
+import ArtRef from '../components/ArtRef.astro';
+import Icon from '../components/Icon.astro';
+import WithToc from '../components/WithToc.astro';
 import { content } from '../content';
 import type { Lang } from '../i18n/routes';
 
@@ -8,47 +11,77 @@ interface Props {
 
 const { lang } = Astro.props;
 const tr = content[lang].transparency;
+const toc = [
+  { id: 'status-title', label: tr.statusTitle },
+  { id: 'funding-title', label: tr.fundingTitle },
+  { id: 'independence-title', label: tr.independenceTitle },
+  { id: 'accounts-title', label: tr.accountsTitle },
+  { id: 'dissolution-title', label: tr.dissolutionTitle },
+  { id: 'policies-title', label: tr.policiesTitle },
+];
 ---
 
-<!-- Art. 16–18 (finance), Art. 20 (policies) -->
+<!-- Art. 1–2 (status), 16–18 (finance), 20 (policies), 21 (dissolution) -->
 <div class="page-body">
   <div class="container">
-    <div class="prose">{tr.intro.map((p) => <p class="lead">{p}</p>)}</div>
+    <WithToc lang={lang} items={toc}>
+      <div class="prose">{tr.intro.map((p) => <p class="lead">{p}</p>)}</div>
 
-    <section class="block" aria-labelledby="status-title">
-      <h2 id="status-title">{tr.statusTitle}</h2>
-      <dl class="dl-table">
-        {tr.status.map((s) => (<div><dt>{s.label}</dt><dd>{s.value}</dd></div>))}
-      </dl>
-    </section>
-
-    <div class="grid grid--2 block">
-      <section aria-labelledby="funding-title" class="prose">
-        <h2 id="funding-title">{tr.fundingTitle}</h2>
-        {tr.funding.map((p) => <p>{p}</p>)}
-        <ul class="checklist">{tr.fundingSources.map((s) => <li>{s}</li>)}</ul>
+      <section class="block" aria-labelledby="status-title">
+        <h2 id="status-title">{tr.statusTitle}</h2>
+        <dl class="dl-table">
+          {tr.status.map((s) => (<div><dt>{s.label}</dt><dd>{s.value}</dd></div>))}
+        </dl>
       </section>
-      <section aria-labelledby="independence-title" class="aside-box">
+
+      <section class="block" aria-labelledby="funding-title">
+        <ArtRef lang={lang} article="16" />
+        <h2 id="funding-title">{tr.fundingTitle}</h2>
+        <div class="prose">{tr.funding.map((p) => <p>{p}</p>)}</div>
+        <ul class="sources plain-list">{tr.fundingSources.map((s) => <li><Icon name="check" size={20} />{s}</li>)}</ul>
+      </section>
+
+      <section class="block independence on-dark" aria-labelledby="independence-title">
+        <ArtRef lang={lang} article="17" />
         <h2 id="independence-title">{tr.independenceTitle}</h2>
         {tr.independence.map((p) => <p>{p}</p>)}
-        <h2>{tr.accountsTitle}</h2>
-        {tr.accounts.map((p) => <p>{p}</p>)}
-        <!-- Art. 21 -->
-        <h2>{tr.dissolutionTitle}</h2>
-        {tr.dissolution.map((p) => <p>{p}</p>)}
       </section>
-    </div>
 
-    <section class="block" aria-labelledby="policies-title">
-      <h2 id="policies-title">{tr.policiesTitle}</h2>
-      <p>{tr.policiesLead}</p>
-      <ul class="grid grid--3 plain-list">
-        {tr.policies.map((p) => (<li><div class="card"><h3>{p.title}</h3><p>{p.text}</p></div></li>))}
-      </ul>
-    </section>
+      <div class="grid grid--2 block">
+        <section class="prose" aria-labelledby="accounts-title">
+          <ArtRef lang={lang} article="18" />
+          <h2 id="accounts-title">{tr.accountsTitle}</h2>
+          {tr.accounts.map((p) => <p>{p}</p>)}
+        </section>
+        <section class="prose" aria-labelledby="dissolution-title">
+          <ArtRef lang={lang} article="21" />
+          <h2 id="dissolution-title">{tr.dissolutionTitle}</h2>
+          {tr.dissolution.map((p) => <p>{p}</p>)}
+        </section>
+      </div>
+
+      <section class="block" aria-labelledby="policies-title">
+        <ArtRef lang={lang} article="20" />
+        <h2 id="policies-title">{tr.policiesTitle}</h2>
+        <p>{tr.policiesLead}</p>
+        <ul class="grid grid--2 plain-list">
+          {tr.policies.map((p) => (<li><div class="card reveal"><h3>{p.title}</h3><p>{p.text}</p></div></li>))}
+        </ul>
+      </section>
+    </WithToc>
   </div>
 </div>
 
 <style>
   .block { margin-block: var(--space-5); }
+  .block :global(.art-ref), .prose :global(.art-ref) { margin-bottom: var(--space-1); }
+  .sources { display: grid; gap: var(--space-1); margin-top: var(--space-3); }
+  @media (min-width: 768px) { .sources { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .sources li { display: flex; gap: var(--space-2); align-items: flex-start; margin: 0; padding: var(--space-2); background: var(--grey-50); border-inline-start: 4px solid var(--blue-500); font-weight: 500; color: var(--navy-900); }
+  .sources :global(.icon) { flex-shrink: 0; margin-top: 0.2em; color: var(--blue-700); }
+  /* The independence rule is the point of the page, so it stands out. */
+  .independence { padding: var(--space-4); background: var(--navy-900); color: var(--white); }
+  .independence h2 { color: var(--white); }
+  .independence p:last-child { margin-bottom: 0; }
+  .independence :global(.art-ref) { color: rgb(255 255 255 / 0.85); border-color: rgb(255 255 255 / 0.35); }
 </style>

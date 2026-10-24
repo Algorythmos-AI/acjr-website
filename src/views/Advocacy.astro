@@ -1,5 +1,7 @@
 ---
 import Icon from '../components/Icon.astro';
+import ArtRef from '../components/ArtRef.astro';
+import WithToc from '../components/WithToc.astro';
 import { content } from '../content';
 import type { Lang } from '../i18n/routes';
 
@@ -9,34 +11,43 @@ interface Props {
 
 const { lang } = Astro.props;
 const a = content[lang].advocacy;
+const toc = [
+  { id: 'un-title', label: a.unTitle },
+  { id: 'africa-title', label: a.africaTitle },
+  { id: 'networks-title', label: a.networksTitle },
+];
 ---
 
 <!-- Art. 7 (UN system) and Art. 8 (African system, international courts) -->
 <div class="page-body">
   <div class="container">
+    <WithToc lang={lang} items={toc}>
     <div class="prose">{a.intro.map((p) => <p class="lead">{p}</p>)}</div>
 
     <section class="block" aria-labelledby="un-title">
       <div class="section-head">
+        <ArtRef lang={lang} article="7" />
         <h2 id="un-title">{a.unTitle}</h2>
         <p>{a.unLead}</p>
       </div>
-      <ul class="grid grid--4 plain-list">
+      <ul class="grid grid--2 plain-list">
         {a.un.map((m) => (<li><div class="card"><h3>{m.title}</h3><p>{m.text}</p></div></li>))}
       </ul>
     </section>
 
     <section class="block" aria-labelledby="africa-title">
       <div class="section-head">
+        <ArtRef lang={lang} article="8.1–8.2" />
         <h2 id="africa-title">{a.africaTitle}</h2>
         <p>{a.africaLead}</p>
       </div>
-      <ul class="grid grid--3 plain-list">
+      <ul class="grid grid--2 plain-list">
         {a.africa.map((m) => (<li><div class="card card--ochre"><h3>{m.title}</h3><p>{m.text}</p></div></li>))}
       </ul>
     </section>
 
     <section class="block prose" aria-labelledby="networks-title">
+      <ArtRef lang={lang} article="8.3" />
       <h2 id="networks-title">{a.networksTitle}</h2>
       {a.networks.map((p) => <p>{p}</p>)}
     </section>
@@ -45,10 +56,12 @@ const a = content[lang].advocacy;
       <Icon name="shield" size={22} />
       <p>{a.note}</p>
     </div>
+    </WithToc>
   </div>
 </div>
 
 <style>
   .block { margin-block: var(--space-5); }
   .card--ochre { border-top-color: var(--ochre-500); }
+  .block :global(.art-ref) { margin-bottom: var(--space-1); }
 </style>
