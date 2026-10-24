@@ -1,4 +1,5 @@
 ---
+import Illo from './Illo.astro';
 import { breadcrumbs } from '../i18n/nav';
 import { ui } from '../i18n/ui';
 import { content } from '../content';
@@ -19,12 +20,27 @@ const meta = content[lang].meta[pageKey];
 const trail = breadcrumbs(lang, pageKey).map((c) => ({ ...c, current: false }));
 if (currentCrumb) trail.push({ key: pageKey, label: currentCrumb, href: '', current: true });
 else trail[trail.length - 1]!.current = true;
+// One line illustration per section, shown beside the heading on wide screens. None for legal pages.
+const illos: Partial<Record<PageKey, Parameters<typeof Illo>[0]['name']>> = {
+  about: 'africa',
+  principles: 'scales',
+  framework: 'book',
+  work: 'dossier',
+  advocacy: 'table',
+  governance: 'columns',
+  transparency: 'shield',
+  involved: 'network',
+  contact: 'shield',
+  news: 'dossier',
+};
+const illo = illos[pageKey];
 const heading = title ?? meta.title;
 const leadText = lead ?? meta.lead;
 ---
 
 <div class="page-header on-dark">
-  <div class="container">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
     <nav class="breadcrumbs" aria-label={ui[lang].breadcrumb}>
       <ol>
         {
@@ -44,6 +60,8 @@ const leadText = lead ?? meta.lead;
     <hr class="rule-ochre" />
     {leadText && <p class="page-lead">{leadText}</p>}
     <slot />
+    </div>
+    {illo && <div class="page-header-art"><Illo name={illo} /></div>}
   </div>
 </div>
 
@@ -59,6 +77,12 @@ const leadText = lead ?? meta.lead;
     background:
       radial-gradient(120% 140% at 0% 0%, rgb(0 158 219 / 0.22), transparent 55%),
       var(--navy-900);
+  }
+  .page-header-inner { display: grid; gap: var(--space-4); align-items: end; }
+  .page-header-art { display: none; }
+  @media (min-width: 1024px) {
+    .page-header-inner { grid-template-columns: minmax(0, 1fr) 15rem; }
+    .page-header-art { display: block; opacity: 0.85; }
   }
   .page-header h1 { color: var(--white); margin-top: var(--space-4); max-width: 22ch; }
   .page-header h1.long { font-size: var(--fs-h2); max-width: 32ch; }

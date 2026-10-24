@@ -60,5 +60,7 @@ Until these are supplied, the legal notice and privacy policy say "à communique
   - the « Par où commencer ? » cards (`home.pathsTitle`, `pathsLead`, `paths` in `src/content/{fr,en,ar}.ts`);
   - the shortened advocacy sentence (`home.advocacyText`), since the mechanism names now appear as separate labels;
   - the statute badge label (`statutesArticle` in `src/i18n/ui.ts`), especially the Arabic « النظام الأساسي، المادة 6.1 ».
+  - inner pages: « Sur cette page », « Poursuivre la visite », the org chart labels (« Qui élit qui », « élit », « élit en son sein », « Membres disposant du droit de vote »), and on articles « Partager », « Lien copié », « Article plus récent / précédent » (`src/i18n/ui.ts`);
+  - Arabic reading time, which follows number agreement: « دقيقة واحدة », « دقيقتان », « 3 دقائق », « 11 دقيقة » (`readingTimeLabel` in `src/lib/news.ts`).
 - [ ] Photos for the hero and news (licensed; no images of victims), and founders' photos and bios.
 - [ ] Donation method.

@@ -1,0 +1,119 @@
+---
+import { ui } from '../i18n/ui';
+import type { Lang } from '../i18n/routes';
+
+/**
+ * Long-page layout: the content, plus an "On this page" list of its sections. On desktop the list
+ * is a sticky sidebar that marks the section being read (aria-current="location"); on smaller
+ * screens it is a short list above the content. Every `id` must exist on the page: the link
+ * checker verifies each anchor.
+ */
+interface Props {
+  lang: Lang;
+  items: { id: string; label: string }[];
+}
+
+const { lang, items } = Astro.props;
+const t = ui[lang];
+---
+
+<div class="with-toc">
+  <div class="toc-col">
+    <nav class="page-toc" aria-labelledby="page-toc-title">
+      <h2 id="page-toc-title" class="page-toc-title">{t.onThisPage}</h2>
+      <ol class="page-toc-list">
+        {items.map((item) => <li><a href={`#${item.id}`}>{item.label}</a></li>)}
+      </ol>
+    </nav>
+    <slot name="aside" />
+  </div>
+  <div class="toc-main">
+    <slot />
+  </div>
+</div>
+
+<script>
+  // Scroll-spy: the current section is the last one whose heading has reached the reading line, just
+  // below the sticky header. A heading reached from the list lands right under the header, so the
+  // entry you clicked is the one marked, even when the sections are short.
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.page-toc-list a'));
+  const targets = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1)))).filter((el): el is HTMLElement => !!el);
+  const readingLine = () => (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 0) + 0.15 * innerHeight;
+
+  function update() {
+    const line = readingLine();
+    // Measure the enclosing section, not the heading: side-by-side sections then start level, even
+    // when one has a badge above its heading.
+    const tops = targets.map((el) => (el.closest('section') ?? el).getBoundingClientRect().top);
+    let current = -1;
+    tops.forEach((top, i) => {
+      if (top <= line) current = i;
+    });
+    const jumped = targets.findIndex((el) => `#${el.id}` === decodeURIComponent(location.hash));
+    const jumpedTop = tops[jumped];
+    const jumpedOnScreen = jumpedTop !== undefined && jumpedTop >= 0 && jumpedTop < innerHeight;
+    // Sections side by side have headings at the same height: among those, the one jumped to wins,
+    // otherwise the first in reading order.
+    if (current >= 0) {
+      const ties = tops.flatMap((top, i) => (Math.abs(top - tops[current]!) < 4 ? [i] : []));
+      current = ties.includes(jumped) ? jumped : ties[0]!;
+    }
+    // On a short page, or at the very bottom, headings cannot all reach the line. Then the section the
+    // reader jumped to wins if it is on screen; otherwise the bottom means the last one.
+    const atBottom = innerHeight + scrollY >= document.documentElement.scrollHeight - 2;
+    if (current === -1 || atBottom) {
+      if (jumpedOnScreen) current = jumped;
+      else if (atBottom) current = targets.length - 1;
+    }
+    links.forEach((a, i) => (i === current ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current')));
+  }
+
+  // Recompute at most once per frame while scrolling (passive, so scrolling is never delayed),
+  // and after jumps and resizes.
+  let queued = false;
+  function schedule() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => {
+      queued = false;
+      update();
+    });
+  }
+
+  if (targets.length) {
+    addEventListener('scroll', schedule, { passive: true });
+    addEventListener('scrollend', update);
+    addEventListener('hashchange', schedule);
+    addEventListener('resize', schedule);
+    update();
+  }
+</script>
+
+<style>
+  .with-toc { display: grid; gap: var(--space-4); }
+  .toc-main { min-width: 0; }
+  .page-toc { padding: var(--space-2) var(--space-3); background: var(--grey-50); border-top: var(--rule); }
+  .page-toc-title { font: 700 var(--fs-small)/1.3 var(--font-sans); letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-600); margin-bottom: var(--space-1); }
+  :global(:lang(ar)) .page-toc-title { font-family: var(--font-ar-sans); letter-spacing: 0; }
+  .page-toc-list { list-style: none; margin: 0; padding: 0; }
+  .page-toc-list li + li { margin-top: 0; }
+  .page-toc-list a {
+    display: block;
+    padding: 0.375rem var(--space-2);
+    margin-inline: calc(-1 * var(--space-2));
+    border-inline-start: 3px solid transparent;
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.4;
+    text-decoration: none;
+  }
+  .page-toc-list a:hover { color: var(--blue-700); background: var(--blue-50); }
+  .page-toc-list a[aria-current='location'] { border-inline-start-color: var(--blue-700); color: var(--blue-700); font-weight: 700; }
+  .toc-col { display: grid; gap: var(--space-3); align-content: start; }
+
+  @media (min-width: 1024px) {
+    .with-toc { grid-template-columns: minmax(0, 1fr) 17rem; gap: var(--space-6); }
+    .toc-col { order: 2; position: sticky; top: calc(var(--header-h) + var(--space-3)); max-height: calc(100vh - var(--header-h) - var(--space-5)); overflow-y: auto; }
+  }
+  @media print { .toc-col { display: none; } }
+</style>

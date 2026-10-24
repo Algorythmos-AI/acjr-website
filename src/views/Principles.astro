@@ -1,4 +1,5 @@
 ---
+import ArtRef from '../components/ArtRef.astro';
 import { content } from '../content';
 import { pagePath, type Lang } from '../i18n/routes';
 
@@ -21,6 +22,7 @@ const p = c.principles;
           <li>
             <span class="principle-num" aria-hidden="true">{i + 1}</span>
             <div>
+              <ArtRef lang={lang} article={`4.${i + 1}`} />
               <h2>{item.title}</h2>
               <p>{item.text}</p>
             </div>

@@ -49,3 +49,17 @@ const locales: Record<Lang, string> = { fr: 'fr-FR', en: 'en-GB', ar: 'ar-u-nu-l
 export function formatDate(date: Date, lang: Lang): string {
   return new Intl.DateTimeFormat(locales[lang], { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
 }
+
+/** Estimated reading time, from the article's text (about 200 words a minute, at least 1). */
+export function readingMinutes(article: Article): number {
+  const words = (article.body ?? '').replace(/[#>*_`\[\]()-]/g, ' ').split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
+/** "3 min de lecture", with the Arabic number agreement (1, 2, 3–10, 11+). */
+export function readingTimeLabel(minutes: number, lang: Lang): string {
+  if (lang === 'fr') return `${minutes} min de lecture`;
+  if (lang === 'en') return `${minutes} min read`;
+  const unit = minutes === 1 ? 'دقيقة واحدة' : minutes === 2 ? 'دقيقتان' : minutes <= 10 ? `${minutes} دقائق` : `${minutes} دقيقة`;
+  return `مدة القراءة: ${unit}`;
+}

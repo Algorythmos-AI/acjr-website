@@ -1,0 +1,73 @@
+---
+import Icon from './Icon.astro';
+import { content } from '../content';
+import { ui } from '../i18n/ui';
+import { pagePath, type Lang, type PageKey } from '../i18n/routes';
+
+/** "Continue exploring": three hand-picked next pages, with the lead each page already has. */
+interface Props {
+  lang: Lang;
+  pageKey: PageKey;
+}
+
+const related: Partial<Record<PageKey, [PageKey, PageKey, PageKey]>> = {
+  principles: ['framework', 'about', 'work'],
+  framework: ['principles', 'work', 'advocacy'],
+  work: ['advocacy', 'principles', 'involved'],
+  advocacy: ['work', 'framework', 'involved'],
+  governance: ['transparency', 'about', 'involved'],
+  transparency: ['governance', 'principles', 'contact'],
+  involved: ['about', 'work', 'contact'],
+  news: ['about', 'work', 'involved'],
+};
+
+const { lang, pageKey } = Astro.props;
+const c = content[lang];
+const keys = related[pageKey];
+---
+
+{
+  keys && (
+    <section class="section section--grey related" aria-labelledby="related-pages-title">
+      <div class="container">
+        <h2 id="related-pages-title">{ui[lang].continueExploring}</h2>
+        <ul class="grid grid--3 plain-list">
+          {keys.map((key) => (
+            <li>
+              <article class="related-card reveal">
+                <h3><a href={pagePath(lang, key)}>{c.nav[key]}</a></h3>
+                <p>{c.meta[key].lead}</p>
+                <Icon name="arrow" size={20} flip class="related-arrow" />
+              </article>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .related h2 { font-size: var(--fs-h3); }
+  .related-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: var(--space-3);
+    background: var(--white);
+    border-top: var(--rule);
+    box-shadow: var(--shadow-1);
+    transition: box-shadow var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
+  }
+  .related-card:hover { box-shadow: var(--shadow-3); }
+  @media (prefers-reduced-motion: no-preference) { .related-card:hover { transform: translateY(-3px); } }
+  .related-card:focus-within { outline: 3px solid var(--blue-700); outline-offset: 2px; }
+  .related-card h3 { font-size: 1.25rem; }
+  .related-card h3 a { color: var(--navy-900); text-decoration: none; }
+  .related-card h3 a::after { content: ''; position: absolute; inset: 0; }
+  .related-card h3 a:focus-visible { outline: none; box-shadow: none; }
+  .related-card p { color: var(--grey-600); flex-grow: 1; }
+  .related-card :global(.related-arrow) { color: var(--blue-700); }
+  @media print { .related { display: none; } }
+</style>
