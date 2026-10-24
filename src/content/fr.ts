@@ -112,6 +112,13 @@ export const fr: Content = {
       'Notre mission : documenter les violations graves des droits humains, soutenir les victimes et porter les faits documentés devant les juridictions et mécanismes africains et internationaux compétents.',
     ctaPrimary: 'Découvrir nos actions',
     ctaSecondary: 'Qui sommes-nous',
+    pathsTitle: 'Par où commencer ?',
+    pathsLead: 'Trois portes d’entrée, selon ce qui vous amène.',
+    paths: [
+      { title: 'Victime ou témoin', text: 'Avant de nous transmettre quoi que ce soit, lisez nos conseils pour communiquer en sécurité.', cta: 'Conseils de sécurité' },
+      { title: 'Juriste, chercheur ou organisation', text: 'Comment l’ACJR entend développer des alliances et des réseaux avec les organisations qui poursuivent des objectifs compatibles.', cta: 'Alliances et réseaux' },
+      { title: 'Rejoindre l’association', text: 'Membres, bénévoles et partenaires : les modalités prévues par nos statuts.', cta: 'Agir avec nous' },
+    ],
     missionEyebrow: 'Notre mission',
     missionTitle: 'Établir les faits, défendre les droits, exiger des comptes',
     missionText: [
@@ -132,7 +139,7 @@ export const fr: Content = {
     principlesLead: 'Indépendance, universalité des droits, impartialité, non-discrimination et approche centrée sur les victimes.',
     advocacyTitle: 'Une voix auprès des mécanismes internationaux',
     advocacyText:
-      'Conseil des droits de l’homme, Examen périodique universel, procédures spéciales, organes de traités, Commission africaine des droits de l’homme et des peuples : lorsqu’elle y est admise et selon leurs règles, l’ACJR entend porter les faits documentés là où ils peuvent faire changer les choses.',
+      'Lorsqu’elle y est admise et selon leurs règles, l’ACJR entend porter les faits documentés là où ils peuvent faire changer les choses.',
     involvedTitle: 'Agir avec nous',
     involvedText:
       'Juristes, chercheurs, journalistes, traducteurs ou simples citoyens : rejoignez une association bénévole engagée pour la justice.',
