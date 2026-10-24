@@ -34,6 +34,7 @@
   --fs-h3: clamp(1.375rem, 1.25rem + 0.4vw, 1.625rem);
   --fs-h2: clamp(1.875rem, 1.6rem + 1vw, 2.5rem);
   --fs-h1: clamp(2.5rem, 2rem + 1.8vw, 3.5rem);
+  --fs-display: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
 
   --space-1: 0.5rem;
   --space-2: 1rem;
@@ -48,8 +49,25 @@
   --radius: 2px;
   --rule: 4px solid var(--blue-500);
   --shadow: 0 1px 2px rgb(11 37 69 / 0.08), 0 4px 16px rgb(11 37 69 / 0.06);
+  --shadow-1: 0 1px 2px rgb(11 37 69 / 0.08);
+  --shadow-2: var(--shadow);
+  --shadow-3: 0 2px 4px rgb(11 37 69 / 0.06), 0 12px 32px rgb(11 37 69 / 0.14);
+
+  /* Motion. Every animation is also gated by prefers-reduced-motion in global.css. */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur-1: 150ms;
+  --dur-2: 250ms;
+  --dur-3: 600ms;
+
+  /* Height of the part of the header that stays on screen (the masthead on phones, the menu bar on
+     desktop). Header.astro measures the real value; this estimate is a safety net in case a browser
+     scrolls to an #anchor on first load before that script has run. */
+  --header-h: 5.25rem;
 }
 
 @media (min-width: 768px) {
-  :root { --gutter: 1.5rem; }
+  :root { --gutter: 1.5rem; --header-h: 6.5rem; }
+}
+@media (min-width: 1024px) {
+  :root { --header-h: 3.5rem; }
 }

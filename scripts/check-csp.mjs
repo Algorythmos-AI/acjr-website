@@ -30,6 +30,9 @@ function check(file) {
   for (const [, body] of html.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/g)) {
     if (!styleSrc.includes(hash(body))) problems.push(`${file}: inline style not in style-src: ${body.slice(0, 60)}`);
   }
+  // Inline style attributes are blocked by the CSP (no 'unsafe-inline'); use a class instead.
+  // JavaScript may still set element.style through the CSSOM, which the CSP allows.
+  for (const [attr] of html.matchAll(/<[a-z][^>]*\sstyle="[^"]*"/gi)) problems.push(`${file}: inline style attribute: ${attr.slice(0, 80)}`);
   // Inlined assets must be allowed too: a data: font is blocked unless font-src allows data:.
   if (/url\(\s*["']?data:font/.test(html) && !directive('font-src').includes('data:')) problems.push(`${file}: data: font blocked by font-src`);
   if (/url\(\s*["']?data:image/.test(html) && !directive('img-src').includes('data:')) problems.push(`${file}: data: image blocked by img-src`);

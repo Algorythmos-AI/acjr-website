@@ -23,6 +23,7 @@ const logoWidth = Math.round((logo.width / logo.height) * logoHeight);
 const currentPath = (key: PageKey) => key === pageKey;
 ---
 
+<div class="header-sentinel" aria-hidden="true"></div>
 <header class="site-header">
   <div class="utility-bar on-dark">
     <div class="container utility-inner">
@@ -66,7 +67,8 @@ const currentPath = (key: PageKey) => key === pageKey;
   </div>
 
   <nav class="site-nav" id="site-nav" aria-label={t.mainNav}>
-    <div class="container">
+    <div class="container nav-inner">
+      <img class="nav-mark" src="/brand/mark.svg" alt="" width="36" height="36" />
       <ul class="nav-list">
         {
           nav.map((item, i) => (
@@ -80,11 +82,13 @@ const currentPath = (key: PageKey) => key === pageKey;
                     {item.label}
                     <Icon name="chevron" size={18} />
                   </button>
-                  <ul class="nav-sub" id={`nav-sub-${i}`}>
+                  <ul class:list={['nav-sub', { 'nav-sub--wide': item.children.length > 4 }]} id={`nav-sub-${i}`}>
                     {item.children.map((child) => (
                       <li>
                         <a href={child.href} aria-current={!child.href.includes('#') && currentPath(child.key) ? 'page' : undefined}>
-                          {child.label}
+                          <span class="nav-sub-label">{child.label}</span>
+                          {/* A visual hint only: the link's accessible name stays the short label. */}
+                          {child.description && <span class="nav-sub-desc" aria-hidden="true">{child.description}</span>}
                         </a>
                       </li>
                     ))}
@@ -161,9 +165,60 @@ const currentPath = (key: PageKey) => key === pageKey;
     setMenu(false);
     closeSubs();
   });
+
+  // Sticky header: the utility bar (and on desktop the masthead) scroll away; the rest stays.
+  // The hidden part's height is measured, not hard-coded, so wrapped text or zoom never breaks it.
+  const header = document.querySelector<HTMLElement>('.site-header');
+  const utility = header?.querySelector<HTMLElement>('.utility-bar');
+  const masthead = header?.querySelector<HTMLElement>('.masthead');
+  const sentinel = document.querySelector<HTMLElement>('.header-sentinel');
+  const root = document.documentElement;
+
+  function measure() {
+    if (!header || !utility || !masthead || !nav || !sentinel) return;
+    const hidden = utility.offsetHeight + (desktop.matches ? masthead.offsetHeight : 0);
+    const visible = desktop.matches ? nav.offsetHeight : masthead.offsetHeight;
+    header.style.setProperty('--header-stick', `${-hidden}px`);
+    sentinel.style.height = `${hidden}px`;
+    root.style.setProperty('--header-h', `${visible}px`);
+  }
+  measure();
+  if (utility && masthead) {
+    const sizes = new ResizeObserver(measure);
+    sizes.observe(utility);
+    sizes.observe(masthead);
+  }
+  desktop.addEventListener('change', measure);
+
+  // The sentinel covers the part that scrolls away; once it has left the viewport the header is stuck.
+  if (sentinel && header) {
+    new IntersectionObserver(([entry]) => header.classList.toggle('is-stuck', !entry?.isIntersecting)).observe(sentinel);
+  }
+
+  // No cross-fade between languages: French/English and Arabic mirror the whole layout.
+  addEventListener('pageswap', (event) => {
+    const { viewTransition, activation } = event as Event & { viewTransition?: { skipTransition(): void }; activation?: { entry?: { url: string } } };
+    const next = activation?.entry?.url;
+    if (!viewTransition || !next) return;
+    const langOf = (url: string) => new URL(url, location.href).pathname.split('/')[1];
+    if (langOf(next) !== langOf(location.href)) viewTransition.skipTransition();
+  });
 </script>
 
 <style>
+  .header-sentinel { position: absolute; top: 0; inset-inline-start: 0; width: 1px; height: 0; pointer-events: none; }
+
+  /* Sticky only with JS, which measures how far the header may scroll before it sticks.
+     Until then the offset is so large that the header behaves as if it were static. */
+  :global(html.js) .site-header {
+    position: sticky;
+    top: var(--header-stick, -100vh);
+    z-index: 40;
+    background: var(--white);
+    transition: box-shadow var(--dur-2) var(--ease-out);
+  }
+  .site-header.is-stuck { box-shadow: var(--shadow-3); }
+
   .utility-bar {
     background: var(--navy-900);
     color: var(--white);
@@ -296,6 +351,12 @@ const currentPath = (key: PageKey) => key === pageKey;
     line-height: 1.4;
   }
   .nav-sub a:hover { border-inline-start-color: var(--blue-500); color: var(--blue-700); background: var(--blue-50); }
+  .nav-sub-label { display: block; }
+  /* Descriptions only in the desktop dropdowns; the mobile menu stays compact. */
+  .nav-sub-desc { display: none; }
+
+  .nav-inner { display: flex; align-items: center; gap: var(--space-2); }
+  .nav-mark { display: none; flex-shrink: 0; width: 2.25rem; height: 2.25rem; }
   .nav-sub a[aria-current='page'] { border-inline-start-color: var(--blue-700); color: var(--blue-700); font-weight: 700; }
 
   /* Without JavaScript the menu is always visible and section links lead to the overview pages. */
@@ -307,7 +368,14 @@ const currentPath = (key: PageKey) => key === pageKey;
 
   @media (max-width: 1023px) {
     :global(html.js) .site-nav { display: none; }
-    :global(html.js) .site-nav.is-open { display: block; }
+    /* The header is sticky, so a long open menu scrolls inside itself instead of off-screen. */
+    :global(html.js) .site-nav.is-open {
+      display: block;
+      max-height: calc(100dvh - var(--header-h) - 2.5rem);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+    .nav-inner { display: block; }
     .nav-item { border-bottom: 1px solid var(--grey-200); }
     .nav-item:last-child { border-bottom: 0; }
   }
@@ -340,6 +408,26 @@ const currentPath = (key: PageKey) => key === pageKey;
       box-shadow: var(--shadow);
     }
     .nav-sub a { border-inline-start: 0; padding: 0.625rem var(--space-2); }
+    .nav-sub-label { font-weight: 500; }
+    .nav-sub-desc {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+      margin-top: 0.125rem;
+      font-size: var(--fs-small);
+      line-height: 1.4;
+      color: var(--grey-600);
+    }
+    .nav-sub--wide {
+      display: none;
+      width: min(42rem, calc(100vw - 2 * var(--gutter)));
+      max-width: none;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    :global(html.js) .nav-sub-toggle[aria-expanded='true'] + .nav-sub--wide { display: grid; }
+    .site-header.is-stuck .nav-mark { display: block; }
     .nav-sub a[aria-current='page'] { box-shadow: inset 3px 0 0 var(--blue-700); }
     :global([dir='rtl']) .nav-sub a[aria-current='page'] { box-shadow: inset -3px 0 0 var(--blue-700); }
   }

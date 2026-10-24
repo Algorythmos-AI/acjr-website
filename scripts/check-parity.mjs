@@ -63,8 +63,20 @@ for (const [key, langs] of Object.entries(newsKeys)) {
   for (const l of languages) if (!langs.has(l)) errors.push(`news "${key}" has no ${l} version`);
 }
 
+// Photos: alt text in every language and a CREDITS.md row naming the file, before any photo ships.
+import { photos } from '../src/config/photos.ts';
+const photoFiles = readdirSync(new URL('../src/assets/photos/', import.meta.url)).filter((f) => /\.(jpe?g|png|webp)$/i.test(f));
+const credits = readFileSync(new URL('../CREDITS.md', import.meta.url), 'utf8');
+for (const f of photoFiles) {
+  const key = f.replace(/\.\w+$/, '');
+  const meta = photos[key];
+  if (!meta) errors.push(`photo ${f}: not registered in src/config/photos.ts`);
+  else for (const l of languages) if (!meta.alt[l]?.trim()) errors.push(`photo ${f}: no ${l} alt text`);
+  if (!credits.includes(f)) errors.push(`photo ${f}: no row in CREDITS.md`);
+}
+
 if (errors.length) {
   console.error(errors.map((e) => `✘ ${e}`).join('\n'));
   process.exit(1);
 }
-console.log(`✔ content parity OK across ${languages.join(', ')} (${shapes.fr.size} fields, ${pageKeys.length} pages, ${Object.keys(newsKeys).length} news items)`);
+console.log(`✔ content parity OK across ${languages.join(', ')} (${shapes.fr.size} fields, ${pageKeys.length} pages, ${Object.keys(newsKeys).length} news items, ${photoFiles.length} photos)`);
