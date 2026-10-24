@@ -1,6 +1,7 @@
 // Fails the build if anything that must never be published reaches dist/.
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { gunzipSync } from 'node:zlib';
 
 const root = new URL('../dist/', import.meta.url).pathname;
 
@@ -32,8 +33,9 @@ function walk(dir) {
     const where = path.replace(root, 'dist/');
     if (statSync(path).isDirectory()) walk(path);
     else if (/\.(pdf|docx?|md)$/i.test(name)) problems.push(`document published: ${where}`);
-    else if (/\.(html|xml|txt|js|json|svg|css|webmanifest)$/.test(name)) {
-      let text = readFileSync(path, 'utf8');
+    else if (/\.(html|xml|txt|js|json|svg|css|webmanifest|pf_fragment|pf_meta|pf_index|pf_filter)$/.test(name)) {
+      // The search index (dist/pagefind/) is gzipped, so it is unpacked before being checked.
+      let text = /\.pf_\w+$/.test(name) ? gunzipSync(readFileSync(path)).toString('utf8') : readFileSync(path, 'utf8');
       for (const allowed of allowedNames) text = text.replaceAll(allowed, '');
       for (const re of forbidden) if (re.test(text)) problems.push(`${re} found in ${where}`);
     }

@@ -20,7 +20,7 @@ const p = c.principles;
       {
         p.items.map((item, i) => (
           <li>
-            <span class="principle-num" aria-hidden="true">{i + 1}</span>
+            <span class="principle-num" aria-hidden="true" data-pagefind-ignore>{i + 1}</span>
             <div>
               <ArtRef lang={lang} article={`4.${i + 1}`} />
               <h2>{item.title}</h2>

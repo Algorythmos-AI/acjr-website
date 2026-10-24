@@ -28,6 +28,9 @@ const currentPath = (key: PageKey) => key === pageKey;
   <div class="utility-bar on-dark">
     <div class="container utility-inner">
       <p class="utility-tagline">{t.tagline}</p>
+      <a class="utility-search" href={pagePath(lang, 'search')} aria-current={pageKey === 'search' ? 'page' : undefined}>
+        <Icon name="search" size={18} /><span>{c.nav.search}</span>
+      </a>
       <nav class="lang-switch" aria-label={t.languageNav}>
         <ul>
           {
@@ -240,7 +243,19 @@ const currentPath = (key: PageKey) => key === pageKey;
   @media (min-width: 768px) {
     .utility-tagline { display: block; }
   }
-  .lang-switch { margin-inline-start: auto; }
+  .utility-search {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: 2.5rem;
+    margin-inline-start: auto;
+    padding-inline: 0.5rem;
+    color: var(--white);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .utility-search:hover, .utility-search[aria-current] { color: var(--white); text-decoration: underline; }
+  .lang-switch { padding-inline-start: 0.5rem; border-inline-start: 1px solid rgb(255 255 255 / 0.25); }
   .lang-switch ul {
     display: flex;
     list-style: none;

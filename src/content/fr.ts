@@ -79,6 +79,11 @@ export const fr: Content = {
       description: "Comment l'ACJR traite vos données personnelles, conformément au RGPD. Aucun cookie de suivi.",
       lead: 'Nous collectons le strict minimum et ne déposons aucun cookie de suivi.',
     },
+    search: {
+      title: 'Rechercher',
+      description: 'Rechercher dans les pages et les actualités du site de l’ACJR.',
+      lead: 'Toutes les pages et actualités du site, en français.',
+    },
   },
 
   nav: {
@@ -95,6 +100,7 @@ export const fr: Content = {
     contact: 'Contact',
     legal: 'Mentions légales',
     privacy: 'Confidentialité',
+    search: 'Rechercher',
   },
 
   facts: [

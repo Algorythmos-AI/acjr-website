@@ -66,7 +66,7 @@ const mechanisms = [...c.advocacy.un.map((m) => m.title), c.advocacy.africa[0].t
               <Icon name={p.icon} size={40} class="path-icon" />
               <h3><a href={p.href}>{p.title}</a></h3>
               <p>{p.text}</p>
-              <span class="path-more" aria-hidden="true">{p.cta}<Icon name="arrow" size={18} flip /></span>
+              <span class="path-more" aria-hidden="true" data-pagefind-ignore>{p.cta}<Icon name="arrow" size={18} flip /></span>
             </article>
           </li>
         ))
@@ -120,7 +120,7 @@ const mechanisms = [...c.advocacy.un.map((m) => m.title), c.advocacy.africa[0].t
       {
         h.how.map((step, i) => (
           <li>
-            <span class="step-num" aria-hidden="true">{i + 1}</span>
+            <span class="step-num" aria-hidden="true" data-pagefind-ignore>{i + 1}</span>
             <h3>{step.title}</h3>
             <p>{step.text}</p>
           </li>

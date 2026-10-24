@@ -31,7 +31,9 @@ export default defineConfig({
         "object-src 'none'",
       ],
       // Hand-written is:inline scripts are not hashed by Astro, so their hashes are added here.
-      scriptDirective: { hashes: [sha256(jsClassScript)] },
+      // 'wasm-unsafe-eval' lets the self-hosted Pagefind search run its WebAssembly; it allows no
+      // eval() of JavaScript and no other origin.
+      scriptDirective: { hashes: [sha256(jsClassScript)], resources: ["'self'", "'wasm-unsafe-eval'"] },
     },
   },
   markdown: { syntaxHighlight: false },

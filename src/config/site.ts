@@ -20,6 +20,8 @@ export const site = {
   email: null as string | null,
   phone: null as string | null,
   social: [] as { name: string; url: string }[],
+  /** Where the safety "Leave this site" button goes: a neutral, widely used page. */
+  quickExitUrl: 'https://www.google.com/',
   /** Hosting provider for the legal notice (LCEN). Address from vercel.com/legal/privacy-policy. */
   host: {
     name: 'Vercel Inc.',

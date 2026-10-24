@@ -34,7 +34,7 @@ const id = `card-${articleSlug(article)}`;
     <Heading id={id}><a href={href}>{article.data.title}</a></Heading>
     <p>{article.data.description}</p>
   </div>
-  <span class="btn btn--block news-more" aria-hidden="true">{t.readMore}</span>
+  <span class="btn btn--block news-more" aria-hidden="true" data-pagefind-ignore>{t.readMore}</span>
 </article>
 
 <style>

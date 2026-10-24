@@ -31,6 +31,12 @@ Requires Node 22.22 or later in the 22.x line (see `.nvmrc`).
 | `docs/brand/README.md` | Brand guide: colours, clear space, minimum sizes. Kept out of `public/`. |
 | `docs/` | Source statutes and design references. **Never served.** |
 
+### Search
+Search is self-hosted [Pagefind](https://pagefind.app): `npm run build` runs `scripts/build-search-index.mjs` after `astro build`, which writes the index to `dist/pagefind/`. Only `<main data-pagefind-body>` of indexable pages is searched (not drafts, the 404 or the search page); navigation-like blocks carry `data-pagefind-ignore`. The index is built with straight apostrophes so that French elisions (« d’Istanbul ») are found by their base word. The CSP allows `'wasm-unsafe-eval'` for Pagefind's WebAssembly, and the leak guard unpacks and checks the index.
+
+### Safety exit
+The Contact page has a « Quitter le site » button (`src/components/QuickExit.astro`): a plain link to `site.quickExitUrl` that works without JavaScript, `location.replace()` with it (so Back does not return), and Esc pressed twice.
+
 ### Design review page
 `npm run build:drafts` also builds `/styleguide/{fr,en,ar}/`, a page showing the illustrations, the media slot and the type in each language. It is never built for production.
 
@@ -47,7 +53,7 @@ Requires Node 22.22 or later in the 22.x line (see `.nvmrc`).
 2. content parity across the three languages, including news, and alt text and credits for every photo
 3. WCAG contrast on every token pair
 4. the production, drafts and fixtures builds
-5. the leak guard: no PV, récépissé, `docs/` content, documents, the street address, draft markers or UN wordmark in `dist/`
+5. the leak guard: no PV, récépissé, `docs/` content, documents, the street address, draft markers or UN wordmark in `dist/`, including the unpacked search index
 6. every inline script and style has its hash in the page's CSP, and no element uses an inline `style` attribute
 7. budgets on every page: HTML ≤ 60 KB and own JavaScript ≤ 6 KB gzipped, illustrations ≤ 3 KB (two per page at most), and no scroll timeline folded into an `animation` shorthand
 8. `html-validate` on all three builds
