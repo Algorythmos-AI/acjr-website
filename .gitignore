@@ -12,3 +12,7 @@ playwright-report/
 # Source documents live outside this folder and must never be committed or published.
 *.pdf
 dist-drafts/
+
+# Visual baselines are Linux screenshots from CI; never commit ones made on another system.
+tests/visual.spec.ts-snapshots/*-darwin.png
+tests/visual.spec.ts-snapshots/*-win32.png

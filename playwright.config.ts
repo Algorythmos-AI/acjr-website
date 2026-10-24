@@ -6,6 +6,8 @@ const executablePath = process.env['PW_CHROMIUM'];
 
 export default defineConfig({
   testDir: 'tests',
+  // Visual baselines are Linux screenshots from CI, so @visual tests run only where VISUAL=1 (CI).
+  ...(process.env['VISUAL'] ? {} : { grepInvert: /@visual/ }),
   fullyParallel: true,
   reporter: [['list']],
   use: { baseURL: 'http://localhost:4411', launchOptions: executablePath ? { executablePath } : {} },

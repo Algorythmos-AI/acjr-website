@@ -37,6 +37,9 @@ Search is self-hosted [Pagefind](https://pagefind.app): `npm run build` runs `sc
 ### Safety exit
 The Contact page has a « Quitter le site » button (`src/components/QuickExit.astro`): a plain link to `site.quickExitUrl` that works without JavaScript, `location.replace()` with it (so Back does not return), and Esc pressed twice.
 
+### Visual regression
+`tests/visual.spec.ts` compares full-page screenshots of six templates in French and Arabic at 375, 768 and 1280 px with baselines in `tests/visual.spec.ts-snapshots/`. Fonts render differently on each system, so the baselines are Linux screenshots made in CI and the tests run only when `VISUAL=1` (CI sets it). After an intended visual change, the **Visual baselines** workflow on the pull request uploads fresh screenshots: download the `visual-baselines` artifact (`gh run download <run-id> -n visual-baselines -D tests/visual.spec.ts-snapshots`), check them, and commit them.
+
 ### Design review page
 `npm run build:drafts` also builds `/styleguide/{fr,en,ar}/`, a page showing the illustrations, the media slot and the type in each language. It is never built for production.
 
