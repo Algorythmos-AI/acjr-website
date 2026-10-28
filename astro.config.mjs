@@ -8,8 +8,8 @@ import { jsClassScript } from './src/config/inline-scripts.mjs';
 /** @param {string} text @returns {`sha256-${string}`} */
 const sha256 = (text) => `sha256-${createHash('sha256').update(text).digest('base64')}`;
 
-// Final domain is not decided yet; set SITE_URL in the deploy environment.
-const site = process.env.SITE_URL ?? 'https://acjr-website.vercel.app';
+// Public domain. SITE_URL overrides it, e.g. for a preview on another host.
+const site = process.env.SITE_URL ?? 'https://www.acjr.org';
 
 export default defineConfig({
   site,

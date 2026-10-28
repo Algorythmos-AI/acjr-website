@@ -29,7 +29,7 @@ interface Props {
 const { lang, pageKey, title, description, noindex = false, altPaths, hreflangPaths, ogType = 'website' } = Astro.props;
 const meta = langMeta[lang];
 const t = ui[lang];
-const siteUrl = Astro.site ?? new URL('https://acjr-website.vercel.app');
+const siteUrl = Astro.site ?? new URL('https://www.acjr.org');
 const abs = (path: string) => new URL(path, siteUrl).href;
 
 // Pagefind indexes only <main> of pages meant to be found: not drafts, the 404, the styleguide or the search page.
