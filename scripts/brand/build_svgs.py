@@ -218,12 +218,13 @@ def build_mark(simple=False):
         return fit(blue, pans, pad=2)
     sc, pans = scale_of_justice()
     land = unary_union([af, mg])
-    blue = land.symmetric_difference(sc)
-    # keep pans clear of the land with a hairline gap
-    blue = blue.difference(pans.buffer(2.2))
+    # The whole scale (beam, post, strings, pans, base) is gold and sits in front of a blue
+    # Africa, as in the president's reference artwork; a hairline gap keeps the layers apart.
+    gold = unary_union([sc, pans])
+    blue = land.difference(gold.buffer(2.2))
     br = branches()
-    blue = unary_union([blue, br.difference(pans.buffer(2.5))])
-    return fit(blue, pans, pad=3)
+    blue = unary_union([blue, br.difference(gold.buffer(2.5))])
+    return fit(blue, gold, pad=3)
 
 
 def fit(blue, pans, pad=3, size=200):
@@ -285,6 +286,8 @@ def font_path(pkg, fn):
 
 ROBOTO_B = Font(font_path("roboto", "roboto-latin-700-normal.woff2"))
 ROBOTO_R = Font(font_path("roboto", "roboto-latin-400-normal.woff2"))
+ROBOTO_M = Font(font_path("roboto", "roboto-latin-500-normal.woff2"))
+ROBOTO_K = Font(font_path("roboto", "roboto-latin-900-normal.woff2"))
 NASKH_B = Font(font_path("noto-naskh-arabic", "noto-naskh-arabic-arabic-700-normal.woff2"))
 
 
@@ -339,55 +342,52 @@ def main():
                                   mark_body(poly_to_path(fb), poly_to_path(fo), BLUE, OCHRE)))
 
     # ---- lockups. Mark occupies a 200x200 cell; text block to its side.
+    # Wordmark as the client's reference artwork: a heavy "ACJR" over the name on one line.
+    # The legal name elsewhere stays "African Center for Justice Rights"; the logo reads "Africa".
+    logo_name = "Africa Center for Justice Rights"
+    logo_title = "ACJR – " + logo_name
     langs = {
-        "en": dict(acr="ACJR", lines=["African Center for", "Justice Rights"],
-                   title="ACJR – African Center for Justice Rights"),
-        # ACJR is the legal reference name (statutes, Art. 1), so it is used in every language.
-        "fr": dict(acr="ACJR", lines=["Centre Africain pour les", "Droits de la Justice"],
-                   title="ACJR – Centre Africain pour les Droits de la Justice"),
-        "ar": dict(acr=None, lines=["المركز الافريقي", "للحقوق والعدالة"],
+        "en": dict(line=logo_name, title=logo_title),
+        "fr": dict(line=logo_name, title=logo_title),
+        "ar": dict(line="المركز الافريقي للحقوق والعدالة",
                    title="المركز الافريقي للحقوق والعدالة – ACJR"),
     }
     gap = 26          # mark -> divider and divider -> text
+    div_w = 4
+    acr_size = 146    # cap height ~104 of the 200 unit lockup
+    acr_base = 120
+    line_base = 172
     for lang, cfg in langs.items():
         for suf in ("", "-white"):
             cm, cp, ct = PALETTES[suf]
             parts = []
             if lang != "ar":
-                # The name is sized to stay legible at header size (the lockup is shown 52–72 px tall).
-                acr_size, line_size = 70, 40
-                text_x = 200 + gap * 2 + 3
-                d1, w1 = ROBOTO_B.path(cfg["acr"], acr_size, text_x, 86, tracking=0.02)
-                d2, w2 = ROBOTO_R.path(cfg["lines"][0], line_size, text_x + 2, 132)
-                d3, w3 = ROBOTO_R.path(cfg["lines"][1], line_size, text_x + 2, 178)
-                width = text_x + max(w1, w2 + 2, w3 + 2) + 12
-                parts.append(f'<path fill="{ct}" d="{d1}"/>')
-                parts.append(f'<path fill="{ct}" d="{d2}{d3}"/>')
-                parts.insert(0, mark_body(blue_d, ochre_d, cm, cp))
+                # Sized so the name stays legible at header size (lockup shown 52–72 px tall).
+                line_size = 38
+                text_x = 200 + gap * 2 + div_w
+                _, wl = ROBOTO_M.path(cfg["line"], line_size, 0, 0)
+                _, wa = ROBOTO_K.path("ACJR", acr_size, 0, 0, tracking=0.01)
+                d1, _ = ROBOTO_K.path("ACJR", acr_size, text_x - 4, acr_base, tracking=0.01)
+                d2, _ = ROBOTO_M.path(cfg["line"], line_size, text_x, line_base)
+                width = text_x + max(wa - 4, wl) + 12
+                parts.append(mark_body(blue_d, ochre_d, cm, cp))
+                parts.append(f'<path fill="{ct}" d="{d1}{d2}"/>')
                 divider_x = 200 + gap
             else:
-                size = 54
-                acr_size = 38
-                # measure first, then right-align next to the divider on the right
-                _, w1 = NASKH_B.path(cfg["lines"][0], size, 0, 0, "rtl", "Arab", "ar")
-                _, w2 = NASKH_B.path(cfg["lines"][1], size, 0, 0, "rtl", "Arab", "ar")
-                _, w3 = ROBOTO_B.path("ACJR", acr_size, 0, 0, tracking=0.02)
-                tw = max(w1, w2, w3)
+                line_size = 44
+                _, wl = NASKH_B.path(cfg["line"], line_size, 0, 0, "rtl", "Arab", "ar")
+                _, wa = ROBOTO_K.path("ACJR", acr_size, 0, 0, tracking=0.01)
                 pad = 12
-                right = pad + tw
-                d1, _ = NASKH_B.path(cfg["lines"][0], size, right - w1, 66, "rtl", "Arab", "ar")
-                d2, _ = NASKH_B.path(cfg["lines"][1], size, right - w2, 132, "rtl", "Arab", "ar")
-                # ACJR, the legal reference name, under the Arabic name as in the other lockups.
-                d3, _ = ROBOTO_B.path("ACJR", acr_size, right - w3, 182, tracking=0.02)
-                d2 += d3
+                right = pad + max(wl, wa)
+                d1, _ = ROBOTO_K.path("ACJR", acr_size, right - wa + 4, acr_base, tracking=0.01)
+                d2, _ = NASKH_B.path(cfg["line"], line_size, right - wl, line_base + 4, "rtl", "Arab", "ar")
                 divider_x = right + gap
-                mark_x = divider_x + gap + 3 - 3
+                mark_x = divider_x + div_w + gap
                 width = mark_x + 200
                 parts.append(f'<path fill="{ct}" d="{d1}{d2}"/>')
                 parts.append(mark_body(blue_d, ochre_d, cm, cp, f"translate({fmtn(mark_x)} 0)"))
-            div_col = ct
-            parts.append(f'<rect x="{fmtn(divider_x)}" y="36" width="3" height="128" '
-                         f'fill="{div_col}" opacity=".35"/>')
+            # Gold divider (ochre token; decorative only).
+            parts.append(f'<rect x="{fmtn(divider_x)}" y="14" width="{div_w}" height="172" fill="{OCHRE}"/>')
             write(f"lockup-{lang}{suf}.svg", svg(width, 200, cfg["title"], "".join(parts), lang=lang))
 
 
