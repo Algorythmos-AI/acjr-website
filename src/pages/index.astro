@@ -25,7 +25,7 @@ const labels: Record<Lang, string> = { fr: 'Entrer sur le site en français', en
   </head>
   <body>
     <main class="chooser">
-      <img src={lockups.fr.src} alt="ACJR — Centre Africain pour les Droits de la Justice" width={Math.round(lockups.fr.width / 2)} height={lockups.fr.height / 2} />
+      <img src={lockups.fr.src} alt="ACJR – Africa Center for Justice Rights" width={Math.round(lockups.fr.width / 2)} height={lockups.fr.height / 2} />
       <ul class="plain-list">
         {languages.map((l) => (
           <li><a class="btn btn--block" href={`/${l}/`} lang={l} hreflang={langMeta[l].hreflang}>{labels[l]}</a></li>

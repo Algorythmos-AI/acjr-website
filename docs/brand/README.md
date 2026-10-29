@@ -13,9 +13,9 @@ All SVGs are pure vector paths. Text is converted to outlines, so no font is nee
 | `mark-navy.svg` | One colour, navy |
 | `mark-black.svg` | One colour, black (fax, stamps, engraving) |
 | `favicon-mark.svg` | Simplified mark for sizes under 32 px (no branches, heavier strokes) |
-| `lockup-en.svg` / `-white` | Mark, divider, **ACJR** and *African Center for Justice Rights* |
-| `lockup-fr.svg` / `-white` | Mark, divider, **ACJR** and *Centre Africain pour les Droits de la Justice*. ACJR is the legal reference name (statutes, Art. 1), so every lockup uses it. |
-| `lockup-ar.svg` / `-white` | Mirrored for RTL (mark on the right), المركز الافريقي للحقوق والعدالة |
+| `lockup-en.svg` / `-white` | Mark, gold divider, a heavy **ACJR** (Roboto Black) over *Africa Center for Justice Rights* on one line (Roboto Medium), as in the president's reference artwork. The logo reads "Africa"; the registered legal name used in all other text stays "African Center for Justice Rights". |
+| `lockup-fr.svg` / `-white` | Same wordmark as English (the client asked for the name exactly as in his artwork). ACJR is the legal reference name (statutes, Art. 1), so every lockup uses it. |
+| `lockup-ar.svg` / `-white` | Mirrored for RTL (mark on the right), gold divider, heavy **ACJR** over المركز الافريقي للحقوق والعدالة on one line |
 | `og-image-{fr,en,ar}.png` | 1200×630 social sharing images |
 | `/favicon.svg`, `/favicon.ico`, `/apple-touch-icon.png` | Browser and home-screen icons |
 
