@@ -46,7 +46,10 @@ test.describe('home page', () => {
       await page.goto(pagePath(lang, 'home'));
       const seal = page.locator('svg.seal');
       await expect(seal).toHaveAttribute('aria-hidden', 'true');
-      await expect(seal.locator('textPath')).toContainText('AFRICAN CENTER FOR JUSTICE RIGHTS');
+      const ring = seal.locator('textPath');
+      await expect(ring).toHaveText('AFRICAN CENTER FOR JUSTICE RIGHTS · ACJR · '.repeat(2), { useInnerText: false });
+      // At the client's request the ring carries only the name: no legal form or seat.
+      await expect(ring).not.toContainText(/1901|PARIS/i);
       await expect(seal.locator('text')).toHaveAttribute('direction', 'ltr');
     });
   }
