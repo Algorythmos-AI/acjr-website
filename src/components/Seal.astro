@@ -14,8 +14,9 @@ const ticks = Array.from({ length: 72 }, (_, i) => {
   const p = (r: number) => `${(200 + r * Math.cos(a)).toFixed(1)} ${(200 + r * Math.sin(a)).toFixed(1)}`;
   return `M${p(r1)}L${p(r2)}`;
 }).join('');
-// Facts only: the legal name, its acronym, the legal form and the registered seat (Art. 1–2).
-const ring = `${site.legalName} · ${site.acronym} · Association loi 1901 · ${site.city} · `.toUpperCase();
+// The legal name and its acronym, twice round the ring so the letters keep an even rhythm.
+// (The legal form and seat are in the footer, fact strip and legal notice.)
+const ring = `${site.legalName} · ${site.acronym} · `.repeat(2).toUpperCase();
 ---
 
 <svg class="seal" data-pagefind-ignore viewBox="0 0 400 400" fill="none" aria-hidden="true" focusable="false">
