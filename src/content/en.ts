@@ -16,7 +16,7 @@ export const en: Content = {
     },
     about: {
       title: 'About us',
-      description: 'History, vision and mission of the African Center for Justice Rights (ACJR), a Paris-based association under the 1901 law.',
+      description: 'History, vision and mission of the African Center for Justice Rights (ACJR), a Paris-based non-profit association.',
       lead: 'An independent association, founded in Paris, working for justice and human dignity in Africa.',
     },
     principles: {
@@ -224,7 +224,7 @@ export const en: Content = {
     timeline: [
       { date: '25 April 2024', title: 'Founded', text: '“Paix et la Transition Démocratique” is constituted in Paris.' },
       { date: '17 September 2026', title: 'New statutes', text: 'An extraordinary general assembly adopts the new name and statutes.' },
-      { date: '30 September 2026', title: 'Registered', text: 'Change registered with the prefecture — RNA W751274196.' },
+      { date: '30 September 2026', title: 'Registered', text: 'Change registered with the prefecture.' },
     ],
     visionTitle: 'Our vision',
     vision: 'To contribute to an Africa in which justice, the rule of law, human dignity and fundamental freedoms are effectively protected.',
@@ -270,7 +270,7 @@ export const en: Content = {
     ],
     lawTitle: 'Our status under French law',
     law: [
-      'ACJR is a non-profit association governed by the French law of 1 July 1901 and the decree of 16 August 1901, with an African and international mission. It is based in Paris and has no fixed term.',
+      'ACJR is a non-profit association under French law, with an African and international mission. It is based in Paris and has no fixed term.',
       'It works in France, in Africa and internationally.',
     ],
     protocolsTitle: 'Documentation standards',
@@ -371,9 +371,8 @@ export const en: Content = {
     status: [
       { label: 'Legal name', value: 'African Center for Justice Rights (ACJR)' },
       { label: 'In French', value: 'Centre Africain pour les Droits de la Justice (CADJ)' },
-      { label: 'Legal form', value: 'Association under the French law of 1 July 1901' },
+      { label: 'Legal form', value: 'Non-profit association under French law' },
       { label: 'Registered office', value: 'Paris, France' },
-      { label: 'RNA number', value: 'W751274196' },
       { label: 'Founded', value: '25 April 2024' },
       { label: 'Current statutes', value: '17 September 2026' },
       { label: 'Financial year', value: '1 January – 31 December' },
@@ -490,7 +489,7 @@ export const en: Content = {
       {
         title: 'Publisher',
         body: [
-          'African Center for Justice Rights (ACJR), a non-profit association governed by the French law of 1 July 1901. RNA number: W751274196.',
+          'African Center for Justice Rights (ACJR), a non-profit association under French law.',
           `Registered office: ${site.postalAddress ?? `Paris, France (postal address ${p})`}.`,
           `Phone: ${site.phone ?? p}. Email: ${site.email ?? p}.`,
         ],

@@ -7,7 +7,7 @@ category: association
 draft: true
 ---
 
-On 25 April 2024, the association “Paix et la Transition Démocratique” was constituted in Paris under the French law of 1 July 1901.
+On 25 April 2024, the association “Paix et la Transition Démocratique” was constituted in Paris.
 
 Its three founding members, signatories of the founding act, are ABDELRAHIM GREIN Sadam, MAHMUD MOHAMED Hruia and EL TAHER AISSA Issam.
 
