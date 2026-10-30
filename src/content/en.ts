@@ -423,7 +423,7 @@ export const en: Content = {
     membershipTitle: 'Become a member',
     membershipLead: 'The statutes provide for four categories of members:',
     categories: [
-      { title: 'Founding members', text: 'ABDELRAHIM GREIN Sadam, MAHMUD MOHAMED Hruia and EL TAHER AISSA Issam, signatories of the founding act.' },
+      { title: 'Founding members', text: 'The signatories of the association’s founding act.' },
       { title: 'Active members', text: 'Individuals or organisations admitted as members, who take part in activities and pay the annual fee where applicable.' },
       { title: 'Associate members', text: 'People or organisations supporting the association’s work in an advisory capacity, without voting rights.' },
       { title: 'Honorary members', text: 'Distinguished people recognised for their contribution to the association’s goals, exempt from fees.' },
@@ -494,7 +494,7 @@ export const en: Content = {
           `Phone: ${site.phone ?? p}. Email: ${site.email ?? p}.`,
         ],
       },
-      { title: 'Publication director', body: ['ABDELRAHIM GREIN Sadam, President of the association.'] },
+      { title: 'Publication director', body: ['The President of the association.'] },
       {
         title: 'Hosting',
         body: [`${site.host.name}, ${site.host.address}, USA. Phone: ${site.host.phone ?? p}. Website: ${site.host.url}.`],
