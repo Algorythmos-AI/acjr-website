@@ -105,7 +105,6 @@ export const fr: Content = {
 
   facts: [
     { value: '2024', label: 'Fondée à Paris' },
-    { value: 'Loi 1901', label: 'Association à but non lucratif' },
     { value: '6', label: 'Domaines d’action' },
     { value: 'Afrique', label: 'et scène internationale' },
   ],
@@ -359,7 +358,7 @@ export const fr: Content = {
     networks: [
       'L’ACJR entend développer des alliances et des réseaux avec des organisations non gouvernementales, des institutions et des acteurs régionaux ou internationaux poursuivant des objectifs compatibles.',
     ],
-    note: 'L’ACJR est une organisation indépendante. Elle ne dispose pas, à ce jour, du statut consultatif auprès du Conseil économique et social (ECOSOC) et n’est accréditée auprès d’aucun organe onusien ou de l’Union africaine. Son éventuelle participation à ces mécanismes n’implique aucune affiliation ni aucun soutien de leur part.',
+    note: 'L’ACJR est une organisation indépendante. Elle ne dispose pas, à ce jour, du statut consultatif auprès du Conseil économique et social (ECOSOC).',
   },
 
   // Art. 11–15 — governance
@@ -367,14 +366,7 @@ export const fr: Content = {
     intro: [
       'L’ACJR est administrée de manière démocratique. Ses organes et leurs pouvoirs sont définis par les statuts adoptés le 17 septembre 2026  ; ils prévoient un règlement intérieur, préparé par le conseil d’administration et soumis à l’approbation de l’assemblée générale, pour en préciser les modalités.',
     ],
-    bureauTitle: 'Le Bureau exécutif',
-    bureauLead: 'À la date d’adoption des statuts, la continuité des fonctions est assurée par les trois membres fondateurs :',
-    bureau: [
-      { name: 'ABDELRAHIM GREIN Sadam', role: 'Président', duty: 'Représente légalement l’association dans les actes de la vie civile.' },
-      { name: 'MAHMUD MOHAMED Hruia', role: 'Secrétaire général', duty: 'Assure le suivi administratif et la coordination, et conserve les procès-verbaux.' },
-      { name: 'EL TAHER AISSA Issam', role: 'Trésorier', duty: 'Assure le suivi financier, la tenue des comptes et la préparation budgétaire.' },
-    ],
-    bureauNote: 'Le Bureau est élu par le conseil d’administration parmi ses membres. Il peut comprendre un vice-président, qui assiste et remplace le président.',
+    bureauRoles: ['Président', 'Secrétaire général', 'Trésorier'],
     bodiesTitle: 'Les organes de l’association',
     bodies: [
       {

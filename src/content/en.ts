@@ -102,7 +102,6 @@ export const en: Content = {
 
   facts: [
     { value: '2024', label: 'Founded in Paris' },
-    { value: '1901 law', label: 'Non-profit association' },
     { value: '6', label: 'Areas of work' },
     { value: 'Africa', label: 'and the international stage' },
   ],
@@ -315,21 +314,14 @@ export const en: Content = {
     networks: [
       'ACJR seeks to build alliances and networks with non-governmental organisations, institutions and regional or international actors pursuing compatible goals.',
     ],
-    note: 'ACJR is an independent organisation. It does not currently hold consultative status with the UN Economic and Social Council (ECOSOC) and is not accredited to any UN or African Union body. Any engagement with these mechanisms implies no affiliation with, or endorsement by, them.',
+    note: 'ACJR is an independent organisation. It does not currently hold consultative status with the UN Economic and Social Council (ECOSOC).',
   },
 
   governance: {
     intro: [
       'ACJR is governed democratically. Its bodies and their powers are defined by the statutes adopted on 17 September 2026; they provide for internal rules, prepared by the Board and submitted to the General Assembly for approval, to set out the details.',
     ],
-    bureauTitle: 'The Executive Bureau',
-    bureauLead: 'As at the adoption of the statutes, continuity in office is ensured by the three founding members:',
-    bureau: [
-      { name: 'ABDELRAHIM GREIN Sadam', role: 'President', duty: 'Legally represents the association in civil matters.' },
-      { name: 'MAHMUD MOHAMED Hruia', role: 'Secretary-General', duty: 'Handles administration and coordination, and keeps the minutes.' },
-      { name: 'EL TAHER AISSA Issam', role: 'Treasurer', duty: 'Oversees finances, the accounts and budget preparation.' },
-    ],
-    bureauNote: 'The Bureau is elected by the Board from among its members. It may include a Vice-President, who assists and stands in for the President.',
+    bureauRoles: ['President', 'Secretary-General', 'Treasurer'],
     bodiesTitle: 'The association’s bodies',
     bodies: [
       {

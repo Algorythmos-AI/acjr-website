@@ -34,12 +34,10 @@ const fr = {
   statutesRef: 'Statuts, art.',
   tagline: 'Justice, droits humains et redevabilité en Afrique',
   footerAbout:
-    "Association indépendante de défense des droits humains, régie par la loi du 1er juillet 1901, dont le siège est à Paris.",
+    "Association indépendante de défense des droits humains.",
   footerExplore: 'Explorer',
   footerOrganisation: "L'association",
   footerLegal: 'Informations légales',
-  legalStatus: 'Association loi 1901',
-  rnaLabel: 'RNA',
   disclaimer:
     "L'ACJR est une organisation indépendante. Elle n'est affiliée à aucun gouvernement ni à aucune organisation intergouvernementale.",
   copyright: 'Tous droits réservés.',
@@ -101,12 +99,10 @@ const en: Strings = {
   statutesRef: 'Statutes, art.',
   tagline: 'Justice, human rights and accountability in Africa',
   footerAbout:
-    'An independent human-rights association governed by the French law of 1 July 1901, based in Paris.',
+    'An independent human-rights association.',
   footerExplore: 'Explore',
   footerOrganisation: 'The organisation',
   footerLegal: 'Legal information',
-  legalStatus: 'Association under the 1901 law',
-  rnaLabel: 'RNA',
   disclaimer:
     'ACJR is an independent organisation. It is not affiliated with any government or intergovernmental organisation.',
   copyright: 'All rights reserved.',
@@ -166,12 +162,10 @@ const ar: Strings = {
   statutesRef: 'النظام الأساسي، المادة',
   tagline: 'العدالة وحقوق الإنسان والمساءلة في أفريقيا',
   footerAbout:
-    'جمعية مستقلة للدفاع عن حقوق الإنسان، يحكمها القانون الفرنسي الصادر في 1 يوليو 1901، ومقرها باريس.',
+    'جمعية مستقلة للدفاع عن حقوق الإنسان.',
   footerExplore: 'استكشف',
   footerOrganisation: 'الجمعية',
   footerLegal: 'معلومات قانونية',
-  legalStatus: 'جمعية خاضعة لقانون 1901',
-  rnaLabel: 'رقم السجل الوطني للجمعيات',
   disclaimer:
     'المركز منظمة مستقلة، وهو غير تابع لأي حكومة أو منظمة حكومية دولية.',
   copyright: 'جميع الحقوق محفوظة.',

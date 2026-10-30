@@ -34,7 +34,7 @@ export interface Content {
   meta: Record<PageKey, { title: string; description: string; lead: string }>;
   /** Short labels for navigation, breadcrumbs and the footer. */
   nav: Record<PageKey, string>;
-  facts: Four<{ value: string; label: string }>;
+  facts: Three<{ value: string; label: string }>;
   home: {
     eyebrow: string;
     heroTitle: string;
@@ -99,10 +99,7 @@ export interface Content {
   };
   governance: {
     intro: string[];
-    bureauTitle: string;
-    bureauLead: string;
-    bureau: Three<{ name: string; role: string; duty: string }>;
-    bureauNote: string;
+    bureauRoles: Three<string>;
     bodiesTitle: string;
     bodies: Four<Pair & { facts: string[] }>;
     volunteerTitle: string;

@@ -13,7 +13,7 @@ The site copy was checked line by line against `docs/source/statuts-ACJR.md` (th
   - the protocols are *promoted* (Art. 6.1), not presented as a standard ACJR already applies;
   - the vulnerable groups match the statute list;
   - examples not in the statutes are removed ("ateliers", "préservation de la mémoire", persons with disabilities).
-- [x] **Art. 7–8:** "lorsqu'elle y est admise" and the help with complaint mechanisms are added. The advocacy copy says ACJR *seeks to* engage and states it has no ECOSOC status or UN/AU accreditation. "Genève" and the African Court are removed, since the statutes don't say this. The networks text now follows Art. 8.3.
+- [x] **Art. 7–8:** "lorsqu'elle y est admise" and the help with complaint mechanisms are added. The advocacy copy says ACJR *seeks to* engage and states it has no ECOSOC status (the wider UN/AU accreditation wording was removed from that page at the client's request and remains in the legal notice). "Genève" and the African Court are removed, since the statutes don't say this. The networks text now follows Art. 8.3.
 - [x] **Art. 9:** four member categories, including associate members (advisory, no vote). Honorary members are exempt from dues.
 - [x] **Art. 10:** admission follows the internal rules (the site no longer says the Bureau decides). The admission criteria and the grounds for losing membership are listed, including the reasoned exclusion with a hearing.
 - [x] **Art. 11–14, governance:**
@@ -21,11 +21,11 @@ The site copy was checked line by line against `docs/source/statuts-ACJR.md` (th
   - Extraordinary General Assembly: quorum of two-thirds of members with voting rights; two-thirds majority of votes cast; a second assembly within 30 days with no quorum required, except for dissolution.
   - Board: 3–7 members, renewable 3-year terms, meets at least every 6 months, and the President has the casting vote.
   - Bureau: elected by the Board, with an optional *elected* vice-president.
-  - Each officer's duties are stated, and the officers are shown as ensuring "continuité des fonctions".
+  - Officers are not named on the Governance page (client request). The org chart lists the statutory roles only.
 - [x] **Art. 15:** officers are unpaid; documented expenses are reimbursed and recorded.
 - [x] **Art. 16–18:** the exact resource list and the independence rule. The financial year runs 1 Jan–31 Dec. Accounts are audited "lorsque la loi… l'exige". The promise to publish the accounts is removed, because the statutes don't make it.
 - [x] **Art. 19–21:** the internal rules are "submitted to the General Assembly for approval". The policies are adopted "according to its activities and obligations" (Art. 20). Dissolution and the transfer of assets are on the Transparency page (Art. 21). The five policies are (ethics and conduct; protection of children and vulnerable people; conflicts of interest and corruption; data and sources; equal opportunity and non-discrimination).
-- [x] **Names:** the Bureau is shown family name first, as in the statutes. The Arabic name is spelled المركز الافريقي للحقوق والعدالة, as confirmed.
+- [x] **Names:** founders are shown family name first, as in the statutes. The Arabic name is spelled المركز الافريقي للحقوق والعدالة, as confirmed.
 - [x] **Draft news:** facts only. The founders' invented "conviction" is removed. The claims about a "broader mission" are removed too, since the 2024 statutes aren't available to compare against.
 - [x] **Home page:** describes the statutory mission, not existing field work or evidence custody (« instances nationales » removed).
 - [x] **Preamble:** the Geneva Additional Protocols are dated 1977 · 2005; the UN Declaration on Human Rights Defenders is named as in the statutes (« Déclaration des Nations Unies sur les défenseurs des droits de l’homme »), not by its full official title.

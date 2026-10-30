@@ -45,7 +45,7 @@ const [ordinary, , board, bureau] = g.bodies;
       <p class="org-edge"><Icon name="arrow" size={18} flip class="org-arrow" />{t.orgElectsFromMembers}</p>
       <div class="org-box org-box--bureau">
         <p class="org-name">{bureau.title}</p>
-        <ul class="org-roles plain-list">{g.bureau.map((m) => <li>{m.role}</li>)}</ul>
+        <ul class="org-roles plain-list">{g.bureauRoles.map((role) => <li>{role}</li>)}</ul>
         <p class="org-meta">{bureau.facts[0]}</p>
         <ArtRef lang={lang} article="14" />
       </div>

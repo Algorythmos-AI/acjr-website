@@ -47,9 +47,6 @@ const columns: { title: string; keys: PageKey[] }[] = [
       }
     </div>
     <div class="footer-bottom">
-      <p class="footer-status">
-        {t.legalStatus} · {t.rnaLabel}&nbsp;<span dir="ltr">{site.rna}</span> · {c.contact.location}
-      </p>
       <p class="footer-disclaimer">{t.disclaimer}</p>
       <p class="footer-copy">© <span dir="ltr">{year}</span> <span lang="en" dir="ltr">{site.legalName} ({site.acronym})</span>. {t.copyright}</p>
     </div>
@@ -98,6 +95,4 @@ const columns: { title: string; keys: PageKey[] }[] = [
     color: rgb(255 255 255 / 0.85);
   }
   .footer-bottom p { margin-bottom: var(--space-1); }
-  .footer-status { font-weight: 700; color: var(--white); text-transform: uppercase; letter-spacing: 0.04em; }
-  :global(:lang(ar)) .footer-status { text-transform: none; letter-spacing: 0; }
 </style>
