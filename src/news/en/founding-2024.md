@@ -9,6 +9,4 @@ draft: true
 
 On 25 April 2024, the association “Paix et la Transition Démocratique” was constituted in Paris.
 
-Its three founding members, signatories of the founding act, are ABDELRAHIM GREIN Sadam, MAHMUD MOHAMED Hruia and EL TAHER AISSA Issam.
-
 In September 2026 the association adopted new statutes and the name African Center for Justice Rights (ACJR); ACJR is the legal continuation of the original association. Transitional justice is one of its six strategic objectives.

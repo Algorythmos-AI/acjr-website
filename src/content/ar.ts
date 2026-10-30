@@ -417,7 +417,7 @@ export const ar: Content = {
     membershipTitle: 'كن عضواً',
     membershipLead: 'ينص النظام الأساسي على أربع فئات من الأعضاء:',
     categories: [
-      { title: 'الأعضاء المؤسسون', text: '⁨ABDELRAHIM GREIN Sadam⁩ و⁨MAHMUD MOHAMED Hruia⁩ و⁨EL TAHER AISSA Issam⁩، الموقّعون على عقد التأسيس.' },
+      { title: 'الأعضاء المؤسسون', text: 'الموقّعون على عقد تأسيس الجمعية.' },
       { title: 'الأعضاء العاملون', text: 'أشخاص طبيعيون أو اعتباريون مقبولون، يشاركون في الأنشطة ويسددون الاشتراك السنوي عند الاقتضاء.' },
       { title: 'الأعضاء المنتسبون', text: 'أشخاص أو منظمات يدعمون أنشطة الجمعية بصفة استشارية، دون حق التصويت.' },
       { title: 'الأعضاء الفخريون', text: 'شخصيات تُمنح هذه الصفة تقديراً لإسهامها في أهداف الجمعية، وتُعفى من الاشتراك.' },
@@ -488,7 +488,7 @@ export const ar: Content = {
           `الهاتف: ${site.phone ? isolate(site.phone) : p}. البريد الإلكتروني: ${site.email ? isolate(site.email) : p}.`,
         ],
       },
-      { title: 'مدير النشر', body: [`${isolate('ABDELRAHIM GREIN Sadam')}، رئيس الجمعية.`] },
+      { title: 'مدير النشر', body: ['رئيس الجمعية.'] },
       {
         title: 'الاستضافة',
         body: [`${isolate(`${site.host.name}, ${site.host.address}`)}، الولايات المتحدة. الهاتف: ${site.host.phone ? isolate(site.host.phone) : p}. الموقع: ${isolate(site.host.url)}.`],
