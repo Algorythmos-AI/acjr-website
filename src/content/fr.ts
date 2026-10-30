@@ -470,7 +470,7 @@ export const fr: Content = {
     membershipTitle: 'Devenir membre',
     membershipLead: 'Les statuts prévoient quatre catégories de membres :',
     categories: [
-      { title: 'Membres fondateurs', text: 'ABDELRAHIM GREIN Sadam, MAHMUD MOHAMED Hruia et EL TAHER AISSA Issam, signataires de l’acte constitutif.' },
+      { title: 'Membres fondateurs', text: 'Les signataires de l’acte constitutif de l’association.' },
       { title: 'Membres actifs', text: 'Personnes physiques ou morales admises, qui participent aux activités et acquittent, le cas échéant, la cotisation annuelle.' },
       { title: 'Membres associés', text: 'Personnes ou organisations qui soutiennent les activités à titre consultatif, sans droit de vote.' },
       { title: 'Membres d’honneur', text: 'Personnalités distinguées pour leur contribution aux objectifs de l’association, dispensées de cotisation.' },
@@ -541,7 +541,7 @@ export const fr: Content = {
           `Téléphone : ${site.phone ?? p}. Courriel : ${site.email ?? p}.`,
         ],
       },
-      { title: 'Directeur de la publication', body: ['ABDELRAHIM GREIN Sadam, président de l’association.'] },
+      { title: 'Directeur de la publication', body: ['Le président de l’association.'] },
       {
         title: 'Hébergement',
         body: [`${site.host.name}, ${site.host.address}, États-Unis. Téléphone : ${site.host.phone ?? p}. Site : ${site.host.url}.`],
