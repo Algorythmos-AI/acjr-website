@@ -12,16 +12,7 @@ interface Props {
 const { lang } = Astro.props;
 const c = content[lang];
 const g = c.governance;
-// Names are written FAMILY NAME Given name, as in the statutes. Initials are given then family,
-// skipping short particles such as "EL" (EL TAHER AISSA Issam → IT).
-const initials = (name: string) => {
-  const words = name.split(/\s+/);
-  const given = words.find((w) => w !== w.toUpperCase()) ?? words[words.length - 1]!;
-  const family = words.find((w) => w === w.toUpperCase() && w.length > 2) ?? words[0]!;
-  return `${given[0]}${family[0]}`;
-};
 const toc = [
-  { id: 'bureau-title', label: g.bureauTitle },
   { id: 'bodies-title', label: g.bodiesTitle },
   { id: 'volunteer-title', label: g.volunteerTitle },
   { id: 'statutes-title', label: g.statutesTitle },
@@ -33,25 +24,6 @@ const toc = [
   <div class="container">
     <WithToc lang={lang} items={toc}>
     <div class="prose">{g.intro.map((p) => <p class="lead">{p}</p>)}</div>
-
-    <section class="block" aria-labelledby="bureau-title">
-      <ArtRef lang={lang} article="14" />
-      <h2 id="bureau-title">{g.bureauTitle}</h2>
-      <p>{g.bureauLead}</p>
-      <ul class="bureau grid grid--3 plain-list">
-        {
-          g.bureau.map((m) => (
-            <li class="person">
-              <span class="person-avatar" aria-hidden="true" lang="fr">{initials(m.name)}</span>
-              <p class="person-name" dir="ltr" lang="fr">{m.name}</p>
-              <p class="person-role">{m.role}</p>
-              <p class="person-duty">{m.duty}</p>
-            </li>
-          ))
-        }
-      </ul>
-      <p class="note bureau-note">{g.bureauNote}</p>
-    </section>
 
     <section class="block" aria-labelledby="bodies-title">
       <ArtRef lang={lang} article="11–14" />
@@ -92,12 +64,6 @@ const toc = [
 <style>
   .block { margin-block: var(--space-5); }
   .block :global(.art-ref) { margin-bottom: var(--space-1); }
-  .person { padding: var(--space-3); border: 1px solid var(--grey-200); border-top: var(--rule); text-align: center; }
-  .person-avatar { display: inline-grid; place-items: center; width: 4.5rem; height: 4.5rem; margin-bottom: var(--space-2); border-radius: 50%; background: var(--navy-900); color: var(--white); font: 700 1.375rem/1 var(--font-serif); letter-spacing: 0.04em; border: 3px solid var(--ochre-500); }
-  .person-name { margin: 0; font: 700 1.125rem/1.4 var(--font-serif); color: var(--navy-900); unicode-bidi: isolate; }
-  .person-role { margin: 0; color: var(--blue-700); font-weight: 700; }
-  .person-duty { margin: var(--space-1) 0 0; color: var(--grey-600); font-size: 1rem; }
-  .bureau-note { margin-top: var(--space-2); }
   .facts { display: flex; flex-wrap: wrap; gap: var(--space-1); list-style: none; padding: 0; margin: var(--space-2) 0 0; }
   .facts li { margin: 0; padding: 0.25rem 0.625rem; background: var(--blue-50); color: var(--navy-900); font-size: var(--fs-small); font-weight: 500; }
   .note { font-size: var(--fs-small); color: var(--grey-600); margin: 0; }

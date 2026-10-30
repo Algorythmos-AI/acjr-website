@@ -72,7 +72,7 @@ test.describe('statute references', () => {
     ['principles', ['4.1', '4.2', '4.3', '4.4', '4.5']],
     ['advocacy', ['7', '8.1–8.2', '8.3']],
     ['transparency', ['16', '17', '11, 18', '21', '20']],
-    ['governance', ['14', '11–14', '11', '13', '14', '15']],
+    ['governance', ['11–14', '11', '13', '14', '15']],
     ['involved', ['9–10']],
   ];
   for (const [key, articles] of cases) {
@@ -85,12 +85,13 @@ test.describe('statute references', () => {
 
 test.describe('governance', () => {
   for (const lang of languages) {
-    test(`${lang}: the org chart reads in order and the Bureau has initials`, async ({ page }) => {
+    test(`${lang}: the org chart reads in order and no officer is named`, async ({ page }) => {
       await page.goto(pagePath(lang, 'governance'));
       const steps = page.locator('.org-flow > li');
       await expect(steps).toHaveCount(3);
       await expect(steps.nth(2).locator('.org-roles li')).toHaveCount(3);
-      await expect(page.locator('.person-avatar')).toHaveText(['SA', 'HM', 'IT']);
+      await expect(page.locator('main')).not.toContainText(/GREIN|MOHAMED|AISSA/);
+      await expect(page.locator('.person-avatar')).toHaveCount(0);
       // Only the ordinary assembly elects the Board (Art. 11); the extraordinary one is not in the chain.
       const g = content[lang].governance;
       await expect(steps.nth(0)).toContainText(g.bodies[0].title);
