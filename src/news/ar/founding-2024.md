@@ -7,7 +7,7 @@ category: association
 draft: true
 ---
 
-في 25 أبريل 2024، تأسست جمعية «⁨Paix et la Transition Démocratique⁩» في باريس وفقاً للقانون الفرنسي الصادر في 1 يوليو 1901.
+في 25 أبريل 2024، تأسست جمعية «⁨Paix et la Transition Démocratique⁩» في باريس.
 
 وأعضاؤها المؤسسون الثلاثة، الموقّعون على عقد التأسيس، هم: ⁨ABDELRAHIM GREIN Sadam⁩، و⁨MAHMUD MOHAMED Hruia⁩، و⁨EL TAHER AISSA Issam⁩.
 

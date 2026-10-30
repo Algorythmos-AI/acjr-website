@@ -19,7 +19,7 @@ export const fr: Content = {
     },
     about: {
       title: 'Qui sommes-nous',
-      description: 'Histoire, vision et mission de l’African Center for Justice Rights (ACJR), association loi 1901 basée à Paris.',
+      description: 'Histoire, vision et mission de l’African Center for Justice Rights (ACJR), association à but non lucratif basée à Paris.',
       lead: 'Une association indépendante, fondée à Paris, au service de la justice et de la dignité humaine en Afrique.',
     },
     principles: {
@@ -249,7 +249,7 @@ export const fr: Content = {
     timeline: [
       { date: '25 avril 2024', title: 'Fondation', text: 'Constitution à Paris de « Paix et la Transition Démocratique ».' },
       { date: '17 septembre 2026', title: 'Nouveaux statuts', text: 'L’assemblée générale extraordinaire adopte la nouvelle dénomination et les nouveaux statuts.' },
-      { date: '30 septembre 2026', title: 'Enregistrement', text: 'Modification enregistrée en préfecture — RNA W751274196.' },
+      { date: '30 septembre 2026', title: 'Enregistrement', text: 'Modification enregistrée en préfecture.' },
     ],
     visionTitle: 'Notre vision',
     vision: 'Contribuer à une Afrique dans laquelle la justice, l’État de droit, la dignité humaine et les libertés fondamentales sont effectivement protégés.',
@@ -313,7 +313,7 @@ export const fr: Content = {
     ],
     lawTitle: 'Notre statut en droit français',
     law: [
-      "L'ACJR est une association à but non lucratif régie par la loi du 1er juillet 1901 et le décret du 16 août 1901, à vocation africaine et internationale. Son siège est à Paris et sa durée est illimitée.",
+      "L'ACJR est une association à but non lucratif de droit français, à vocation africaine et internationale. Son siège est à Paris et sa durée est illimitée.",
       'Elle exerce ses activités en France, en Afrique et à l’échelle internationale.',
     ],
     protocolsTitle: 'Standards de documentation',
@@ -417,9 +417,8 @@ export const fr: Content = {
     status: [
       { label: 'Dénomination juridique', value: 'African Center for Justice Rights (ACJR)' },
       { label: 'En français', value: 'Centre Africain pour les Droits de la Justice (CADJ)' },
-      { label: 'Forme', value: 'Association régie par la loi du 1er juillet 1901' },
+      { label: 'Forme', value: 'Association à but non lucratif de droit français' },
       { label: 'Siège', value: 'Paris, France' },
-      { label: 'N° RNA', value: 'W751274196' },
       { label: 'Création', value: '25 avril 2024' },
       { label: 'Statuts en vigueur', value: '17 septembre 2026' },
       { label: 'Exercice financier', value: '1er janvier – 31 décembre' },
@@ -537,7 +536,7 @@ export const fr: Content = {
       {
         title: 'Éditeur du site',
         body: [
-          'African Center for Justice Rights (ACJR), en français Centre Africain pour les Droits de la Justice, association à but non lucratif régie par la loi du 1er juillet 1901. N° RNA : W751274196.',
+          'African Center for Justice Rights (ACJR), en français Centre Africain pour les Droits de la Justice, association à but non lucratif de droit français.',
           `Siège social : ${site.postalAddress ?? `Paris, France (adresse postale ${p})`}.`,
           `Téléphone : ${site.phone ?? p}. Courriel : ${site.email ?? p}.`,
         ],
@@ -573,7 +572,7 @@ export const fr: Content = {
       {
         title: 'Responsable du traitement',
         body: [
-          `African Center for Justice Rights (ACJR), association loi 1901, siège social à Paris, France. Contact : ${site.email ?? p}.`,
+          `African Center for Justice Rights (ACJR), association à but non lucratif, siège social à Paris, France. Contact : ${site.email ?? p}.`,
           'L’association n’a pas désigné de délégué à la protection des données.',
         ],
       },

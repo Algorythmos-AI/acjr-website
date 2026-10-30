@@ -7,7 +7,7 @@ category: association
 draft: true
 ---
 
-Le 25 avril 2024, l’association « Paix et la Transition Démocratique » a été constituée à Paris, sous le régime de la loi du 1er juillet 1901.
+Le 25 avril 2024, l’association « Paix et la Transition Démocratique » a été constituée à Paris.
 
 Ses trois membres fondateurs, signataires de l’acte constitutif, sont ABDELRAHIM GREIN Sadam, MAHMUD MOHAMED Hruia et EL TAHER AISSA Issam.
 
